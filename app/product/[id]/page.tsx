@@ -77,7 +77,7 @@ const ProductDetailPage = () => {
         <Button 
           variant="outline" 
           onClick={() => router.back()}
-          className="mb-6 flex items-center gap-1 text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+          className="mb-6 flex items-center gap-1 text-gray-700 bg-white hover:text-gray-900 hover:bg-gray-100"
         >
           <ChevronLeft size={18} /> Back to Products
         </Button>
