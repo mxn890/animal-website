@@ -321,7 +321,7 @@ const Navbar = () => {
               initial="closed"
               animate="open"
               exit="closed"
-              className="md:hidden mt-3 pb-3 border-t pt-3 overflow-hidden"
+              className="md:hidden mt-3 pb-3 border-t pt-3 overflow-hidden text-black"
             >
               <motion.div className="flex flex-col space-y-3">
                 <motion.div variants={menuItemVariants}>
@@ -332,6 +332,16 @@ const Navbar = () => {
                   >
                     <Home size={18} className="text-gray-600" />
                     <span className="text-gray-800">Home</span>
+                  </Link>
+                </motion.div>
+
+                <motion.div variants={menuItemVariants}>
+                  <Link 
+                    href="/about" 
+                    className="px-3 py-2 rounded-md hover:bg-gray-50 text-gray-800 font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    About
                   </Link>
                 </motion.div>
                 <motion.div variants={menuItemVariants}>
@@ -355,7 +365,7 @@ const Navbar = () => {
                 
                 {/* Mobile Search */}
                 <motion.div variants={menuItemVariants} className="flex mt-2">
-                  <form onSubmit={handleSearch} className="flex w-full">
+                  <form onSubmit={handleSearch} className="flex w-full bg-white">
                     <Input
                       type="text"
                       placeholder="Search products..."

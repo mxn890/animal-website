@@ -334,62 +334,60 @@ const HomePage = () => {
       </section>
 
       {/* Promo Banner */}
-      <motion.div 
-        className="relative py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-teal-500 to-teal-600 text-white overflow-hidden mx-0 sm:mx-4 md:mx-8 lg:mx-16 my-8 sm:my-12 lg:my-16"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        style={{
-          borderRadius: '100% / 10%',
-          clipPath: 'ellipse(90% 50% at 50% 50%)'
-        }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 text-center">
-          <motion.h2 
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6"
-            initial={{ y: -20 }}
-            whileInView={{ y: 0 }}
-            transition={{ type: "spring", stiffness: 100 }}
-          >
-            Special Offer!
-          </motion.h2>
-          
-          <motion.p 
-            className="text-xl sm:text-2xl lg:text-3xl mb-6 sm:mb-8 max-w-2xl lg:max-w-3xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            Get <span className="font-bold text-amber-300">20% off</span> your first order!
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-md lg:max-w-lg mx-auto"
-            whileHover={{ scale: 1.02 }}
-          >
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              className="text-gray-900 rounded-full px-6 py-4 border-0 focus-visible:ring-2 focus-visible:ring-amber-700 shadow-lg text-base sm:text-lg"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <motion.div 
+          className="relative py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-teal-500 to-teal-600 text-white overflow-hidden rounded-2xl mx-4 sm:mx-8 lg:mx-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <div className="container mx-auto px-4 sm:px-6 text-center">
+            <motion.h2 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6"
+              initial={{ y: -20 }}
+              whileInView={{ y: 0 }}
+              transition={{ type: "spring", stiffness: 100 }}
+            >
+              Special Offer!
+            </motion.h2>
+            
+            <motion.p 
+              className="text-xl sm:text-2xl lg:text-3xl mb-6 sm:mb-8 max-w-2xl lg:max-w-3xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              Get <span className="font-bold text-amber-300">20% off</span> your first order!
+            </motion.p>
             
             <motion.div 
-              whileHover={{ scale: 1.05 }} 
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-md lg:max-w-lg mx-auto"
+              whileHover={{ scale: 1.02 }}
             >
-              <Button 
-                size="lg"
-                className="bg-white text-teal-600 hover:bg-white/90 rounded-full px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all w-full"
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="text-gray-900 rounded-full px-6 py-4 border-0 focus-visible:ring-2 focus-visible:ring-amber-700 shadow-lg text-base sm:text-lg bg-white"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              
+              <motion.div 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
               >
-                Subscribe Now
-              </Button>
+                <Button 
+                  size="lg"
+                  className="bg-white text-teal-600 hover:bg-white/90 rounded-full px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all w-full"
+                >
+                  Subscribe Now
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
-      </motion.div>
+          </div>
+        </motion.div>
+      </section>
     </div>
   );
 };
