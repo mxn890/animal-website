@@ -11,10 +11,10 @@ const CartPage = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center">
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-white min-h-screen">
         <div className="max-w-md mx-auto">
           <ShoppingBag size={48} className="mx-auto mb-4 sm:mb-6 text-gray-400" />
-          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Your Cart is Empty</h1>
+          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-black">Your Cart is Empty</h1>
           <p className="mb-6 sm:mb-8 text-gray-600 text-sm sm:text-base">
             Looks like you haven't added any products to your cart yet.
           </p>
@@ -29,21 +29,21 @@ const CartPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-6 sm:py-8">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Your Shopping Cart</h1>
+    <div className="container mx-auto px-4 py-6 sm:py-8 bg-white min-h-screen">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-black">Your Shopping Cart</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
         {/* Cart Items */}
         <div className="lg:col-span-2">
-          <Card className="p-4 sm:p-6">
+          <Card className="p-4 sm:p-6 bg-white">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[600px]">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-left pb-3 sm:pb-4 text-sm sm:text-base">Product</th>
-                    <th className="text-center pb-3 sm:pb-4 text-sm sm:text-base">Quantity</th>
-                    <th className="text-right pb-3 sm:pb-4 text-sm sm:text-base">Price</th>
-                    <th className="text-right pb-3 sm:pb-4 text-sm sm:text-base">Total</th>
+                    <th className="text-left pb-3 sm:pb-4 text-sm sm:text-base text-black">Product</th>
+                    <th className="text-center pb-3 sm:pb-4 text-sm sm:text-base text-black">Quantity</th>
+                    <th className="text-right pb-3 sm:pb-4 text-sm sm:text-base text-black">Price</th>
+                    <th className="text-right pb-3 sm:pb-4 text-sm sm:text-base text-black">Total</th>
                     <th className="pb-3 sm:pb-4"></th>
                   </tr>
                 </thead>
@@ -60,11 +60,11 @@ const CartPage = () => {
                           <div>
                             <Link 
                               href={`/product/${item.id}`} 
-                              className="font-medium text-sm sm:text-base hover:text-teal-600 line-clamp-1"
+                              className="font-medium text-sm sm:text-base text-black hover:text-teal-600 line-clamp-1"
                             >
                               {item.name}
                             </Link>
-                            <p className="text-xs sm:text-sm text-gray-500 capitalize">{item.category} Food</p>
+                            <p className="text-xs sm:text-sm text-gray-900 capitalize">{item.category} Food</p>
                           </div>
                         </div>
                       </td>
@@ -78,7 +78,7 @@ const CartPage = () => {
                           >
                             <Minus size={14} className="sm:w-4 sm:h-4" />
                           </button>
-                          <span className="mx-2 sm:mx-3 text-sm sm:text-base">{item.quantity}</span>
+                          <span className="mx-2 sm:mx-3 text-sm sm:text-base text-black">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="p-1 rounded-full hover:bg-teal-50 text-teal-600"
@@ -88,10 +88,10 @@ const CartPage = () => {
                           </button>
                         </div>
                       </td>
-                      <td className="py-3 sm:py-4 text-right text-sm sm:text-base">
+                      <td className="py-3 sm:py-4 text-right text-sm sm:text-base text-black">
                         ${item.price.toFixed(2)}
                       </td>
-                      <td className="py-3 sm:py-4 text-right font-medium text-sm sm:text-base">
+                      <td className="py-3 sm:py-4 text-right font-medium text-sm sm:text-base text-black">
                         ${(item.price * item.quantity).toFixed(2)}
                       </td>
                       <td className="py-3 sm:py-4 text-right">
@@ -123,26 +123,26 @@ const CartPage = () => {
         
         {/* Order Summary */}
         <div>
-          <Card className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Order Summary</h2>
+          <Card className="p-4 sm:p-6 bg-white">
+            <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-black">Order Summary</h2>
             
             <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
               <div className="flex justify-between text-sm sm:text-base">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="font-medium">${getTotalPrice().toFixed(2)}</span>
+                <span className="font-medium text-black">${getTotalPrice().toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm sm:text-base">
                 <span className="text-gray-600">Shipping</span>
-                <span className="font-medium">Calculated at checkout</span>
+                <span className="font-medium text-black">Calculated at checkout</span>
               </div>
               <div className="flex justify-between text-sm sm:text-base">
                 <span className="text-gray-600">Tax</span>
-                <span className="font-medium">Calculated at checkout</span>
+                <span className="font-medium text-black">Calculated at checkout</span>
               </div>
               <div className="border-t pt-2 sm:pt-3 mt-2 sm:mt-3">
                 <div className="flex justify-between font-bold text-sm sm:text-base">
-                  <span>Total</span>
-                  <span>${getTotalPrice().toFixed(2)}</span>
+                  <span className="text-black">Total</span>
+                  <span className="text-black">${getTotalPrice().toFixed(2)}</span>
                 </div>
               </div>
             </div>

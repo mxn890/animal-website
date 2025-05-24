@@ -95,11 +95,11 @@ const CatFoodPage = () => {
       </div>
       
       {/* Main Content */}
-      <div className="container mx-auto px-4 sm:px-6 py-6 md:py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 md:py-8 ">
         <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8">
           {/* Sidebar with Filters - Improved mobile behavior */}
-          <div className="lg:w-1/4">
-            <div className="bg-white rounded-lg md:rounded-xl shadow-md p-4 md:p-6 sticky top-4">
+          <div className="lg:w-1/4 text-black">
+            <div className="bg-white rounded-lg md:rounded-xl shadow-md p-4 md:p-6 sticky top-4 text-black">
               <h2 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-gray-800 border-b pb-2 md:pb-3">
                 Refine Selection
               </h2>
@@ -111,9 +111,9 @@ const CatFoodPage = () => {
           </div>
           
           {/* Product Grid - Responsive columns */}
-          <div className="lg:w-3/4">
+          <div className="lg:w-3/4 text-black">
             {/* Results Header - Improved spacing */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-2">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-2 text-black">
               <h2 className="text-xl sm:text-2xl font-extrabold text-gray-800">
                 Our Cat Food Collection
               </h2>
@@ -123,7 +123,7 @@ const CatFoodPage = () => {
             </div>
             
             {filteredProducts.length === 0 ? (
-              <div className="text-center py-8 md:py-12 bg-white rounded-lg md:rounded-xl shadow-sm">
+              <div className="text-center py-8 md:py-12 bg-white rounded-lg md:rounded-xl shadow-sm text-black">
                 <div className="mx-auto w-16 h-16 md:w-20 md:h-20 mb-3 md:mb-4 text-gray-400">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -145,7 +145,7 @@ const CatFoodPage = () => {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6 ">
                 {filteredProducts.map(product => (
                   <ProductCard 
                     key={product.id} 
