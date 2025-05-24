@@ -146,7 +146,7 @@ const HomePage = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 max-w-2xl lg:max-w-3xl leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extra-bold font-extrabold mb-3 sm:mb-4 max-w-2xl lg:max-w-3xl leading-tight">
                   Premium Nutrition for Your Beloved Pets
                 </h1>
                 <p className="text-lg sm:text-xl lg:text-2xl mb-6 sm:mb-8 max-w-xl lg:max-w-2xl text-gray-100 leading-relaxed">

@@ -93,8 +93,8 @@ const DogFoodPage = () => {
       </div>
       
       {/* Main Content */}
-      <div className="container mx-auto px-4 sm:px-6 py-6 md:py-8">
-        <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 md:py-8 text-black">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 ">
           {/* Sidebar with Filters */}
           <div className="lg:w-1/4 text-black">
             <div className="bg-white rounded-lg md:rounded-xl shadow-md p-4 md:p-6 sticky top-4">
@@ -109,7 +109,7 @@ const DogFoodPage = () => {
           </div>
           
           {/* Product Grid */}
-          <div className="lg:w-3/4">
+          <div className="lg:w-3/4 text-black">
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-3">
               <h2 className="text-xl md:text-2xl font-extrabold text-gray-800">
