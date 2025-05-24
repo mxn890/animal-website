@@ -25,7 +25,7 @@ const config: Config = {
         extrabold: '800',
         black: '900',
         // Or you can add custom names:
-        'extra-bold': '800',
+        'extra-bold': '1000',
         'super-bold': '900',
       },
     },
