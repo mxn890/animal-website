@@ -112,7 +112,7 @@ const CartPage = () => {
               <Link href="/">
                 <Button 
                   variant="outline" 
-                  className="text-white font-semibold border-teal-600  hover:bg-teal-50 text-sm sm:text-base"
+                  className="text-teal-700 bg-white font-semibold border-teal-600  hover:bg-teal-50 text-sm sm:text-base"
                 >
                   Continue Shopping
                 </Button>

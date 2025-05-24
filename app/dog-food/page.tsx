@@ -64,7 +64,7 @@ const DogFoodPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-teal-50 to-gray-100">
       {/* Hero Section with Image Background */}
       <div className="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden">
         <Image 

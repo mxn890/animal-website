@@ -224,7 +224,7 @@ const HomePage = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 text-gray-900">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-900">
             <span className="bg-gradient-to-r from-teal-500 to-teal-700 bg-clip-text text-transparent">
               Our Top Products
             </span>
@@ -248,10 +248,10 @@ const HomePage = () => {
           <Button 
             size="lg"
             variant="outline" 
-            className="border-teal-600 text-teal-600 hover:bg-teal-50 hover:text-teal-700 px-8 py-6 text-lg"
+            className="border-teal-600 text-teal-600 bg-white hover:bg-teal-50 hover:text-teal-700 px-8 py-6 text-lg"
             asChild
           >
-            <Link href="/products">
+            <Link href="/cat-food">
               View All Products <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -286,7 +286,7 @@ const HomePage = () => {
               </motion.div>
             </div>
             <div className="lg:w-1/2 w-full">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 text-gray-900">
                 <span className="bg-gradient-to-r from-teal-500 to-teal-600 bg-clip-text font-extrabold text-transparent">
                   About PetFoodHub
                 </span>

@@ -365,12 +365,12 @@ const ProductDetailPage = () => {
             <h2 className="text-2xl font-bold text-gray-900">Customers also bought</h2>
             <Button 
               variant="ghost" 
-              className="text-petgreen-600 hover:text-petgreen-700 hover:bg-petgreen-50 cursor-pointer"
+              className="text-petgreen-600 hover:text-petgreen-700 hover:bg-petgreen-50 cursor-pointer text-teal-600"
             >
               View all
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-black">
             {relatedProducts.map(relatedProduct => (
               <ProductCard key={relatedProduct.id} product={relatedProduct} />
             ))}
