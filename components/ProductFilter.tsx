@@ -79,7 +79,7 @@ const ProductFilter: React.FC<FilterProps> = ({ onFilterChange, category }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold mb-4">Filters</h2>
+        <h2 className="text-xl font-extrabold mb-4 bg-white">Filters</h2>
         <Button 
           variant="outline" 
           className="md:hidden border-teal-500 text-teal-600 hover:bg-teal-50 hover:text-teal-700" 

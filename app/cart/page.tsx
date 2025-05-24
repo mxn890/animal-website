@@ -108,11 +108,11 @@ const CartPage = () => {
                 </tbody>
               </table>
             </div>
-            <div className="mt-4 sm:mt-6 text-right">
+            <div className="mt-4 sm:mt-6 text-right bg-white">
               <Link href="/">
                 <Button 
                   variant="outline" 
-                  className="text-teal-600 border-teal-600 hover:bg-teal-50 text-sm sm:text-base"
+                  className="text-white font-semibold border-teal-600  hover:bg-teal-50 text-sm sm:text-base"
                 >
                   Continue Shopping
                 </Button>

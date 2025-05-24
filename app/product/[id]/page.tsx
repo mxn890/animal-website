@@ -178,7 +178,7 @@ const ProductDetailPage = () => {
                 <span className="text-sm text-gray-600">(42 reviews)</span>
               </div>
               
-              <p className="text-2xl font-bold text-petgreen-700 mb-4">${product.price.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-petgreen-700 mb-4 text-black">${product.price.toFixed(2)}</p>
               
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <div className="bg-petgreen-100 text-petgreen-800 px-2 py-1 rounded text-sm">
@@ -273,7 +273,7 @@ const ProductDetailPage = () => {
               </TabsList>
               
               <TabsContent value="description" className="mt-4">
-                <Card className="p-6 border-gray-200">
+                <Card className="p-6 border-gray-200 text-black">
                   <h3 className="font-semibold text-lg mb-3 text-gray-900">Product Details</h3>
                   <p className="text-gray-700 mb-4">{product.description}</p>
                   
