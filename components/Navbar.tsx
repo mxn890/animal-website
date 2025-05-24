@@ -364,7 +364,7 @@ const Navbar = () => {
                 </motion.div>
                 
                 {/* Mobile Search */}
-                <motion.div variants={menuItemVariants} className="flex mt-2">
+                <motion.div variants={menuItemVariants} className="flex mt-2 bg-white">
                   <form onSubmit={handleSearch} className="flex w-full bg-white">
                     <Input
                       type="text"

@@ -96,7 +96,7 @@ const DogFoodPage = () => {
       <div className="container mx-auto px-4 sm:px-6 py-6 md:py-8">
         <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
           {/* Sidebar with Filters */}
-          <div className="lg:w-1/4">
+          <div className="lg:w-1/4 text-black">
             <div className="bg-white rounded-lg md:rounded-xl shadow-md p-4 md:p-6 sticky top-4">
               <h2 className="text-lg md:text-xl font-bold mb-4 md:mb-6 text-gray-800 border-b pb-2 md:pb-3">
                 Refine Selection
