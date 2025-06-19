@@ -17,7 +17,7 @@ const AboutPage = () => {
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
           <div className="container mx-auto px-4 text-center text-white">
             <h1 className="text-3xl sm:text-4xl md:text-5xl  mb-4 font-extrabold">
-              About PetFoodHub
+              About ZeenMart
             </h1>
           </div>
         </div>
@@ -28,10 +28,10 @@ const AboutPage = () => {
         {/* Introduction Section */}
         <section className="mb-12">
           <h2 className="text-2xl md:text-3xl font-extrabold mb-6">
-            Welcome to PetFoodHub
+            Welcome to ZeenMart
           </h2>
           <p className="text-lg mb-6">
-            The UK's go-to store for high-quality food and accessories for cats and dogs at wholesale prices with free shipping nationwide.
+            The US's go-to store for high-quality food and accessories for cats and dogs at wholesale prices with free shipping nationwide.
           </p>
           <p className="mb-8">
             We believe that every pet deserves the best nutritious food, comfortable accessories, and endless love without costing their owners a fortune. That's why we offer premium, healthy pet food and durable accessories at very affordable rates.
@@ -62,7 +62,7 @@ const AboutPage = () => {
         {/* Features Section */}
         <section>
           <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-            Why Choose PetFoodHub?
+            Why Choose ZeenMart?
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -113,7 +113,7 @@ const AboutPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold">Free UK-Wide Delivery</h3>
+                <h3 className="text-xl font-semibold">Free US-Wide Delivery</h3>
               </div>
               <p>No hidden costs. Get your order shipped for free, anywhere in the UK.</p>
             </div>

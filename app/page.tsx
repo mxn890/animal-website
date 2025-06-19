@@ -288,11 +288,11 @@ const HomePage = () => {
             <div className="lg:w-1/2 w-full">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 text-gray-900">
                 <span className="bg-gradient-to-r from-teal-500 to-teal-600 bg-clip-text font-extrabold text-transparent">
-                  About PetFoodHub
+                  About ZeenMart
                 </span>
               </h2>
               <p className="text-gray-800 mb-4 sm:mb-6 text-lg sm:text-xl leading-relaxed">
-                Welcome to PetFoodHub, the UK's go-to store for high-quality food and accessories for cats and dogs at wholesale prices with free shipping nationwide.
+                Welcome to ZeenMart, the UK's go-to store for high-quality food and accessories for cats and dogs at wholesale prices with free shipping nationwide.
               </p>
               <p className="text-gray-800 mb-4 sm:mb-6 text-lg sm:text-xl leading-relaxed">
                 We believe that every pet deserves the best nutritious food, comfortable accessories, and endless love without costing their owners a fortune. That's why we offer premium, healthy pet food and durable accessories at very affordable rates.
@@ -313,7 +313,7 @@ const HomePage = () => {
                 </div>
                 <div className="flex items-start">
                   <Truck className="h-5 w-5 text-teal-600 mr-3 mt-1 flex-shrink-0" />
-                  <p className="text-gray-800 text-base sm:text-lg"><strong>Free UK-Wide Delivery</strong> – No hidden costs. Get your order shipped for free, anywhere in the UK.</p>
+                  <p className="text-gray-800 text-base sm:text-lg"><strong>Free US-Wide Delivery</strong> – No hidden costs. Get your order shipped for free, anywhere in the UK.</p>
                 </div>
               </div>
 

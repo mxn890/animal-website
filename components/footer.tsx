@@ -8,8 +8,8 @@ const Footer = () => {
           {/* Logo and About */}
           <div>
             <Link href="/" className="flex items-center mb-4">
-              <span className="text-2xl font-bold text-petgreen-400">PetFood</span>
-              <span className="text-2xl font-bold text-white">Hub</span>
+              <span className="text-2xl font-bold text-petgreen-400">ZeenMart</span>
+              
             </Link>
             <p className="text-gray-300 mb-4">
               Premium pet food for your furry friends. Quality nutrition that helps pets live their best life.
@@ -65,10 +65,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Contact Us</h3>
             <address className="not-italic text-gray-300">
-              <p className="mb-2">123 Pet Avenue</p>
-              <p className="mb-2">New York, NY 10001</p>
-              <p className="mb-2">Phone: (123) 456-7890</p>
-              <p className="mb-4">Email: info@petfoodhub.com</p>
+            
+              
             </address>
             <h4 className="font-medium mb-2 text-white">Subscribe to Our Newsletter</h4>
             <div className="flex">
@@ -86,7 +84,7 @@ const Footer = () => {
         
         {/* Copyright */}
         <div className="pt-8 mt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
-          <p>© {new Date().getFullYear()} PetFoodHub. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} ZeenMart. All rights reserved.</p>
           <p className="mt-2">
             
           </p>

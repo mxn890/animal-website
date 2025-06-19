@@ -151,14 +151,14 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              PetFood
+              Zeen
             </motion.span>
             <motion.span 
               className="text-2xl font-bold dark:text-white"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Hub
+              Mart
             </motion.span>
           </Link>
 
