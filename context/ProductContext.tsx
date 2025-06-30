@@ -126,7 +126,7 @@ const catFoodProducts: Product[] = [
       "/cat/whiskas.png", 
       "/cat/whiskas1.png", 
       "/cat/whiskas2.png", 
-      "/cat/whiskas3.png",
+      
       
     ],
     description: "With Chicken Meat and Animal Derivatives (35%, including 4% Chicken in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin , Various Sugars, *Chunk typically 40% of product With Duck Meat and Animal Derivatives (35%, including 4% Duck in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin, Various Sugars, *Chunk typically 40% of product With Poultry Meat and Animal Derivatives (35%, including 4% Poultry in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin, Various Sugars, *Chunk typically 40% of product With Turkey Meat and Animal Derivatives (35%, including 4% Turkey in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin, Various Sugars, *Chunk typically 40% of product",

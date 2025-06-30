@@ -9,12 +9,22 @@ import {
   Heart,
   ShieldCheck,
   Truck,
-  Star
+  Star,
+  CreditCard,
+  Bitcoin
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { motion } from 'framer-motion';
 import { Input } from "@/components/ui/input";
+import { 
+  FaCcVisa, 
+  FaCcMastercard, 
+  FaCcAmex,
+  FaPoundSign
+} from 'react-icons/fa';
+import { SiBitcoin } from 'react-icons/si';
+import { SiEthereum } from 'react-icons/si';
 
 // Mock product data
 const topProducts = [
@@ -214,6 +224,76 @@ const HomePage = () => {
           </div>
         </div>
       </motion.section>
+
+      {/* Enhanced Payment Methods Section */}
+     <motion.section 
+  className="py-8 sm:py-10 bg-gray-50 border-t border-b border-gray-200"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5 }}
+>
+  <div className="container mx-auto px-4 sm:px-6">
+    <div className="flex flex-col items-center">
+      <motion.h3 
+        className="text-sm font-medium text-gray-500 mb-4 sm:mb-6 flex items-center gap-2"
+        whileHover={{ scale: 1.05 }}
+      >
+        <CreditCard className="h-4 w-4 text-teal-600" />
+        SECURE PAYMENT METHODS
+      </motion.h3>
+      
+      <div className="w-full max-w-3xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          {/* Credit Cards */}
+          <motion.div 
+            className="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
+            whileHover={{ y: -5 }}
+          >
+            <FaCcVisa className="h-8 w-8 text-blue-600 mb-1" />
+            <span className="text-xs font-medium text-gray-600">Visa</span>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
+            whileHover={{ y: -5 }}
+          >
+            <FaCcMastercard className="h-8 w-8 text-red-600 mb-1" />
+            <span className="text-xs font-medium text-gray-600">Mastercard</span>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
+            whileHover={{ y: -5 }}
+          >
+            <FaCcAmex className="h-8 w-8 text-blue-800 mb-1" />
+            <span className="text-xs font-medium text-gray-600">Amex</span>
+          </motion.div>
+          
+          {/* Cryptocurrencies */}
+          <motion.div 
+            className="flex flex-col items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
+            whileHover={{ y: -5 }}
+          >
+            <SiBitcoin className="h-8 w-8 text-orange-500 mb-1" />
+            <span className="text-xs font-medium text-gray-600">Bitcoin</span>
+          </motion.div>
+        </div>
+        
+        {/* Bank Transfer - Now properly centered in the grid */}
+        <motion.div 
+          className="mt-6 flex justify-center"
+          whileHover={{ scale: 1.05 }}
+        >
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
+            <FaPoundSign className="h-5 w-5 text-green-600" />
+            <span className="text-sm font-medium text-gray-700">Bank Transfer</span>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  </div>
+</motion.section>
 
       {/* Top Products */}
       <section className="py-12 sm:py-16 lg:py-20 container mx-auto px-4 sm:px-6 bg-white">

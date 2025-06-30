@@ -109,7 +109,7 @@ const CartPage = () => {
               </table>
             </div>
             <div className="mt-4 sm:mt-6 text-right bg-white">
-              <Link href="/">
+              <Link href="/checkout">
                 <Button 
                   variant="outline" 
                   className="text-teal-700 bg-white font-semibold border-teal-600  hover:bg-teal-50 text-sm sm:text-base"
