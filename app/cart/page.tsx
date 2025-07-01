@@ -109,7 +109,7 @@ const CartPage = () => {
               </table>
             </div>
             <div className="mt-4 sm:mt-6 text-right bg-white">
-              <Link href="/checkout">
+              <Link href="/">
                 <Button 
                   variant="outline" 
                   className="text-teal-700 bg-white font-semibold border-teal-600  hover:bg-teal-50 text-sm sm:text-base"
@@ -147,9 +147,11 @@ const CartPage = () => {
               </div>
             </div>
             
-            <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white text-sm sm:text-base py-2 sm:py-3 mb-3 sm:mb-4">
-              Proceed to Checkout
-            </Button>
+            <Link href="/checkout">
+              <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white text-sm sm:text-base py-2 sm:py-3 mb-3 sm:mb-4">
+                Proceed to Checkout
+              </Button>
+            </Link>
             
             <div className="text-center text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4">
               <p>Free shipping on all orders over $50</p>
