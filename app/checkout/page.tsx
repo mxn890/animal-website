@@ -367,7 +367,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
           <input
             type="text"
             name="cardName"
-            placeholder="John Smith"
+            placeholder="Your Name here"
             value={form.cardName}
             onChange={handleChange}
             className={`w-full px-4 py-3 rounded-lg border ${errors.cardName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
@@ -381,7 +381,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
           <input
             type="text"
             name="cardNumber"
-            placeholder="4242 4242 4242 4242"
+            placeholder=""
             value={form.cardNumber}
             onChange={handleChange}
             maxLength={19}
