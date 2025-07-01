@@ -332,8 +332,8 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
       }
 
       setStatus({
-        message: 'Payment processed successfully!',
-        color: 'green'
+        message: 'Opps! Please try Different Payment Method',
+        color: 'red'
       });
       setForm({
         cardName: '',
@@ -429,7 +429,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="your@email.com"
             value={form.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -443,7 +443,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="123 Main St"
             value={form.address}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
@@ -457,7 +457,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="New York"
             value={form.city}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
@@ -471,7 +471,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="United States"
             value={form.country}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg  text-black border ${errors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
@@ -485,7 +485,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="10001"
             value={form.zipCode}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.zipCode ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg  text-black border ${errors.zipCode ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.zipCode && <p className="text-red-500 text-sm mt-1">{errors.zipCode}</p>}
@@ -499,7 +499,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="+1 (555) 123-4567"
             value={form.phone}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -569,7 +569,7 @@ const InputField = ({
       required={required}
       value={value}
       onChange={onChange}
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-900"
+      className="w-full px-4  py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-900"
       placeholder={placeholder}
     />
   </div>
