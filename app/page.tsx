@@ -373,7 +373,7 @@ const HomePage = () => {
                 </span>
               </h2>
               <p className="text-gray-800 mb-4 sm:mb-6 text-lg sm:text-xl leading-relaxed">
-                Welcome to ZeenMart, the UK's go-to store for high-quality food and accessories for cats and dogs at wholesale prices with free shipping nationwide.
+                Welcome to ZeenMart, the US go-to store for high-quality food and accessories for cats and dogs at wholesale prices with free shipping nationwide.
               </p>
               <p className="text-gray-800 mb-4 sm:mb-6 text-lg sm:text-xl leading-relaxed">
                 We believe that every pet deserves the best nutritious food, comfortable accessories, and endless love without costing their owners a fortune. That's why we offer premium, healthy pet food and durable accessories at very affordable rates.

