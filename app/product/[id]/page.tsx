@@ -175,7 +175,7 @@ const ProductDetailPage = () => {
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">(42 reviews)</span>
+                <span className="text-sm text-gray-600"></span>
               </div>
               
               <p className="text-2xl font-bold text-petgreen-700 mb-4 text-black">${product.price.toFixed(2)}</p>
