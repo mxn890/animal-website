@@ -11,7 +11,8 @@ import {
   Truck,
   Star,
   CreditCard,
-  Bitcoin
+  Bitcoin,
+  Check,
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -297,7 +298,7 @@ const HomePage = () => {
 </motion.section>
 
       {/* Top Products */}
-      <section className="py-12 sm:py-16 lg:py-20 container mx-auto px-4 sm:px-6 bg-white">
+      <section className="py-10 sm:py-12 lg:py-16 container mx-auto px-4 sm:px-6 bg-white">
         <motion.div 
           className="text-center mb-8 sm:mb-12 lg:mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -306,7 +307,7 @@ const HomePage = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-900">
-            <span className="bg-gradient-to-r from-teal-500 to-teal-700 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-500 to-teal-700 bg-clip-text text-transparent font-extrabold">
               Our Top Products
             </span>
           </h2>
@@ -417,71 +418,103 @@ const HomePage = () => {
       {/* Promo Banner */}
     <section className="py-12 sm:py-16 lg:py-20 bg-white">
   <motion.div 
-    className="relative py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-teal-500 to-teal-600 text-white overflow-hidden rounded-2xl mx-4 sm:mx-8 lg:mx-16"
+    className="relative py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-teal-600 via-teal-500 to-teal-400 text-white overflow-hidden rounded-3xl mx-4 sm:mx-8 lg:mx-16 shadow-xl"
     initial={{ opacity: 0 }}
     whileInView={{ opacity: 1 }}
-    viewport={{ once: true }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6 }}
   >
-    <div className="container mx-auto px-4 sm:px-6 text-center">
+    {/* Decorative elements */}
+    <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-teal-700/20 blur-xl"></div>
+    <div className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-teal-800/20 blur-xl"></div>
+    
+    <div className="relative container mx-auto px-4 sm:px-6 text-center">
       <motion.h2 
-        className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6"
-        initial={{ y: -20 }}
-        whileInView={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 100 }}
+        className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight"
+        initial={{ y: -20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 100, delay: 0.1 }}
       >
-        Special Offer!
+        Exclusive <span className="text-amber-300">Offer!</span>
       </motion.h2>
       
       {!subscribed ? (
         <>
-          <motion.p 
-            className="text-xl sm:text-2xl lg:text-3xl mb-6 sm:mb-8 max-w-2xl lg:max-w-3xl mx-auto"
+          <motion.div
+            className="flex flex-col items-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ staggerChildren: 0.1 }}
           >
-            Get <span className="font-bold text-amber-300">20% off</span> your first order!
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-md lg:max-w-lg mx-auto"
-            whileHover={{ scale: 1.02 }}
-          >
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              className="text-gray-900 rounded-full px-6 py-4 border-0 focus-visible:ring-2 focus-visible:ring-amber-700 shadow-lg text-base sm:text-lg bg-white"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <motion.p 
+              className="text-xl sm:text-2xl lg:text-3xl mb-6 max-w-3xl mx-auto leading-relaxed"
+              initial={{ y: 10, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              Get <span className="font-bold text-amber-300">20% OFF</span> your first order plus 
+              <span className="font-semibold"> free shipping</span>!
+            </motion.p>
             
             <motion.div 
-              whileHover={{ scale: 1.05 }} 
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto"
+              className="flex flex-col sm:flex-row gap-4 w-full max-w-md lg:max-w-xl mx-auto"
+              initial={{ y: 10, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              whileHover={{ scale: 1.01 }}
             >
-              <Button 
-                size="lg"
-                className="bg-white text-teal-600 hover:bg-white/90 rounded-full px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all w-full"
-                onClick={() => setSubscribed(true)}
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="text-gray-900 rounded-full px-6 py-5 border-0 focus-visible:ring-2 focus-visible:ring-amber-400 shadow-lg text-base sm:text-lg bg-white/95 hover:bg-white transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              
+              <motion.div 
+                whileHover={{ scale: 1.03 }} 
+                whileTap={{ scale: 0.97 }}
+                className="w-full sm:w-auto"
               >
-                Subscribe Now
-              </Button>
+                <Button 
+                  size="lg"
+                  className="relative bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-white rounded-full px-8 py-5 text-lg font-semibold shadow-lg hover:shadow-xl transition-all w-full overflow-hidden group"
+                  onClick={() => setSubscribed(true)}
+                >
+                  <span className="relative z-10">Claim Your Discount</span>
+                  <span className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-all duration-300"></span>
+                </Button>
+              </motion.div>
             </motion.div>
+            
+            <motion.p 
+              className="text-sm sm:text-base mt-4 opacity-80"
+              initial={{ y: 10, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              No spam ever. Unsubscribe anytime.
+            </motion.p>
           </motion.div>
         </>
       ) : (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring" }}
-          className="py-8"
+          transition={{ type: "spring", stiffness: 300 }}
+          className="py-12"
         >
-          <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-amber-300 mb-4">
-            Subscribed!
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-teal-700/30 mb-6">
+            <Check className="h-12 w-12 text-amber-300" />
+          </div>
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-300 mb-4">
+            You're In!
+          </h3>
+          <p className="text-xl sm:text-2xl lg:text-3xl mb-6 max-w-2xl mx-auto">
+          
           </p>
-          <p className="text-lg sm:text-xl lg:text-2xl">
-            Thank you for subscribing!
+          <p className="text-teal-100">
+            Welcome to the ZeenMart family!
           </p>
         </motion.div>
       )}
