@@ -148,7 +148,7 @@ const Footer = () => {
             <address className="not-italic space-y-4">
               <div className="flex items-start">
                 <MapPin className="flex-shrink-0 h-5 w-5 text-teal-300 mt-0.5 mr-3" />
-                <span className="text-teal-100">123 Pet Street, Animal City, UK</span>
+                <span className="text-teal-100">49 Pioneer Parkway, Sulphur Springs, Texas 75482 U.S.A</span>
               </div>
               <div className="flex items-center">
                 <Phone className="flex-shrink-0 h-5 w-5 text-teal-300 mr-3" />

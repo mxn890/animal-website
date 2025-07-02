@@ -201,7 +201,6 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
             value={formData.zipCode}
             onChange={handleChange}
             placeholder="10001"
-            icon="📮"
             focusedField={focusedField}
             setFocusedField={setFocusedField}
           />

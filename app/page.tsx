@@ -395,7 +395,7 @@ const HomePage = () => {
                 </div>
                 <div className="flex items-start">
                   <Truck className="h-5 w-5 text-teal-600 mr-3 mt-1 flex-shrink-0" />
-                  <p className="text-gray-800 text-base sm:text-lg"><strong>Free US-Wide Delivery</strong> – No hidden costs. Get your order shipped for free, anywhere in the UK.</p>
+                  <p className="text-gray-800 text-base sm:text-lg"><strong>Free US-Wide Delivery</strong> – No hidden costs. Get your order shipped for free, anywhere in the US.</p>
                 </div>
               </div>
 
