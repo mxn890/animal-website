@@ -69,7 +69,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 border-b border-teal-700 pb-2">Contact Us</h3>
             <address className="not-italic text-gray-300 mb-4">
               <p className="mb-2">123 Pet Street, Animal City</p>
-              <p className="mb-2">Phone: (123) 456-7890</p>
+              <p className="mb-2">Phone: 44 7888 267902</p>
               <p>Email: info@zeenmart.com</p>
             </address>
             <h4 className="font-medium mb-2 text-white">Subscribe to Our Newsletter</h4>
