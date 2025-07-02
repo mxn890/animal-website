@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ProductProvider } from "@/context/ProductContext"; // adjust path if needed
-import { CartProvider } from "@/context/CartContext"; // 👈 import CartProvider
+import { ProductProvider } from "@/context/ProductContext";
+import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/Navbar";
-import  Footer  from "@/components/footer"
+import Footer from "@/components/footer";
 import TopHeader from "@/components/top";
+import WhatsAppButton from "@/components/WhatsAppButton"; // 👈 Import here
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,15 +30,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ProductProvider>
           <CartProvider>
-          <TopHeader />
+            <TopHeader />
             <Navbar />
             {children}
-            
+            <WhatsAppButton /> {/* 👈 Add button inside providers */}
           </CartProvider>
         </ProductProvider>
         <Footer />
