@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.zeenmart.com
+
+# Sitemaps
+Sitemap: https://www.zeenmart.com/sitemap.xml
