@@ -72,7 +72,7 @@ const PaymentError = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-gray-900">Selected Payment</h3>
-                      <p className="text-xs text-gray-500">VISA •••• 4242</p>
+                    
                     </div>
                   </div>
                   <span className="text-xs font-medium bg-rose-100 text-rose-700 px-2.5 py-1 rounded-full">Not Processed</span>
