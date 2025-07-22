@@ -186,23 +186,7 @@ const ProductDetailPage = () => {
                 </div>
               </div>
               
-              <div className="my-4">
-                <h3 className="font-semibold mb-1 text-gray-900">Highlights:</h3>
-                <ul className="space-y-1 text-gray-700">
-                  <li className="flex items-start gap-2">
-                    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                    <span>Made with high-quality, natural ingredients</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                    <span>No artificial preservatives or colors</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                    <span>Supports healthy digestion and shiny coat</span>
-                  </li>
-                </ul>
-              </div>
+              
             </div>
             
             <div className="space-y-4">
