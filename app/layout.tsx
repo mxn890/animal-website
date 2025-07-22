@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -13,22 +13,28 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
   preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: 'swap',
-  weight: ['400'],
+  display: "swap",
+  weight: ["400"],
   preload: true,
 });
 
+// ✅ Move themeColor to viewport export
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
+
 export const metadata: Metadata = {
   title: "ZeenMart – Your One‑Stop Shop for Your Pets",
-  description: "ZeenMart offers premium quality pet food, accessories, and supplies with fast delivery and trusted service.",
+  description:
+    "ZeenMart offers premium quality pet food, accessories, and supplies with fast delivery and trusted service.",
   keywords: [
     "ZeenMart",
     "pet store",
@@ -38,10 +44,11 @@ export const metadata: Metadata = {
     "pet care",
   ],
   authors: [{ name: "ZeenMart Team" }],
-  metadataBase: new URL('https://www.zeenmart.com'),
+  metadataBase: new URL("https://www.zeenmart.com"),
   openGraph: {
     title: "ZeenMart – Your One‑Stop Shop for Your Pets",
-    description: "Find everything your pets need in one place. Quality products, fast shipping, and trusted service.",
+    description:
+      "Find everything your pets need in one place. Quality products, fast shipping, and trusted service.",
     url: "https://www.zeenmart.com",
     siteName: "ZeenMart",
     images: [
@@ -58,7 +65,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ZeenMart – Your One‑Stop Shop for Your Pets",
-    description: "Explore premium quality pet food, accessories, and supplies at ZeenMart.",
+    description:
+      "Explore premium quality pet food, accessories, and supplies at ZeenMart.",
     images: ["/og-image.png"],
   },
   icons: {
@@ -75,35 +83,21 @@ export const metadata: Metadata = {
     canonical: "https://www.zeenmart.com",
   },
   manifest: "/site.webmanifest",
-  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Preload critical resources */}
-        <link rel="preload" href="/og-image.png" as="image" />
+        {/* Preconnect for fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Preload font files */}
         <link
-          rel="preload"
-          href="/_next/static/media/geist-sans-regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/_next/static/media/geist-mono-regular.woff2"
-          as="font"
-          type="font/woff2"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
 
@@ -119,8 +113,8 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-TJR5GCW4');`,
           }}
         />
-        
-        {/* Performance monitoring */}
+
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
           strategy="afterInteractive"
@@ -185,4 +179,3 @@ export default function RootLayout({
     </html>
   );
 }
-
