@@ -118,7 +118,7 @@ const ProductDetailPage = () => {
                   priority
                 />
                 
-                {product.images.length > 2 && (
+                {product.images.length > 1 && (
                   <>
                     <button 
                       onClick={prevImage}

@@ -179,6 +179,49 @@ const catFoodProducts: Product[] = [
     featured: false
   },
   {
+    id: generateId("Blue Buffalo True Solutions Digestive Care Natural Dry Cat Food for Adult Cats, Chicken, 11-lb. Bag"),
+    name: "Blue Buffalo True Solutions Digestive Care Natural Dry Cat Food for Adult Cats, Chicken, 11-lb. Bag",
+    price: 44.98,
+    images: [
+      "/cat/blue.png",
+      "/cat/blue2.png",
+      "/cat/blue3.png",
+      "/cat/blue4.png",
+      "/cat/blue5.png",
+      "/cat/blue6.png",
+      "/cat/blue7.png",
+      "/cat/blue8.png",
+    ],
+    description: "• Specially formulated for adult cats with digestive care needs. • Flavor: Chicken. • Dry food item form with specific use for stomach support. • Ingredients include deboned chicken, chicken meal, brown rice, pea protein, barley, oatmeal, flaxseed, and more with added vitamins, minerals, and probiotics. • Provides complete and balanced nutrition for adult cats while supporting digestive health.",
+    category: "cat",
+    weight: "11 lb bag",
+    stock: 20,
+    featured: false
+  },
+  {
+    id: generateId("9Lives Paté Favorites Wet Cat Food Variety Pack, 5.5 Ounce (Pack of 12)"),
+    name: "9Lives Paté Favorites Wet Cat Food Variety Pack, 5.5 Ounce (Pack of 12)",
+    price: 14.99,
+    images: [
+      "/cat/l1.png",
+      "/cat/l2.png",
+      "/cat/l3.png",
+      "/cat/l4.png",
+      "/cat/l5.png",
+      "/cat/l6.png",
+      "/cat/l7.png",
+      "/cat/l8.png",
+      "/cat/l9.png",
+    ],
+    description: "• Contains twelve (12) 5.5 oz cans: four Meaty Paté Super Supper, four Meaty Paté with Real Chicken & Tuna, and four Meaty Paté with Real Chicken. • 100% complete nutrition for kittens and adult maintenance. • Moist and tender paté texture that cats love. • Perfect for daily feeding or as a treat. • Flavor: Meaty Paté Favorites. • Form: wet food, providing balanced nutrition and hydration.",
+    category: "cat",
+    weight: "5.5 oz x 12 cans",
+    stock: 25,
+    featured: false
+  },
+  
+  
+  {
     id: generateId("Potaroma Cat Toys Chew Ropes 3Pcs with Refillable Natural Catnip, Safe Teeth Cleaning Toy for Indoor Kittens, Interactive Cat Nip Kitty Toys for All Breeds 19.5 Inches"),
     name: "Potaroma Cat Toys Chew Ropes 3Pcs with Refillable Natural Catnip, Safe Teeth Cleaning Toy for Indoor Kittens, Interactive Cat Nip Kitty Toys for All Breeds 19.5 Inches",
     price: 8.98,
