@@ -21,11 +21,8 @@ const ProductDetailPage = () => {
   // Get the ID from params
   const id = params?.id as string;
   
-  // Convert id string to number
-  const productId = id ? parseInt(id, 10) : 0;
-  
-  // Get product details
-  const product = getProductById(productId);
+  // Get product details using the string ID
+  const product = getProductById(id);
   
   // Get related products (same category)
   const relatedProducts = product 
