@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -8,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star, Heart, Check, Eye } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Product } from '@/context/ProductContext';
+import { motion } from 'framer-motion';
 
 interface ProductCardProps {
   product: Product;
@@ -31,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
       category: product.category,
     });
     setIsAdded(true);
-    
+
     setTimeout(() => {
       setIsAdded(false);
     }, 2000);
@@ -44,7 +43,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
-    // Don't navigate if clicking on buttons or links inside the card
     const target = e.target as HTMLElement;
     if (
       target.closest('button') || 
@@ -57,25 +55,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
     router.push(`/product/${product.id}`);
   };
 
-  // Calculate a random rating between 3.5 and 5 for demo purposes
   const rating = (Math.random() * 1.5 + 3.5).toFixed(1);
   const reviewCount = Math.floor(Math.random() * 100) + 1;
 
   return (
-    <div className="group relative">
+    <motion.div 
+      className="group relative"
+      whileHover={{ scale: 1.02 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
       <Card 
-        className="h-full flex flex-col bg-white border border-gray-200/60 shadow-sm hover:shadow-lg hover:shadow-teal-100/30 transition-all duration-300 ease-out overflow-hidden hover:-translate-y-1 cursor-pointer"
+        className="h-full flex flex-col bg-white border border-gray-200/60 shadow-sm hover:shadow-lg hover:shadow-teal-100/30 transition-all duration-300 ease-out overflow-hidden cursor-pointer"
         onClick={handleCardClick}
       >
-        {/* Compact Image Container */}
         <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100/50">
-          <img
+          <motion.img
             src={product.images[0]}
             alt={product.name}
-            className="w-full h-full object-contain p-4 transition-all duration-500 ease-out group-hover:scale-105"
+            className="w-full h-full object-contain p-4"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
           />
-          
-          {/* Action Buttons - Smaller and positioned better */}
           <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
             <button 
               onClick={handleWishlistToggle}
@@ -87,7 +89,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
             >
               <Heart size={14} fill={isWishlisted ? 'currentColor' : 'none'} />
             </button>
-            
             <Link 
               href={`/product/${product.id}`}
               onClick={(e) => e.stopPropagation()}
@@ -96,8 +97,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
               <Eye size={14} />
             </Link>
           </div>
-          
-          {/* Category Badge - Smaller */}
           {product.category && (
             <div className="absolute bottom-3 left-3">
               <span className="bg-gradient-to-r from-teal-600 to-teal-700 text-white text-xs font-medium px-2 py-1 rounded-full shadow-md">
@@ -108,7 +107,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
         </div>
 
         <CardContent className="p-4 flex-1">
-          {/* Rating - More compact */}
           <div className="flex items-center mb-3">
             <div className="flex items-center gap-1">
               <div className="flex text-amber-400">
@@ -125,27 +123,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
               </span>
             </div>
           </div>
-          
-          {/* Product Name */}
+
           <h3 className="text-base font-semibold text-gray-900 group-hover:text-teal-700 transition-colors duration-300 line-clamp-2 mb-2">
             {product.name}
           </h3>
-          
-          {/* Price Below Name */}
+
           <div className="mb-3">
             <span className="text-xl font-bold text-teal-700">
               ${product.price.toFixed(2)}
             </span>
           </div>
-          
-          {/* Weight/Specs - Smaller */}
+
           {product.weight && (
             <p className="text-xs text-gray-500 mb-2 bg-gray-50 px-2 py-1 rounded inline-block">
               {product.weight}
             </p>
           )}
-          
-          {/* Description - More compact */}
+
           <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
@@ -195,7 +189,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showBuyNow = false }
           )}
         </CardFooter>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 
