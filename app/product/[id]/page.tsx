@@ -261,12 +261,7 @@ const ProductDetailPage = () => {
                 >
                   Description
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="feeding" 
-                  className="py-2 data-[state=active]:bg-white data-[state=active]:shadow-sm text-gray-700 hover:text-gray-900 cursor-pointer"
-                >
-                  Feeding Guide
-                </TabsTrigger>
+               
               </TabsList>
               
               <TabsContent value="description" className="mt-4">
@@ -275,65 +270,32 @@ const ProductDetailPage = () => {
                   <p className="text-gray-700 mb-4">{product.description}</p>
                   
                   <h3 className="font-semibold text-lg mb-3 text-gray-900">Key Features</h3>
-                  <ul className="space-y-2 text-gray-700">
-                    <li className="flex items-start gap-2">
-                      <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                      <span>Premium quality ingredients for optimal pet health</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                      <span>Formulated by veterinary nutritionists</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                      <span>Supports immune system and digestive health</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                      <span>Made in USA with globally sourced ingredients</span>
-                    </li>
-                  </ul>
+<ul className="space-y-2 text-gray-700">
+  <li className="flex items-start gap-2">
+    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
+    <span>Crafted with high‑quality materials and components</span>
+  </li>
+  <li className="flex items-start gap-2">
+    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
+    <span>Designed with pets’ comfort and well‑being in mind</span>
+  </li>
+  <li className="flex items-start gap-2">
+    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
+    <span>Tested and recommended by pet care specialists</span>
+  </li>
+  <li className="flex items-start gap-2">
+    <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
+    <span>Built to support long‑lasting use and reliability</span>
+  </li>
+</ul>
+
+                 
                 </Card>
               </TabsContent>
               
               <TabsContent value="feeding" className="mt-4">
                 <Card className="p-6 border-gray-200">
-                  <h3 className="font-semibold text-lg mb-3 text-gray-900">Feeding Guide</h3>
-                  <p className="text-gray-700 mb-4">Recommended daily feeding amounts (cups per day):</p>
                   
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm border-collapse">
-                      <thead>
-                        <tr className="bg-gray-50">
-                          <th className="p-3 text-left border-b text-gray-700">Pet Weight</th>
-                          <th className="p-3 text-left border-b text-gray-700">Daily Amount</th>
-                          <th className="p-3 text-left border-b text-gray-700">Meals Per Day</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b hover:bg-gray-50 cursor-default">
-                          <td className="p-3 text-gray-700">5-10 lbs</td>
-                          <td className="p-3 text-gray-700">1/2 to 3/4 cup</td>
-                          <td className="p-3 text-gray-700">2</td>
-                        </tr>
-                        <tr className="border-b hover:bg-gray-50 cursor-default">
-                          <td className="p-3 text-gray-700">10-15 lbs</td>
-                          <td className="p-3 text-gray-700">3/4 to 1 cup</td>
-                          <td className="p-3 text-gray-700">2</td>
-                        </tr>
-                        <tr className="border-b hover:bg-gray-50 cursor-default">
-                          <td className="p-3 text-gray-700">15-20 lbs</td>
-                          <td className="p-3 text-gray-700">1 to 1 1/4 cups</td>
-                          <td className="p-3 text-gray-700">2</td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 cursor-default">
-                          <td className="p-3 text-gray-700">20-30 lbs</td>
-                          <td className="p-3 text-gray-700">1 1/4 to 1 3/4 cups</td>
-                          <td className="p-3 text-gray-700">2</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
                   
                   <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 hover:bg-yellow-100 transition-colors cursor-default">
                     <div className="flex">
@@ -341,10 +303,7 @@ const ProductDetailPage = () => {
                         <Info className="h-5 w-5 text-yellow-500" />
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm text-yellow-700">
-                          Adjust feeding amount to maintain ideal body condition. Fresh water should be available at all times. 
-                          Consult your veterinarian for specific dietary needs.
-                        </p>
+                      
                       </div>
                     </div>
                   </div>
