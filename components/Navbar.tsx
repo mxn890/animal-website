@@ -16,11 +16,13 @@ import { useProducts } from '@/context/ProductContext';
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Use the Product type from your ProductContext
 type Product = {
-  id: number;
+  id: string;  // Changed from number to string
   name: string;
   price: number;
   images: string[];
+  category: 'cat' | 'dog';  // Added to match ProductContext
 };
 
 const Navbar = () => {
@@ -54,7 +56,7 @@ const Navbar = () => {
     }
   };
 
-  const handleSearchItemClick = (id: number) => {
+  const handleSearchItemClick = (id: string) => {  // Changed from number to string
     router.push(`/product/${id}`);
     setShowSearchResults(false);
     setSearchQuery('');
@@ -65,7 +67,7 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Animation variants
+  // Animation variants (remain the same)
   const menuVariants = {
     open: { 
       opacity: 1,
