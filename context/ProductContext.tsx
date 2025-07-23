@@ -141,6 +141,71 @@ const catFoodProducts: Product[] = [
     featured: true
   },
   {
+    id: generateId("Purina Fancy Feast Gourmet Gravy Wet Cat Food Petites Tender Beef With Carrots Entree Pack of 12 2.8 oz Tubs"),
+    name: "Purina Fancy Feast Gourmet Gravy Wet Cat Food, Petites Tender Beef With Carrots Entree - (Pack of 12) 2.8 oz. Tubs",
+    price: 13.44,
+    images: [
+      "/cat/fancy.png",
+      "/cat/fancy1.png",
+      "/cat/fancy2.png",
+      "/cat/fancy3.png",
+      "/cat/fancy4.png",
+      "/cat/fancy5.png",
+      "/cat/fancy6.png",
+      "/cat/fancy7.png",
+    ],
+    description: "• Fancy Feast Petites Tender Beef with Carrots in gourmet gravy. Perfectly portioned wet cat food tubs made with high‑quality ingredients to please cats of all life stages.",
+    category: "cat",
+    weight: "0.95kg", // approx 12 x 2.8oz
+    stock: 12,
+    featured: false
+  },
+
+  {
+    id: generateId("Rachael Ray Nutrish Natural Wet Cat Food Tuna Purrfection Recipe 2.8 Ounce Cup Pack of 12 Grain Free"),
+    name: "Rachael Ray Nutrish Natural Wet Cat Food, Tuna Purrfection Recipe, 2.8 Ounce Cup (Pack of 12), Grain Free",
+    price: 14.16,
+    images: [
+      "/cat/n1.png",
+      "/cat/n2.png",
+      "/cat/n3.png",
+      "/cat/n4.png"
+    ],
+    description: "• Grain‑free wet cat food with real tuna in a savory recipe. Crafted for adult cats with wholesome nutrition and gourmet taste in convenient 2.8oz cups.",
+    category: "cat",
+    weight: "0.95kg", // 12 × 2.8oz ≈ 33.6oz ≈ 0.95kg
+    stock: 12,
+    featured: false
+  },
+
+  {
+    id: generateId("Temptations Jumbo Stuff Crunchy and Soft Cat Treats Tasty Chicken Flavor 14 oz Tub"),
+    name: "Temptations Jumbo Stuff Crunchy and Soft Cat Treats, Tasty Chicken Flavor, 14 oz. Tub",
+    price: 8.48,
+    images: [
+      "/cat/t.png",
+      "/cat/t1.png",
+      "/cat/t2.png",
+      "/cat/t3.png",
+      "/cat/t4.png",
+      "/cat/t5.png",
+      "/cat/t6.png",
+      "/cat/t7.png",
+      "/cat/t8.png",
+      "/cat/t9.png",
+      "/cat/t10.png",
+      "/cat/t11.png",
+    ],
+    description: "• Crunchy on the outside and soft on the inside, these jumbo‑stuffed chicken flavor treats are perfect for adult cats and ideal for treating or training.",
+    category: "cat",
+    weight: "397g", // 14oz ≈ 397g
+    stock: 20,
+    featured: false
+  },
+  
+  
+  
+  {
     id: generateId("Automatic Cat Feeder and Water Dispenser with Stainless Steel Bowl Dog Gravity Food Feeder and Waterer for Small Medium Pets Puppy Kitten 1 Gallon x 2"),
     name: "Automatic Cat Feeder and Water Dispenser with Stainless Steel Bowl Dog Gravity Food Feeder and Waterer for Small Medium Pets Puppy Kitten 1 Gallon x 2",
     price: 39.9,
@@ -355,6 +420,29 @@ const dogFoodProducts: Product[] = [
     featured: true
   },
   {
+    id: generateId("IAMS Proactive Health Minichunks Adult Dry Dog Food with Real Chicken and Whole Grains 7 lb Bag"),
+    name: "IAMS Proactive Health Minichunks Adult Dry Dog Food with Real Chicken and Whole Grains, 7 lb. Bag",
+    price: 15.00,
+    images: [
+      "/dog/i1.png",
+      "/dog/i2.png",
+      "/dog/i3.png",
+      "/dog/i4.png",
+      "/dog/i5.png",
+      "/dog/i6.png",
+      "/dog/i7.png",
+      "/dog/i9.png",
+      "/dog/i10.png",
+
+    ],
+    description: "• IAMS Proactive Health Minichunks crafted with real chicken and whole grains for adult dogs. Supports active energy, strong muscles, and complete balanced nutrition in a smaller kibble size.",
+    category: "dog",
+    weight: "3.18kg", // 7 lb ≈ 3.18 kg
+    stock: 18,
+    featured: false
+  },
+  
+  {
     id: generateId("Harringtons Complete Wet Tray Grain Free Hypoallergenic Adult Dog Food Meaty Bumper Pack 16x400g - Chicken, Lamb, Beef & Turkey - Made with All Natural Ingredients"),
     name: "Harringtons Complete Wet Tray Grain Free Hypoallergenic Adult Dog Food Meaty Bumper Pack 16x400g - Chicken, Lamb, Beef & Turkey - Made with All Natural Ingredients",
     price: 32.35,
@@ -423,6 +511,30 @@ const dogFoodProducts: Product[] = [
     featured: false
   },
   {
+    id: generateId("Pedigree Complete Nutrition Adult Dry Dog Food Grilled Steak and Vegetable Flavor 18 lb Bag"),
+    name: "Pedigree Complete Nutrition Adult Dry Dog Food, Grilled Steak & Vegetable Flavor, 18 lb. Bag",
+    price: 16.9,
+    images: [
+      "/dog/pedi.png",
+      "/dog/pedi1.png",
+      "/dog/pedi2.png",
+      "/dog/pedi3.png",
+      "/dog/pedi4.png",
+      "/dog/pedi5.png",
+      "/dog/pedi6.png",
+      "/dog/pedi7.png",
+      "/dog/pedi8.png",
+      "/dog/pedi9.png",
+      "/dog/pedi10.png",
+    ],
+    description: "• Pedigree Complete Nutrition adult dry dog food with grilled steak and vegetable flavor. Supports digestive health and provides balanced nutrition for adult dogs.",
+    category: "dog",
+    weight: "8.16kg", // 18 lb ≈ 8.16 kg
+    stock: 15,
+    featured: false
+  },
+  
+  {
     id: generateId("Wagg Meaty Goodness Complete Dry Adult Dog Food Beef Dinner 12kg - Meaty Ingredients Come 1st"),
     name: "Wagg Meaty Goodness Complete Dry Adult Dog Food Beef Dinner 12kg - Meaty Ingredients Come 1st",
     price: 19.99,
@@ -439,6 +551,30 @@ const dogFoodProducts: Product[] = [
     stock: 19,
     featured: false
   },
+  {
+    id: generateId("Blue Buffalo Life Protection Formula Adult Dry Dog Food Chicken and Brown Rice Recipe 30 lb Bag"),
+    name: "Blue Buffalo Life Protection Formula Adult Dry Dog Food, Chicken & Brown Rice Recipe, 30 lb. Bag",
+    price: 61.73,
+    images: [
+      "/dog/blue.png",
+      "/dog/blue1.png",
+      "/dog/blue2.png",
+      "/dog/blue3.png",
+      "/dog/blue4.png",
+      "/dog/blue5.png",
+      "/dog/blue6.png",
+      "/dog/blue7.png",
+      "/dog/blue8.png",
+      "/dog/blue9.png",
+     
+    ],
+    description: "• Blue Buffalo Life Protection Formula made with deboned chicken and brown rice. Helps build and maintain strong muscles, supports coat health, and is crafted with natural ingredients for adult dogs.",
+    category: "dog",
+    weight: "13.6kg", // 30 lb ≈ 13.6 kg
+    stock: 10,
+    featured: false
+  },
+  
   {
     id: generateId("Wagg Wheat Free Complete Dry Adult Dog Food Chicken & Rice 12kg - For Sensitive Stomachs"),
     name: "Wagg Wheat Free Complete Dry Adult Dog Food Chicken & Rice 12kg - For Sensitive Stomachs",
@@ -457,6 +593,26 @@ const dogFoodProducts: Product[] = [
     featured: false
   },
   {
+    id: generateId("Nutrish Dry Dog Food Real Chicken and Veggies Recipe Whole Health Blend for Adult Dogs 40 lb Bag"),
+    name: "Nutrish Dry Dog Food, Real Chicken & Veggies Recipe Whole Health Blend for Adult Dogs, 40 lb. Bag",
+    price: 54.99,
+    images: [
+      "/dog/n.png",
+      "/dog/n1.png",
+      "/dog/n2.png",
+      "/dog/n3.png",
+      "/dog/n4.png",
+      "/dog/n5.png",
+      "/dog/n6.png",
+    ],
+    description: "• Nutrish Whole Health Blend with real chicken as the #1 ingredient. Formulated for adult dogs with omega‑3 for an active mind, antioxidants for immune support, and lean proteins with whole grains for balanced energy. No artificial preservatives or flavors.",
+    category: "dog",
+    weight: "18.14kg", // 40 lb ≈ 18.14 kg
+    stock: 10,
+    featured: false
+  },
+  
+  {
     id: generateId("Pet Feeding Mat-Absorbent Pet Placemat for Food and Water Bowl, with Waterproof Rubber Backing, Quick Dry Water Dispenser Mat for Dog and Cat (12\"x20\", Striped Dark Gray)"),
     name: "Pet Feeding Mat-Absorbent Pet Placemat for Food and Water Bowl, with Waterproof Rubber Backing, Quick Dry Water Dispenser Mat for Dog and Cat (12\"x20\", Striped Dark Gray)",
     price: 6.98,
@@ -472,7 +628,72 @@ const dogFoodProducts: Product[] = [
     stock: 25,
     featured: true
   },
- 
+
+  {
+    id: generateId("Hills Science Diet Small and Mini Adult 1-6 Small and Mini Breeds Premium Nutrition Dry Dog Food Chicken and Brown Rice 15.5 lb Bag"),
+    name: "Hill's Science Diet Small & Mini, Adult 1-6, Small & Mini Breeds Premium Nutrition, Dry Dog Food, Chicken & Brown Rice, 15.5 lb Bag",
+    price: 57.99,
+    images: [
+      "/dog/h.png",
+      "/dog/h1.png",
+      "/dog/h2.png",
+      "/dog/h3.png",
+      "/dog/h4.png",
+      "/dog/h5.png",
+      "/dog/h6.png",
+      "/dog/h7.png",
+      "/dog/h8.png",
+      "/dog/h9.png",
+      "/dog/h10.png",
+    ],
+    description: "• Hill's Science Diet premium dry food crafted for small & mini breed adult dogs (ages 1–6). Made with real chicken and brown rice to support digestive health, strong muscles, and overall wellness with balanced nutrition.",
+    category: "dog",
+    weight: "7.03kg", // 15.5 lb ≈ 7.03 kg
+    stock: 12,
+    featured: false
+  },
+  
+  {
+    id: generateId("Cesar Small Breed Dry Dog Food Filet Mignon Flavor and Spring Vegetables Garnish 12 lb Bag"),
+    name: "Cesar Small Breed Dry Dog Food Filet Mignon Flavor and Spring Vegetables Garnish, 12 lb. Bag",
+    price: 18.98,
+    images: [
+      "/dog/ce.png",
+      "/dog/ce1.png",
+      "/dog/ce2.png",
+      "/dog/ce3.png",
+      "/dog/ce4.png",
+      "/dog/ce5.png",
+      "/dog/ce6.png",
+      "/dog/ce7.png",
+    ],
+    description: "• Cesar Small Breed Dry Dog Food with Filet Mignon flavor and spring vegetables garnish. Specially crafted for adult small breed dogs to support digestive health and provide balanced nutrition.",
+    category: "dog",
+    weight: "5.44kg", // 12 lb ≈ 5.44 kg
+    stock: 14,
+    featured: false
+  },
+  
+  {
+    id: generateId("Purina ONE Chicken and Rice Formula Dry Dog Food 8 lb Bag"),
+    name: "Purina ONE Chicken and Rice Formula Dry Dog Food, 8 lb. Bag",
+    price: 16.28,
+    images: [
+      "/dog/red1.png",
+      "/dog/red2.png",
+      "/dog/red4.png",
+      "/dog/red5.png",
+      "/dog/red6.png",
+      "/dog/red7.png",
+      "/dog/red8.png",
+      "/dog/red10.png",
+    ],
+    description: "• Purina ONE Chicken & Rice Formula crafted for adult dogs with high protein for strong muscles, vitamins and minerals for overall health, and support for dental, skin & coat, digestive, heart, and immune health.",
+    category: "dog",
+    weight: "3.63kg", // 8 lb ≈ 3.63 kg
+    stock: 20,
+    featured: false
+  },
   
 ];
 
