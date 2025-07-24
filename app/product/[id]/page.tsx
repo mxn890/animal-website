@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { useProducts } from '@/context/ProductContext';
@@ -13,7 +13,6 @@ import {
   CheckCircle2 as CheckCircle,
   Truck,
   Star,
-  Info,
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
@@ -27,6 +26,9 @@ const ProductDetailPage = () => {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const imageRef = useRef<HTMLDivElement>(null);
 
   const id = params?.id as string;
   const product = getProductById(id);
@@ -34,6 +36,15 @@ const ProductDetailPage = () => {
   const relatedProducts = product
     ? products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4)
     : [];
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageRef.current) return;
+
+    const { left, top, width, height } = imageRef.current.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setZoomPosition({ x, y });
+  };
 
   if (!product) {
     return (
@@ -117,7 +128,13 @@ const ProductDetailPage = () => {
 
             {/* Main Image */}
             <div className="flex-1 order-1 md:order-2 relative">
-              <div className="border rounded-lg overflow-hidden bg-white p-4 flex items-center justify-center h-[400px] md:h-[500px] relative">
+              <div
+                ref={imageRef}
+                className="border rounded-lg overflow-hidden bg-white p-4 flex items-center justify-center h-[400px] md:h-[500px] relative cursor-zoom-in"
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                onMouseMove={handleMouseMove}
+              >
                 <Image
                   src={product.images[activeImageIndex]}
                   alt={product.name}
@@ -127,17 +144,27 @@ const ProductDetailPage = () => {
                   sizes="(max-width: 768px) 100vw, 600px"
                   priority={activeImageIndex === 0}
                 />
+                {isHovering && (
+                  <div
+                    className="absolute inset-0 bg-no-repeat bg-[length:200%] pointer-events-none hidden md:block"
+                    style={{
+                      backgroundImage: `url(${product.images[activeImageIndex]})`,
+                      backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                      opacity: 0.8,
+                    }}
+                  />
+                )}
                 {product.images.length > 2 && (
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all z-10"
                     >
                       <ChevronLeft size={24} className="text-gray-700" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all z-10"
                     >
                       <ChevronRight size={24} className="text-gray-700" />
                     </button>
@@ -272,7 +299,7 @@ const ProductDetailPage = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
-                      <span>Designed with pets’ comfort and well‑being in mind</span>
+                      <span>Designed with pets' comfort and well‑being in mind</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check size={16} className="text-petgreen-600 mt-0.5 flex-shrink-0" />
