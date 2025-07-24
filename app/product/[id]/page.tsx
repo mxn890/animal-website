@@ -150,7 +150,7 @@ const ProductDetailPage = () => {
                     style={{
                       backgroundImage: `url(${product.images[activeImageIndex]})`,
                       backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                      opacity: 0.8,
+                      opacity: 20,
                     }}
                   />
                 )}
