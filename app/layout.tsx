@@ -32,9 +32,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "ZeenMart – Your One‑Stop Shop for Your Pets",
+  title: " ZeenMart | One-Stop Pet Food Store in the USA",
   description:
-    "ZeenMart offers premium quality pet food, accessories, and supplies with fast delivery and trusted service.",
+    "ZeenMart offers premium quality pet food, accessories, and supplies with fast delivery and trusted service in USA.",
   keywords: [
     "ZeenMart",
     "pet store",
