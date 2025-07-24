@@ -266,67 +266,73 @@ ${form.deliveryInstructions ? `📝 *Delivery Notes*: ${escapeMarkdown(form.deli
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Card Details Section */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <CreditCard className="w-5 h-5 mr-2 text-blue-600" />
-          Card Information
-        </h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="col-span-2">
-            <InputField
-              label="Name on Card"
-              name="cardName"
-              value={form.cardName}
-              onChange={handleChange}
-              error={errors.cardName}
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              placeholder="John Smith"
-            />
-          </div>
-          
-          <div className="col-span-2">
-            <InputField
-              label="Card Number"
-              name="cardNumber"
-              value={form.cardNumber}
-              onChange={handleChange}
-              error={errors.cardNumber}
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              placeholder="1234 5678 9012 3456"
-              icon={<CreditCard className="w-5 h-5 text-gray-400" />}
-            />
-          </div>
-          
-          <div>
-            <InputField
-              label="Expiration Date"
-              name="expiry"
-              value={form.expiry}
-              onChange={handleChange}
-              error={errors.expiry}
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              placeholder="MM/YY"
-            />
-          </div>
-          
-          <div>
-            <InputField
-              label="CVV"
-              name="cvv"
-              value={form.cvv}
-              onChange={handleChange}
-              error={errors.cvv}
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              placeholder="123"
-              icon={<Lock className="w-4 h-4 text-gray-400" />}
-            />
-          </div>
-        </div>
-      </div>
+  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+    <CreditCard className="w-5 h-5 mr-2 text-blue-600" />
+    Card Information
+  </h3>
+
+  {/* grid responsive fix */}
+  <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
+    {/* Name on Card - full width always */}
+    <div className="md:col-span-2">
+      <InputField
+        label="Your Name"
+        name="cardName"
+        value={form.cardName}
+        onChange={handleChange}
+        error={errors.cardName}
+        focusedField={focusedField}
+        setFocusedField={setFocusedField}
+        placeholder="Name on Card"
+      />
+    </div>
+
+    {/* Card Number - full width always */}
+    <div className="md:col-span-2">
+      <InputField
+        label="Card Number"
+        name="cardNumber"
+        value={form.cardNumber}
+        onChange={handleChange}
+        error={errors.cardNumber}
+        focusedField={focusedField}
+        setFocusedField={setFocusedField}
+        placeholder="1234 5678 9012 3456"
+        icon={<CreditCard className="w-5 h-5 text-gray-400" />}
+      />
+    </div>
+
+    {/* Expiry - half on md, full on small */}
+    <div className="w-full">
+      <InputField
+        label="Expiration Date"
+        name="expiry"
+        value={form.expiry}
+        onChange={handleChange}
+        error={errors.expiry}
+        focusedField={focusedField}
+        setFocusedField={setFocusedField}
+        placeholder="MM/YY"
+      />
+    </div>
+
+    {/* CVV - half on md, full on small */}
+    <div className="w-full">
+      <InputField
+        label="CVV"
+        name="cvv"
+        value={form.cvv}
+        onChange={handleChange}
+        error={errors.cvv}
+        focusedField={focusedField}
+        setFocusedField={setFocusedField}
+        placeholder="123"
+        icon={<Lock className="w-4 h-4 text-gray-400" />}
+      />
+    </div>
+  </div>
+</div>
+
 
       {/* Contact Information Section */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
@@ -367,221 +373,191 @@ ${form.deliveryInstructions ? `📝 *Delivery Notes*: ${escapeMarkdown(form.deli
 
       {/* Delivery Address Section */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <Truck className="w-5 h-5 mr-2 text-blue-600" />
-          Delivery Address
-        </h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <InputField
-            label="First Name"
-            name="firstName"
-            value={form.firstName}
-            onChange={handleChange}
-            error={errors.firstName}
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-            placeholder="John"
-          />
-          
-          <InputField
-            label="Last Name"
-            name="lastName"
-            value={form.lastName}
-            onChange={handleChange}
-            error={errors.lastName}
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-            placeholder="Smith"
-          />
-          
-          <div className="col-span-2">
-            <InputField
-              label="Address Line 1"
-              name="address1"
-              value={form.address1}
-              onChange={handleChange}
-              error={errors.address1}
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              placeholder="123 Main St"
-            />
-          </div>
-          
-          <div className="col-span-2">
-            <InputField
-              label="Address Line 2 (Optional)"
-              name="address2"
-              value={form.address2}
-              onChange={handleChange}
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              placeholder="Apt, suite, unit, building, floor, etc."
-            />
-          </div>
-          
-          <InputField
-            label="City"
-            name="city"
-            value={form.city}
-            onChange={handleChange}
-            error={errors.city}
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-            placeholder="New York"
-          />
-          
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">State</label>
-            <select
-              name="state"
-              value={form.state}
-              onChange={handleChange}
-              className={`w-full px-4 py-4 rounded-xl border-2 transition-all duration-300 ${
-                errors.state 
-                  ? 'border-red-500 bg-red-50' 
-                  : focusedField === 'state'
-                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-100'
-                  : 'border-gray-200 hover:border-gray-300'
-              } focus:outline-none text-gray-900`}
-            >
-              <option value="">Select State</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="CT">Connecticut</option>
-              <option value="DE">Delaware</option>
-              <option value="FL">Florida</option>
-              <option value="GA">Georgia</option>
-              <option value="HI">Hawaii</option>
-              <option value="ID">Idaho</option>
-              <option value="IL">Illinois</option>
-              <option value="IN">Indiana</option>
-              <option value="IA">Iowa</option>
-              <option value="KS">Kansas</option>
-              <option value="KY">Kentucky</option>
-              <option value="LA">Louisiana</option>
-              <option value="ME">Maine</option>
-              <option value="MD">Maryland</option>
-              <option value="MA">Massachusetts</option>
-              <option value="MI">Michigan</option>
-              <option value="MN">Minnesota</option>
-              <option value="MS">Mississippi</option>
-              <option value="MO">Missouri</option>
-              <option value="MT">Montana</option>
-              <option value="NE">Nebraska</option>
-              <option value="NV">Nevada</option>
-              <option value="NH">New Hampshire</option>
-              <option value="NJ">New Jersey</option>
-              <option value="NM">New Mexico</option>
-              <option value="NY">New York</option>
-              <option value="NC">North Carolina</option>
-              <option value="ND">North Dakota</option>
-              <option value="OH">Ohio</option>
-              <option value="OK">Oklahoma</option>
-              <option value="OR">Oregon</option>
-              <option value="PA">Pennsylvania</option>
-              <option value="RI">Rhode Island</option>
-              <option value="SC">South Carolina</option>
-              <option value="SD">South Dakota</option>
-              <option value="TN">Tennessee</option>
-              <option value="TX">Texas</option>
-              <option value="UT">Utah</option>
-              <option value="VT">Vermont</option>
-              <option value="VA">Virginia</option>
-              <option value="WA">Washington</option>
-              <option value="WV">West Virginia</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
-            {errors.state && <p className="text-red-500 text-sm mt-2 animate-pulse">{errors.state}</p>}
-          </div>
-          
-          <InputField
-            label="ZIP Code"
-            name="zipCode"
-            value={form.zipCode}
-            onChange={handleChange}
-            error={errors.zipCode}
-            focusedField={focusedField}
-            setFocusedField={setFocusedField}
-            placeholder="10001"
-          />
-          
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Country</label>
-            <select
-              name="country"
-              value={form.country}
-              onChange={handleChange}
-              className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900 bg-white"
-              disabled
-            >
-              <option>United States</option>
-            </select>
-          </div>
-        </div>
-      </div>
+  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+    <Truck className="w-5 h-5 mr-2 text-blue-600" />
+    Delivery Address
+  </h3>
+
+  {/* Responsive grid */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+    {/* First Name */}
+    <InputField
+      label="First Name"
+      name="firstName"
+      value={form.firstName}
+      onChange={handleChange}
+      error={errors.firstName}
+      focusedField={focusedField}
+      setFocusedField={setFocusedField}
+      placeholder="John"
+    />
+
+    {/* Last Name */}
+    <InputField
+      label="Last Name"
+      name="lastName"
+      value={form.lastName}
+      onChange={handleChange}
+      error={errors.lastName}
+      focusedField={focusedField}
+      setFocusedField={setFocusedField}
+      placeholder="Smith"
+    />
+
+    {/* Address Line 1 (full width) */}
+    <div className="md:col-span-2">
+      <InputField
+        label="Address Line 1"
+        name="address1"
+        value={form.address1}
+        onChange={handleChange}
+        error={errors.address1}
+        focusedField={focusedField}
+        setFocusedField={setFocusedField}
+        placeholder="123 Main St"
+      />
+    </div>
+
+    {/* Address Line 2 (full width) */}
+    <div className="md:col-span-2">
+      <InputField
+        label="Address Line 2 (Optional)"
+        name="address2"
+        value={form.address2}
+        onChange={handleChange}
+        focusedField={focusedField}
+        setFocusedField={setFocusedField}
+        placeholder="Apt, suite, unit, building, floor, etc."
+      />
+    </div>
+
+    {/* City */}
+    <InputField
+      label="City"
+      name="city"
+      value={form.city}
+      onChange={handleChange}
+      error={errors.city}
+      focusedField={focusedField}
+      setFocusedField={setFocusedField}
+      placeholder="New York"
+    />
+
+    {/* State (changed to text input) */}
+    <InputField
+      label="State"
+      name="state"
+      value={form.state}
+      onChange={handleChange}
+      error={errors.state}
+      focusedField={focusedField}
+      setFocusedField={setFocusedField}
+      placeholder="California"
+    />
+
+    {/* ZIP Code */}
+    <InputField
+      label="ZIP Code"
+      name="zipCode"
+      value={form.zipCode}
+      onChange={handleChange}
+      error={errors.zipCode}
+      focusedField={focusedField}
+      setFocusedField={setFocusedField}
+      placeholder="10001"
+    />
+
+    {/* Country (changed to text input) */}
+    <InputField
+      label="Country"
+      name="country"
+      value={form.country}
+      onChange={handleChange}
+      error={errors.country}
+      focusedField={focusedField}
+      setFocusedField={setFocusedField}
+      placeholder="United States"
+    />
+  </div>
+</div>
 
       {/* Delivery Options Section */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-1a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H19a1 1 0 001-1V5a1 1 0 00-1-1H3zM3 5h2v2h5V5h8v10h-1.05a2.5 2.5 0 00-4.9 0H12v-2H8v2H7.05a2.5 2.5 0 00-4.9 0H3V5z" />
-          </svg>
-          Delivery Options
-        </h3>
-        
-        <div className="space-y-4">
-          <div className="flex items-center space-x-4">
-            <input
-              type="radio"
-              id="standard"
-              name="deliveryMethod"
-              value="standard"
-              checked={form.deliveryMethod === 'standard'}
-              onChange={handleChange}
-              className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
-            />
-            <label htmlFor="standard" className="flex-1">
-              <div className="font-medium text-gray-900">Standard Delivery</div>
-              <p className="text-sm text-gray-500">3-5 business days • Free</p>
-            </label>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <input
-              type="radio"
-              id="express"
-              name="deliveryMethod"
-              value="express"
-              checked={form.deliveryMethod === 'express'}
-              onChange={handleChange}
-              className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
-            />
-            <label htmlFor="express" className="flex-1">
-              <div className="font-medium text-gray-900">Express Delivery</div>
-              <p className="text-sm text-gray-500">1-2 business days • $9.99</p>
-            </label>
-          </div>
-        </div>
-        
-        <div className="mt-6">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Delivery Instructions (Optional)</label>
-          <textarea
-            name="deliveryInstructions"
-            value={form.deliveryInstructions}
-            onChange={handleChange}
-            rows={3}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-400"
-            placeholder="Gate code, building access, delivery preferences, etc."
-          />
-        </div>
+  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 mr-2 text-blue-600"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+      <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-1a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 001 1h1.05a2.5 2.5 0 004.9 0H19a1 1 0 001-1V5a1 1 0 00-1-1H3zM3 5h2v2h5V5h8v10h-1.05a2.5 2.5 0 00-4.9 0H12v-2H8v2H7.05a2.5 2.5 0 00-4.9 0H3V5z" />
+    </svg>
+    Delivery Options
+  </h3>
+
+  {/* Delivery methods */}
+  <div className="space-y-4">
+    {/* Standard Delivery */}
+    <label
+      htmlFor="standard"
+      className="flex items-start md:items-center space-x-3 cursor-pointer p-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-colors duration-300"
+    >
+      <input
+        type="radio"
+        id="standard"
+        name="deliveryMethod"
+        value="standard"
+        checked={form.deliveryMethod === "standard"}
+        onChange={handleChange}
+        className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 flex-shrink-0"
+      />
+      <div className="flex-1">
+        <div className="font-medium text-gray-900">Standard Delivery</div>
+        <p className="text-sm text-gray-500">3–5 business days • Free</p>
       </div>
+    </label>
+
+    {/* Express Delivery */}
+    <label
+      htmlFor="express"
+      className="flex items-start md:items-center space-x-3 cursor-pointer p-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-colors duration-300"
+    >
+      <input
+        type="radio"
+        id="express"
+        name="deliveryMethod"
+        value="express"
+        checked={form.deliveryMethod === "express"}
+        onChange={handleChange}
+        className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 flex-shrink-0"
+      />
+      <div className="flex-1">
+        <div className="font-medium text-gray-900">Express Delivery</div>
+        <p className="text-sm text-gray-500">1–2 business days • $9.99</p>
+      </div>
+    </label>
+  </div>
+
+  {/* Delivery Instructions */}
+  <div className="mt-6">
+    <label
+      htmlFor="deliveryInstructions"
+      className="block text-sm font-semibold text-gray-700 mb-2"
+    >
+      Delivery Instructions (Optional)
+    </label>
+    <textarea
+      id="deliveryInstructions"
+      name="deliveryInstructions"
+      value={form.deliveryInstructions}
+      onChange={handleChange}
+      rows={3}
+      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-400 resize-none"
+      placeholder="Gate code, building access, delivery preferences, etc."
+    />
+  </div>
+</div>
 
       {/* Additional Options */}
       <div className="flex items-center justify-between">
@@ -599,19 +575,7 @@ ${form.deliveryInstructions ? `📝 *Delivery Notes*: ${escapeMarkdown(form.deli
           </label>
         </div>
         
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            id="gift"
-            name="gift"
-            checked={form.gift}
-            onChange={handleChange}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-          />
-          <label htmlFor="gift" className="ml-2 block text-sm text-gray-700">
-            This is a gift
-          </label>
-        </div>
+       
       </div>
       
       {form.gift && (
