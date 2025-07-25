@@ -753,6 +753,15 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
 
 
     try {
+       if (typeof window !== "undefined") {
+      // GA4/Google Ads gtag event
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-17349796191/Vq4-CPOtgvAaEN_Cg9FA',
+        'value': 1.0, // yahan apni order value dynamically bhej do
+        'currency': 'PKR',
+        'transaction_id': '' // yahan apni order id bhej do
+      });
+    }
       await client.create(orderData);
       console.log(orderData)
     }
