@@ -753,17 +753,7 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
 
 
     try {
-      const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-  // 👉 Fir Google Ads Conversion ko fire karo
-  if (typeof window !== "undefined" && typeof window.gtag === "function") {
-    window.gtag('event', 'conversion', {
-      send_to: 'AW-17349796191/Vq4-CPOtgvAaEN_Cg9FA',
-      value: totalAmount,              // ✅ dynamic total value
-      currency: 'PKR',                 // ✅ currency
-      transaction_id: createdOrder._id // ✅ transaction_id (Sanity ka id)
-    });
-    console.log("🔥 Google Ads conversion fired!");
+      
       await client.create(orderData);
       console.log(orderData)
     }
