@@ -120,17 +120,18 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-SNL4ZBMNFW', {
-              page_path: window.location.pathname,
-              transport_type: 'beacon',
-              anonymize_ip: true
-            });
-          `}
-        </Script>
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SNL4ZBMNFW', {
+      page_path: window.location.pathname,
+      transport_type: 'beacon',
+      anonymize_ip: true
+    });
+    gtag('config', 'AW-17349796191');
+  `}
+</Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Google Tag Manager noscript */}
