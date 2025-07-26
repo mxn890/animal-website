@@ -749,11 +749,57 @@ const BitcoinPayment = ({ totalAmount }: { totalAmount: number }) => {
     }
 
     try {
+      try {
+        // 🔹 1. Pehle order database me save karo
+        await client.create(orderData);
+        console.log("✅ Order created:", orderData);
+      
+        // 🔹 2. GA4/Google Ads Conversion Event
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag('event', 'conversion', {
+            'send_to': 'AW-17349796191/Vq4-CPOtgvAaEN_Cg9FA', // apna sahi label lagao
+            'value': totalAmount, // dynamic order amount
+            'currency': 'USD',    // ya 'PKR' agar tumhara store PKR me hai
+          });
+          console.log("✅ Google Ads conversion event fired!");
+        }
+      
+        // 🔹 3. Ab invoice create karo
+        const response = await fetch('/api/create-invoice', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            amount: totalAmount,
+            items: [], // cart items agar bhejna chaho
+            customer: formData,
+            metadata: {
+              orderDate: new Date().toISOString()
+            }
+          })
+        });
+      
+        if (!response.ok) {
+          throw new Error('Failed to create invoice');
+        }
+      
+        const data = await response.json();
+      
+        // 🔹 4. Redirect BTCPay invoice page
+        window.location.href = data.paymentUrl;
+      
+      } catch (err: any) {
+        console.error('Payment Error:', err);
+        setError(err.message || 'Payment failed. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+      
       // Create invoice via API
 
 
     try {
-      
       await client.create(orderData);
       console.log(orderData)
     }
