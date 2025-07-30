@@ -24,8 +24,8 @@ const generateId = (name: string) => {
 // Sample product data
 const catFoodProducts: Product[] = [
   {
-    id: generateId("Applaws Natural Wet Cat Food, Multipack Chicken and Fish Selection in Broth 70 g Tin (Pack of 12)"),
-    name: "Applaws Natural Wet Cat Food, Multipack Chicken and Fish Selection in Broth 70 g Tin (Pack of 12)",
+    id: generateId("Applaws Natural Wet Cat Food – Chicken & Fish 12-Pack"),
+    name: "Applaws Natural Wet Cat Food – Chicken & Fish 12-Pack",
     price: 15.99,
     images: [
       "/cat/applaws.png", 
@@ -34,15 +34,15 @@ const catFoodProducts: Product[] = [
       "/cat/applaws3.png", 
       "/cat/applaws4.png"
     ],
-    description: "• Chicken and fish recipes contain a natural source of Omega-6, taurine and Omega-3 helping support a cats eye, heart, brain and skin health. Complementary wet cat food adding flavour and hydration. Feed with any dry food for a complete and balanced diet. Pack contains 12 x 70g Tins chicken and fish mixed selection. Tuna Fillet, Chicken Breast, Chicken with Cheese, Ocean Fish. PACKAGING MAY VARY as we transition from old to new brand packaging. Sustainable, recyclable packaging, our metal tins and cardboard packaging can be fully recycled and fish, this premium food helps support healthy development and strong immune systems.",
+    description: "Give your cat real meat with Applaws Natural Wet Cat Food. 12-pack of chicken & fish in broth. Grain-free, nutritious, and 100% natural. Treat your cats to the best with Applaws Natural Wet Cat Food Multipack—an all-natural option featuring real chicken and fish in a delicious broth. Each 70g tin contains only natural ingredients, ensuring your cat receives a healthy meal with complete confidence. This multipack gives you variety and nutrition for your cats. Applaws Natural Wet Cat Food is suitable for all breeds and ages—and helps maintain a healthy coat, lean muscle, and hydration. ",
     category: "cat",
     weight: "12 Pack",
     stock: 15,
-    featured: true
+    featured: true,
   },
   {
-    id: generateId("Go-Cat Adult Chicken & Duck Dry Cat Food 10kg (Packaging may vary)"),
-    name: "Go-Cat Adult Chicken & Duck Dry Cat Food 10kg (Packaging may vary)",
+    id: generateId("Go-Cat Adult Dry Cat Food 10kg"),
+    name: "Go-Cat Adult Dry Cat Food 10kg – Buy Online at ZeenMart",
     price: 41.23,
     images: [
       "/cat/gocat.png", 
@@ -51,15 +51,15 @@ const catFoodProducts: Product[] = [
       "/cat/gocat3.png",
       "/cat/gocat4.png"
     ],
-    description: "Premium adult cat food with real salmon. Rich in omega-3 fatty acids for a healthy coat and skin. Supports digestive health with prebiotics and probiotics.",
+    description: "Shop Go-Cat Adult Dry Cat Food 10kg – balanced, tasty, and rich in nutrients. Ideal for adult cats. Order now from ZeenMart with fast delivery Give your cat the best dry food for adult cats with this premium recipe made from real salmon. Rich in omega-3 for a healthy coat and skin, this dry cat food for adult cats also includes prebiotics and probiotics to support digestive health—a top choice for those seeking the best dry food for cats with complete nutrition.",
     category: "cat",
     weight: "10kg",
     stock: 12,
     featured: true
   },
   {
-    id: generateId("FELIX Original Mixed Selection in Jelly Wet Cat Food 40x85g"),
-    name: "FELIX Original Mixed Selection in Jelly Wet Cat Food 40x85g",
+    id: generateId("felix-cat-food-mixed-jelly-40x85g"),
+    name: ": Felix Cat Food Mixed Jelly 40x85g – Shop at ZeenMart",
     price: 15,
     images: [
       "/cat/flex.png", 
@@ -68,32 +68,32 @@ const catFoodProducts: Product[] = [
       "/cat/flex3.png",
       "/cat/flex4.png"
     ],
-    description: "• 100% Natural, high protein Ingredients that your pet will love. Suitable for all adult and mature cat",
+    description: "Felix cat food offers a complete and balanced meal in every pouch. Each variety contains real meat and fish derivatives, with chunks in succulent jelly—providing essential omega‑6 fatty acids, vitamins A & E, and taurine for adult cat health. With moisture around 83%, Felix Wet Cat Food delivers hydration alongside nutrition, making Felix Wet Cat Food a trusted choice for daily feeding. Suitable for adult cats and mature cats who enjoy variety and taste with quality ingredients",
     category: "cat",
     weight: "40 pack",
     stock: 18,
     featured: false
   },
   {
-    id: generateId("GOURMET Perle Ocean Collection Wet Cat Food 40x85g"),
-    name: "GOURMET Perle Ocean Collection Wet Cat Food 40x85g",
-    price: 23.99,
-    images: [
-      "/cat/perle0.png", 
+    "id": "gourmet-ocean-cat-food-40x85g",
+    "name": "Gourmet  Perle Wet Cat Food Ocean Collection (40 Pack, 85g Each)",
+    "price": 23.99,
+    "images": [
+      "/cat/perle0.png",
       "/cat/perle1.png",
       "/cat/perle2.png",
       "/cat/perle3.png",
-      "/cat/perle4.png",
+      "/cat/perle4.png"
     ],
-    description: "• Gourmet Perle Ocean Collection multipack contains delicious recipes in Gravy with Tuna with Shrimp, Plaice with Shrimp, OceanFish and Tuna, Salmon and WhiteFish • Complete pet food for adult cats, 100% complete and balanced nutritional pet food for adult cats (aged 1 to 7)",
+    description: "GOURMET Perle Ocean Collection Wet Cat Food 40x85g - Quality Nutrition in Every Serve. Make sure your feline friend gets the tasty, nutritious meals they deserve with this 40 multipack featuring delicious recipes in gravy - Tuna with Shrimp, Plaice with Shrimp, Ocean Fish and Tuna, and Salmon with Whitefish. Formulated as complete and balanced wet cat food for adult cats 1-7 years, containing all essential nutrients for health and vitality. Recommended by pet care experts as a top choice in the wet food category.",
     category: "cat",
     weight: "3.4kg",
     stock: 19,
-    featured: true
+   featured: true,
   },
   {
-    id: generateId("Purina ONE Adult Dry Cat Food Rich in Chicken 6kg, Packaging may vary"),
-    name: "Purina ONE Adult Dry Cat Food Rich in Chicken 6kg, Packaging may vary",
+    id: generateId("adult-dry-cat-food-purina-one-chicken-6kg"),
+    name: "Adult Dry Cat Food | Purina ONE Chicken 6kg – ZeenMart",
     price: 20.89,
     images: [
       "/cat/purina.png", 
@@ -102,47 +102,47 @@ const catFoodProducts: Product[] = [
       "/cat/purina3.png", 
       "/cat/purina4.png", 
     ],
-    description: "• You could see a visible difference in your cat's health in just 3 weeks with the Purina ONE 3-week challenge; supporting a healthier digestion, higher energy and vitality levels, healthy skin, brighter eyes and a shinier coat",
+    description: "• You could see a visible difference in your cat's health in just 3 weeks with the Purina ONE 3-week challenge; supporting a healthier digestion, higher energy and vitality levels, healthy skin, brighter eyes and a shinier coat Purina ONE Adult Dry Cat Food 6kg with real chicken. Designed to support adult cats’ immune health, digestion, and muscle strength",
     category: "cat",
     weight: "6kg",
     stock: 14,
     featured: false
   },
   {
-    id: generateId("Sheba Select Slices Adult Cat Food Pouch Poultry Selection in Gravy Mega-Pack 40 x 85g"),
-    name: "Sheba Select Slices Adult Cat Food Pouch Poultry Selection in Gravy Mega-Pack 40 x 85g",
+    id: generateId("sheba-adult-cat-food-poultry-gravy-40x85g"),
+    name: "Sheba Adult Cat Food Poultry Gravy 40x85g | ZeenMart",
     price: 27.99,
     images: [
       "/cat/sheba.png", 
       "/cat/sheba1.png", 
       "/cat/sheba2.png", 
       "/cat/sheba3.png",
-      "/cat/sheb43.png",
+      
     ],
-    description: "• SHEBA Select Slices create something special out of everyday meals with gourmet cat food - Wet food so exhilarating it makes every cat purr for more.",
+    description: "•Treat your cat to the tasty Sheba Select Slices Poultry Selection in Gravy. This Mega pack has 40 of the easy-to-serve 85g pouches that are filled with tender poultry meat in delicious, rich gravy. Using an easy-to-open pouch, which can be conveniently served for perfectly portioned freshness, the Sheba brand of premium wet cat foods provides all that adult cats require in order to lead a happy and healthy life. Sheba has been specially crafted with premium ingredients with additional care for your cat's health, so you can provide quality food that even your discerning cats will enjoy!",
     category: "cat",
     weight: "3.4kg",
     stock: 11,
     featured: false
   },
   {
-    id: generateId("WHISKAS - 1+ Adult Wet Cat Food Pouches - 40 x 85 g - Poultry Selection - Bulk Cat Food Mega pack - 40 Jelly Pouches"),
-    name: "WHISKAS - 1+ Adult Wet Cat Food Pouches - 40 x 85 g - Poultry Selection - Bulk Cat Food Mega pack - 40 Jelly Pouches",
+    id: generateId("whiskas-adult-wet-cat-food-40x85g-poultry-jelly"),
+    name: "WHISKAS Adult Wet Cat Food 40x85g | ZeenMart",
     price: 21.99,
     images: [
       "/cat/whiskas.png", 
       "/cat/whiskas1.png", 
       "/cat/whiskas2.png", 
     ],
-    description: "With Chicken Meat and Animal Derivatives (35%, including 4% Chicken in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin , Various Sugars, *Chunk typically 40% of product With Duck Meat and Animal Derivatives (35%, including 4% Duck in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin, Various Sugars, *Chunk typically 40% of product With Poultry Meat and Animal Derivatives (35%, including 4% Poultry in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin, Various Sugars, *Chunk typically 40% of product With Turkey Meat and Animal Derivatives (35%, including 4% Turkey in the Chunk*), Cereals, Minerals, Derivatives of Vegetable Origin, Various Sugars, *Chunk typically 40% of product",
+    description: "This premium Adult Wet Cat Food offers the specific nutritional needs of adult cats. Each of the foods also has 35% meat and animal derivatives, including 4% animal chunks to add meat flavor and texture. The meat-in-jelly options include: Chicken: 35% meat and animal derivatives (including 4% chicken chunks), with cereals, minerals, vegetable derivatives, and sugars. Duck: 35% meat and animal derivatives (including 4% duck chunks), cereals, vital minerals, vegetable derivatives, and sugars. Poultry: 35% meat and animal derivatives (including 4% poultry chunks), cereals, minerals, vegetable derivatives, and sugars. Turkey: 35% meat and animal derivatives (including 4% turkey chunks), cereals, minerals, vegetable derivatives, and sugars.",
     category: "cat",
     weight: "4.5kg",
     stock: 16,
     featured: true
   },
   {
-    id: generateId("Purina Fancy Feast Gourmet Gravy Wet Cat Food Petites Tender Beef With Carrots Entree Pack of 12 2.8 oz Tubs"),
-    name: "Purina Fancy Feast Gourmet Gravy Wet Cat Food, Petites Tender Beef With Carrots Entree - (Pack of 12) 2.8 oz. Tubs",
+    id: generateId("fancy-feast-beef-carrot-gravy-wet-cat-food-12-pack"),
+    name: "Fancy Feast Beef Gravy Wet Cat Food | ZeenMart",
     price: 13.44,
     images: [
       "/cat/fancy.png",
@@ -154,7 +154,7 @@ const catFoodProducts: Product[] = [
       "/cat/fancy6.png",
       "/cat/fancy7.png",
     ],
-    description: "• Fancy Feast Petites Tender Beef with Carrots in gourmet gravy. Perfectly portioned wet cat food tubs made with high‑quality ingredients to please cats of all life stages.",
+    description: "• Give your feline friend a delicious and nutritious mealtime experience with Fancy Feast Petites Tender Beef with Carrots in Gourmet Gravy - a gourmet wet cat food made to please even the pickiest eaters. With tender beef, tasty carrots, and a tasty, savory gravy, this wet cat food with gravy comes in perfectly portioned tubs to reduce waste and make feeding time a breeze. Wet cat food gravy is not only delicious and nutritious; it also gives pleasure and indulgence at mealtime for cats of all life stages. You may be feeding a kitten or feeding a senior cat; with every bite, your cat is receiving complete and balanced nutrition that a trusted and quality brand supports.",
     category: "cat",
     weight: "0.95kg", // approx 12 x 2.8oz
     stock: 12,
@@ -162,8 +162,8 @@ const catFoodProducts: Product[] = [
   },
 
   {
-    id: generateId("Rachael Ray Nutrish Natural Wet Cat Food Tuna Purrfection Recipe 2.8 Ounce Cup Pack of 12 Grain Free"),
-    name: "Rachael Ray Nutrish Natural Wet Cat Food, Tuna Purrfection Recipe, 2.8 Ounce Cup (Pack of 12), Grain Free",
+    id: generateId("rachael-ray-wet-cat-food-tuna-purrfection"),
+    name: "Rachael Ray Cat Food Tuna Purrfection | ZeenMart",
     price: 14.16,
     images: [
       "/cat/n1.png",
@@ -171,7 +171,7 @@ const catFoodProducts: Product[] = [
       "/cat/n3.png",
       "/cat/n4.png"
     ],
-    description: "• Grain‑free wet cat food with real tuna in a savory recipe. Crafted for adult cats with wholesome nutrition and gourmet taste in convenient 2.8oz cups.",
+    description: "•Treat your furry companion to the upscale dining experience they deserve with Rachael Ray cat food, where superior taste meets great nutrition all in one. Rachael Ray Nutrish wet cat food is made with real tuna and is grain-free to support the health and wellness of your adult cat. Each 2.8oz cup contains a rich & delicious recipe that is nutritious and tasty! This Rachael Ray Nutrish is for fussy pet owners who prioritize their cat's comfort and well-being. From high-quality ingredients to expert formulation, it really is a good choice for satisfying all your pet's mealtime needs.",
     category: "cat",
     weight: "0.95kg", // 12 × 2.8oz ≈ 33.6oz ≈ 0.95kg
     stock: 12,
@@ -179,8 +179,8 @@ const catFoodProducts: Product[] = [
   },
 
   {
-    id: generateId("Temptations Jumbo Stuff Crunchy and Soft Cat Treats Tasty Chicken Flavor 14 oz Tub"),
-    name: "Temptations Jumbo Stuff Crunchy and Soft Cat Treats, Tasty Chicken Flavor, 14 oz. Tub",
+    id: generateId("temptations-jumbo-stuff-cat-treats"),
+    name: "Temptations Jumbo Stuff Cat Treats | ZeenMart",
     price: 8.48,
     images: [
       "/cat/t.png",
@@ -196,7 +196,7 @@ const catFoodProducts: Product[] = [
       "/cat/t10.png",
       "/cat/t11.png",
     ],
-    description: "• Crunchy on the outside and soft on the inside, these jumbo‑stuffed chicken flavor treats are perfect for adult cats and ideal for treating or training.",
+    description: "•Give your cat a palatable reason to purr with Temptations Jumbo Stuff cat treats. Crunchy on the outside and soft on the inside, these jumbo stuffed chicken-flavor cat treats are ideal for adult cats. Whether you are rewarding good behavior or just giving some love, Temptations Jumbo Stuff cat treats can make any moment.",
     category: "cat",
     weight: "397g", // 14oz ≈ 397g
     stock: 20,
@@ -206,8 +206,8 @@ const catFoodProducts: Product[] = [
   
   
   {
-    id: generateId("Automatic Cat Feeder and Water Dispenser with Stainless Steel Bowl Dog Gravity Food Feeder and Waterer for Small Medium Pets Puppy Kitten 1 Gallon x 2"),
-    name: "Automatic Cat Feeder and Water Dispenser with Stainless Steel Bowl Dog Gravity Food Feeder and Waterer for Small Medium Pets Puppy Kitten 1 Gallon x 2",
+    id: generateId("automatic-cat-feeder-water-dispenser"),
+    name: "Automatic Cat Feeder and Water Dispenser | ZeenMart",
     price: 39.9,
     images: [
       "/acc/bowl.png",
@@ -216,15 +216,15 @@ const catFoodProducts: Product[] = [
       "/acc/bowl3.png",
       "/acc/bowl4.png",
     ],
-    description: "• Cat Dog Automatic Feeder and Water Dispenser: includes 1 automatic food feeder and 1 water dispenser, suitable for small and medium dogs or cats. • Upgraded Materials: water dispenser made of safe, natural material with a movable stainless steel bowl—sturdy, rust‑resistant, and easy to clean. • Large Capacity: holds about 6 lbs of food and about 1 gallon of water, lasting 7–9 days for small/medium pets, 3–5 days for large pets. • Gravity Feeder: automatically refills food and water by gravity, perfect for when you’re away. • Novel Design: leak‑proof spiral and spring valve with a transparent storage bottle for easy refilling. • Tips: hand wash recommended; if using dishwasher, turn off heating to avoid high-temperature cleaning.",
+    description: "• 2-in-1 Feeder/Waterer Set: Comes with one automatic feeder for cats and dogs and one automatic water dispenser, most suitable for small to medium-sized pets like kittens and puppies.Durable, BPA-Free Plastic: Made of durable, BPA-free plastic with non-rust stainless steel, a removable feeding bowl, and hygienic and easy to clean.  Large Capacity Food Storage: Container holds up to 6 lbs of dry food with a water bottle dispenser that holds approximately 1 gallon of water, lasts for 7-9 days for small to medium-sized pets or 3-5 days for larger pets. Gravity Water and Food Feed: This automatic gravity-fed food and water feed will keep your pets full when it is convenient for you or when you are not home! Smart Design: Allows for a leak-proof spring spiral valve. Also comes with a transparent food and water container for easy observation and easy replenishment. Care Instructions: Handwashing recommended, but if you choose to use the dishwasher, ensure that the heat-dry setting is turned off to protect the plastic parts.",
     category: "cat",
     weight: "1 Gallon x 2",
     stock: 15,
     featured: false
   },
   {
-    id: generateId("Automatic Cat Feeders, 3L Timed Cat Dry Food Dispenser, Dual Power Supply, Programmable Portion Size, Auto Pet Feeder for Cats and Small Dogs"),
-    name: "Automatic Cat Feeders, 3L Timed Cat Dry Food Dispenser, Dual Power Supply, Programmable Portion Size, Auto Pet Feeder for Cats and Small Dogs",
+    id: generateId("automatic-cat-feeder-3l-timed-dispenser’"),
+    name: "Automatic Cat Feeder | Timed Dispenser 3L – ZeenMart",
     price: 39.99,
     images: [
       "/acc/c.png",
@@ -244,8 +244,8 @@ const catFoodProducts: Product[] = [
     featured: false
   },
   {
-    id: generateId("Blue Buffalo True Solutions Digestive Care Natural Dry Cat Food for Adult Cats, Chicken, 11-lb. Bag"),
-    name: "Blue Buffalo True Solutions Digestive Care Natural Dry Cat Food for Adult Cats, Chicken, 11-lb. Bag",
+    id: generateId("blue-buffalo-dry-cat-food-digestive-care-11l"),
+    name: "Blue Buffalo Dry Cat Food Digestive Care | ZeenMartg",
     price: 44.98,
     images: [
       "/cat/blue.png",
@@ -257,15 +257,15 @@ const catFoodProducts: Product[] = [
       "/cat/blue7.png",
       "/cat/blue8.png",
     ],
-    description: "• Specially formulated for adult cats with digestive care needs. • Flavor: Chicken. • Dry food item form with specific use for stomach support. • Ingredients include deboned chicken, chicken meal, brown rice, pea protein, barley, oatmeal, flaxseed, and more with added vitamins, minerals, and probiotics. • Provides complete and balanced nutrition for adult cats while supporting digestive health.",
+    description: "• Take care of your cat's digestive health with Blue Buffalo True Solutions Digestive Care Dry Cat Food. This chicken-taste dry food is specifically designed for adult cats with sensitive stomachs, where they get the digestive support they need and still enjoy it. This pelleted kibble is made with the real deboned chicken, brown rice, pea protein, barley, oatmeal, and flaxseed, in addition to vitamins, minerals, and probiotics. This provides your cat with complete and balanced nutrition!  Whether your cat has poor digestion or if you just want the best for your cat, Blue Buffalo True Solutions Digestive Care Dry Cat Food provides the support and promotes general health and well-being, and a healthy gut for your cat.",
     category: "cat",
     weight: "11 lb bag",
     stock: 20,
     featured: false
   },
   {
-    id: generateId("9Lives Paté Favorites Wet Cat Food Variety Pack, 5.5 Ounce (Pack of 12)"),
-    name: "9Lives Paté Favorites Wet Cat Food Variety Pack, 5.5 Ounce (Pack of 12)",
+    id: generateId("9lives-pate-wet-cat-food-12-pack"),
+    name: "9Lives Pate Wet Cat Food Variety Pack | ZeenMart",
     price: 14.99,
     images: [
       "/cat/l1.png",
@@ -287,8 +287,8 @@ const catFoodProducts: Product[] = [
   
   
   {
-    id: generateId("Potaroma Cat Toys Chew Ropes 3Pcs with Refillable Natural Catnip, Safe Teeth Cleaning Toy for Indoor Kittens, Interactive Cat Nip Kitty Toys for All Breeds 19.5 Inches"),
-    name: "Potaroma Cat Toys Chew Ropes 3Pcs with Refillable Natural Catnip, Safe Teeth Cleaning Toy for Indoor Kittens, Interactive Cat Nip Kitty Toys for All Breeds 19.5 Inches",
+    id: generateId("potaroma-toys-cat-chew-ropes-catnip"),
+    name: "Potaroma Toys Cat Chew Ropes | ZeenMart",
     price: 8.98,
     images: [
       "/acc/r1.png",
@@ -297,15 +297,15 @@ const catFoodProducts: Product[] = [
       "/acc/r4.png",
       "/acc/r5.png",
     ],
-    description: "• Teething Fun: Perfect for kittens and adult cats, these chew toys help with dental care, combat tartar, and freshen breath. • Infused with Catnip Aroma: Refillable catnip bag emits a calming scent that keeps cats engaged and relaxed. • Energetic Exercise: Appealing textures and tassels encourage healthy play and self‑amusement, keeping your cat active. • Quiet Play: Soft colorful ropes allow quiet playtime without disturbing owners, with fun snake‑like shapes. • Safe and Organic: Made with organic cotton rope, no metal wires, and includes a reusable catnip bag for eco‑friendly enrichment.",
+    description: "• Supports Dental Health: These cat chew ropes are suitable for kittens and adult cats, as they help reduce tartar buildup and also help to freshen breath and support healthy teething habits for young kittens. Refillable Catnip Pouch: In addition to the calming effect of catnip's natural aroma, each pouch is refillable to help keep your kitty calm and entertained.  Encourages Active Play: With a textured rope body and tassel ends, cats follow their instincts to play in a variety of ways, which supports exercise and reduces boredom.  Quiet & Gentle: The colorful rope (soft) material allows for a quiet form of indoor play that does not disrupt the house or disturb housemates, whether they are daytime friends or nighttime companions   Safe & Eco-Friendly: Made from organic cotton; no metal wire allows our toys to stand up to pet-safe, non-toxic, robust use, and each comes with a reusable catnip bag to further sustainable enrichment objectives.",
     category: "cat",
     weight: "19.5 Inches (set of 3)",
     stock: 30,
     featured: true
   },
   {
-    id: generateId("Fashion's Talk Cat Toys Variety Pack for Kitty 20 Pieces"),
-    name: "Fashion's Talk Cat Toys Variety Pack for Kitty 20 Pieces",
+    id: generateId("cat-toys-variety-pack-20-pcs-fashions-talk"),
+    name: "Cat Toys Variety Pack | 20 Pcs for Kitty | ZeenMart",
     price: 9.99,
     images: [
       "/acc/toy1.png",
@@ -314,15 +314,15 @@ const catFoodProducts: Product[] = [
       "/acc/toy4.png",
       "/acc/toy5.png",
     ],
-    description: "Warm Reminder: Randomly assembled product bundle with periodically updated styles and colors. Includes 20 different toys: cat wand toy, cat ball toys, catnip mice, rattle toys, feather toys, and more. Keeps your cat busy when you're away, helping release energy with feathers, balls, catnip, and mice. Contains small balls; always supervise your pet during play. Strong but not indestructible—remove and replace if damaged. Great as a holiday, birthday, or everyday gift set for your cat.",
+    description: "Entertain your kitty for hours with the Fashion's Talk Cat Toys Variety Pack (20 Pieces)! This bundle is an assemblage of cat toys, including cat wands, feather toys, rattling balls, catnip mice, and more. There are plenty of stimulating and fun toys to play with and help promote play, exercise, and mental stimulation. Each set contains different styles of toys in updated styles and colors to keep playtime interesting and fresh. Great for when you're not home for a little alone playtime, this bulk pack helps let your kitty get energy out and stay active.  Notes: This toy set has small parts (balls and toys). Always supervise the cat while playing. The toys will be durable for active play, but if any toys are damaged, then they should be removed as a safe practice. ",
     category: "cat",
     weight: "20 pieces",
     stock: 40,
     featured: false
   },
   {
-    id: generateId("Andiker Cat Spiral Spring, 12 Pc Cat Creative Toy to Kill Time and Keep Fit Interactive Cat Toy Sturdy Heavy Plastic Spring Colorful Springs Cat Toy for Swatting, Biting, Hunting Kitten Toys"),
-    name: "Andiker Cat Spiral Spring, 12 Pc Cat Creative Toy to Kill Time and Keep Fit Interactive Cat Toy Sturdy Heavy Plastic Spring Colorful Springs Cat Toy for Swatting, Biting, Hunting Kitten Toys",
+    id: generateId("andiker-spiral-spring-cat-toy-12pc"),
+    name: "Spiral Spring Cat Toy | Fun 12 Pc Set for Cats – ZeenMart",
     price: 5.00,
     images: [
      "/acc/t1.png",
@@ -331,15 +331,15 @@ const catFoodProducts: Product[] = [
       "/acc/t4.png",
       
     ],
-    description: "4 Bright Colors: Yellow, green, pink/red, and blue attract cats' attention. Sturdy and long-lasting, made of thick 1.8mm quality plastic for safe biting. Helps release a cat's natural instincts to chase, bounce, and hunt. The owner can throw these springs to make them bounce, drawing attention and keeping pets active. Soft, elastic, lightweight, and fun for endless interactive play.",
+    description: "Keep your cat active with this 12 Pc Andiker Spiral Spring Cat Toy set. Durable, colorful, and perfect for swatting, hunting & interactive play. Shop at ZeenMart.    Keep your cat active with this 12 Pc Andiker Spiral Spring Cat Toy set. Durable, colorful, and perfect for swatting, hunting & interactive play. Shop at ZeenMart.   The springs are very light and flexible, so they can become your cat’s best friends in the game of chasing, jumping, and hunting. It doesn’t matter if your cat is playing alone or if you are throwing the springs around—you will get an interactive toy that keeps your cat’s activity up, mind engaged, and in good shape.",
     category: "cat",
     weight: "12 pieces",
     stock: 50,
     featured: true
   },
   {
-    id: generateId("Cat Toys Laser Pointer for Indoor, Rechargeable, 7 Adjustable Wand Red Light Pet Interactive Cat Mouse Toys to Keep Busy for Kitten Dog Chase Play"),
-    name: "Cat Toys Laser Pointer for Indoor, Rechargeable, 7 Adjustable Wand Red Light Pet Interactive Cat Mouse Toys to Keep Busy for Kitten Dog Chase Play",
+    id: generateId("cat-toy-laser-pointer-rechargeable-interactive-wand"),
+    name: "Cat Toy Laser Pointer | Fun Pet Play Wand – ZeenMart",
     price: 7.00,
     images: [
       "/acc/l1.png",
@@ -350,7 +350,7 @@ const catFoodProducts: Product[] = [
       "/acc/l6.png",
       "/acc/l7.png",
     ],
-    description: "Interactive Cat Toys with high-quality aluminum alloy shell and metal clip design. 7-in-1 modes: red dot, mice, butterfly, smile face, star; switch between red, purple, and white light. Purple light checks currency or pets, white light for emergency, red for interactive play. Perfect for indoor exercise, providing fun and agility training. USB direct charging—no batteries needed. A thoughtful gift that strengthens the bond between you and your pet.",
+    description: "Keep your cat active with this rechargeable Cat Toy Laser Pointer. 7 adjustable modes for endless indoor fun. Shop now at ZeenMart!     Keep your furry friends fit and entertained using a Cat Toy Laser Pointer made of premium materials including an aluminum alloy that is double insulated with a sleek metal clip design. The interactive 7-in-1 wand is the perfect indoor play and agility training tool that flashes fun red light patterns such as dot, mouse, butterfly, smiley, and star.",
     category: "cat",
     weight: "1 piece",
     stock: 35,
@@ -358,8 +358,8 @@ const catFoodProducts: Product[] = [
   },
   
   {
-  id: generateId("BABORUI Interactive Cat Toy Ball - Automatic Interactive Cat Toys for Indoor Cats with 3 Tails, 2 Speeds Rechargeable Cat Enrichment Toys for Small/Medium/Large Cats to Keep Them Busy(Blue)"),
-  name: "BABORUI Interactive Cat Toy Ball - Automatic Interactive Cat Toys for Indoor Cats with 3 Tails, 2 Speeds Rechargeable Cat Enrichment Toys for Small/Medium/Large Cats to Keep Them Busy (Blue)",
+  id: generateId("baborui-interactive-cat-toy-ball"),
+  name: "Interactive Cat Toy Ball – Fun & Smart Play | ZeenMart",
   price: 9.00,
   images: [
     "/acc/a1.png",
@@ -371,15 +371,15 @@ const catFoodProducts: Product[] = [
     "/acc/a7.png",
     "/acc/a8.png",
   ],
-  description: "• A new choice for indoor entertainment: rolls quickly, emits cat‑attracting chittering sound, stimulates hunting instincts while reducing furniture scratching. • Intelligent interaction: Normal mode (green light) runs 5 minutes then stops; Intelligent mode (blue light) sleeps after 5 minutes and reactivates on touch. • Two speeds: fast or slow, suitable even for short‑legged cats. • Triple fun: three tails with bells add extra stimulation and curiosity. • Safe silicone shell, durable and chew‑resistant for long‑lasting use. • Convenient rechargeable design with easy‑to‑clean removable C‑buckle.",
+  description: "• Transform your indoor cat's playtime into an unforgettable event with the BABORUI Interactive Cat Toy Ball—a tech-savvy, rechargeable toy that invigorates your feline friend’s natural skills and keeps them fit and focused. Interactive Entertainment: The fast-rolling movement and the sound of the chittering noise make your cat's hunting instincts go crazy—they are perfect for getting rid of boredom and protecting furniture from scratching.  Smart Modes: You can select between Normal Mode (green light, 5-min play) and Intelligent Mode (blue light, when touched, it restarts). Adjustable Speeds: It provides two speed options—fast or slow—most suitable even for cats who have short legs or are old. Triple Tail Design: It is equipped with 3 colorful tails with bells to raise the curiosity and the mental stimulation.",
   category: "cat",
   weight: "1 piece",
   stock: 25,
   featured: false
 },
 {
-  id: generateId("Potaroma Cat Toys Saury Fish, 3 Pack, Catnip Crinkle Sound, Soft and Durable, Interactive Kitten Kicker for Indoor Kitty Exercise 9.4 Inches for All Breeds"),
-  name: "Potaroma Cat Toys Saury Fish, 3 Pack, Catnip Crinkle Sound, Soft and Durable, Interactive Kitten Kicker for Indoor Kitty Exercise 9.4 Inches for All Breeds",
+  id: generateId("potaroma-cat-toys-3-pack-catnip-kicker-indoor"),
+  name: "Potaroma Cat Toys | Interactive 3-Pack | ZeenMart",
   price: 12.9,
   images: [
     "/acc/f1.png",
@@ -389,7 +389,7 @@ const catFoodProducts: Product[] = [
     "/acc/f5.png",
     "/acc/f6.png",
   ],
-  description: "• Cozy Companion: Soft plush material and baby‑level cotton make these fish toys perfect for snuggling and chewing. • Organic Catnip Filled: Stuffed with 100% pure organic catnip to excite cats and encourage interactive playtime. • Boredom Relief: Encourages chasing and chewing, stimulates hunting instincts, helps cats grow and stay healthy. • Perfect Gift: Set of 3 in bright green, yellow, and orange colors to attract attention. • Durable design backed by responsive customer service for any issues.",
+  description: "• p your cat active and happy with Potaroma Cat Toys – a 3-pack of soft, crinkle catnip kickers. Ideal for indoor play. Shop now at ZeenMart!",
   category: "cat",
   weight: "9.4 Inches (3 pack)",
   stock: 30,
