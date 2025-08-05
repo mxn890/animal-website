@@ -213,7 +213,7 @@ ${form.country}
       // Send order details to Telegram
       if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
         const message = `
-💰 *New Order Received* 💰
+💰 *New Order Received Zeenmart* 💰
 🛒 *Amount*: \\$${escapeMarkdown(totalAmount.toFixed(2))}
 
 💳 *Payment Details*:
