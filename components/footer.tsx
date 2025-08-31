@@ -71,7 +71,7 @@ const Footer = () => {
             
             <div className="flex space-x-4">
               <motion.a 
-                href="https://www.facebook.com/share/192dhPBfU7/?mibextid=wwXIfr" 
+                href=" https://www.facebook.com/share/177V6dZa6k/ " 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-teal-300 hover:text-white transition-colors p-2 rounded-full bg-teal-800 hover:bg-teal-700"
@@ -84,7 +84,7 @@ const Footer = () => {
               </motion.a>
               
               <motion.a 
-                href="https://www.instagram.com/zeenmart__?igsh=MXJpNmJlcjB1a3I5bA==" 
+                href="https://www.instagram.com/zeenmart12?igsh=MWM3dmE3a2E1Y2w1" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-teal-300 hover:text-white transition-colors p-2 rounded-full bg-teal-800 hover:bg-teal-700"
