@@ -9,7 +9,7 @@ import Footer from "@/components/footer";
 import TopHeader from "@/components/top";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-// Optimized font loading with subset and swap display
+// Optimized font loading
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   authors: [{ name: "ZeenMart Team" }],
   metadataBase: new URL("https://www.zeenmart.com"),
   openGraph: {
-    title: "ZeenMart – Your One‑Stop Shop for Your Pets",
+    title: "ZeenMart – Your One-Stop Shop for Your Pets",
     description:
       "Find everything your pets need in one place. Quality products, fast shipping, and trusted service.",
     url: "https://www.zeenmart.com",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ZeenMart – Your One‑Stop Shop for Your Pets",
+    title: "ZeenMart – Your One-Stop Shop for Your Pets",
     description:
       "Explore premium quality pet food, accessories, and supplies at ZeenMart.",
     images: ["/og-image.png"],
@@ -101,7 +101,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Optimized GTM loading */}
+        {/* Google Tag Manager */}
         <Script
           id="gtm-script"
           strategy="afterInteractive"
@@ -120,21 +120,38 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SNL4ZBMNFW', {
-      page_path: window.location.pathname,
-      transport_type: 'beacon',
-      anonymize_ip: true
-    });
-    gtag('config', 'AW-17349796191');
-  `}
-</Script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SNL4ZBMNFW', {
+              page_path: window.location.pathname,
+              transport_type: 'beacon',
+              anonymize_ip: true
+            });
+            gtag('config', 'AW-17349796191');
+          `}
+        </Script>
+
+        {/* ✅ Meta Pixel Code */}
+        <Script id="fb-pixel" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1056173783068344');
+            fbq('track', 'PageView');
+          `}
+        </Script>
       </head>
+
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Google Tag Manager noscript */}
+        {/* GTM noscript */}
         <noscript
           dangerouslySetInnerHTML={{
             __html: `
@@ -144,7 +161,17 @@ export default function RootLayout({
           }}
         />
 
-        {/* App Structure with optimized providers */}
+        {/* ✅ Meta Pixel noscript */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `
+              <img height="1" width="1" style="display:none"
+              src="https://www.facebook.com/tr?id=1056173783068344&ev=PageView&noscript=1"/>
+            `,
+          }}
+        />
+
+        {/* App Structure */}
         <ProductProvider>
           <CartProvider>
             <TopHeader />
