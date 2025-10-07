@@ -1,13 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
+import type { NextConfig } from "next";
 
-  // ✅ JS aur CSS minify karega
-  swcMinify: true,
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
 
   // ✅ Image optimization
   images: {
-    formats: ['image/avif', 'image/webp'], // faster formats
+    formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
   },
 
@@ -19,12 +17,12 @@ const nextConfig = {
     optimizeCss: true,            // Tailwind ke liye achha hai
     scrollRestoration: true,      // page scroll state preserve karega
     optimizePackageImports: [     // heavy packages ko optimize karega
-      'react-icons',
-      'lucide-react',
-      'framer-motion',
-      'recharts',
+      "react-icons",
+      "lucide-react",
+      "framer-motion",
+      "recharts",
     ],
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
