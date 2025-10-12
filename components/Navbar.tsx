@@ -188,7 +188,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-               About Us
+               About
               </motion.span>
             </Link>
             
@@ -212,6 +212,17 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 Dog Food
+              </motion.span>
+            </Link>
+            <Link 
+              href="/blog" 
+              className="text-gray-800 hover:text-teal-600 transition-colors font-semibold px-2 py-1 rounded-md hover:bg-teal-50 dark:text-gray-200 dark:hover:text-teal-400 dark:hover:bg-gray-800"
+            >
+              <motion.span
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Blog
               </motion.span>
             </Link>
           </div>
@@ -360,6 +371,16 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Dog Food
+                  </Link>
+                </motion.div>
+
+                <motion.div variants={menuItemVariants}>
+                  <Link 
+                    href="/blog" 
+                    className="px-3 py-2 rounded-md hover:bg-gray-50 text-gray-800 font-medium dark:hover:bg-gray-800 dark:text-gray-200"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Blog
                   </Link>
                 </motion.div>
                 

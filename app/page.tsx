@@ -121,7 +121,19 @@ const customerNames = [
 const cities = [
   'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio',
   'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus',
-  'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver', 'Washington'
+  'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver', 'Washington',
+  'Boston', 'El Paso', 'Detroit', 'Nashville', 'Portland', 'Memphis', 'Oklahoma City', 
+  'Las Vegas', 'Louisville', 'Baltimore', 'Milwaukee', 'Albuquerque', 'Tucson', 'Fresno',
+  'Sacramento', 'Kansas City', 'Long Beach', 'Mesa', 'Atlanta', 'Colorado Springs', 
+  'Virginia Beach', 'Raleigh', 'Omaha', 'Miami', 'Oakland', 'Minneapolis', 'Tulsa', 
+  'Cleveland', 'Wichita', 'Arlington', 'New Orleans', 'Bakersfield', 'Tampa', 'Honolulu',
+  'Anaheim', 'Aurora', 'Santa Ana', 'St. Louis', 'Riverside', 'Corpus Christi', 'Lexington',
+  'Pittsburgh', 'Anchorage', 'Stockton', 'Cincinnati', 'St. Paul', 'Toledo', 'Greensboro',
+  'Newark', 'Plano', 'Henderson', 'Lincoln', 'Buffalo', 'Jersey City', 'Chula Vista',
+  'Fort Wayne', 'Orlando', 'St. Petersburg', 'Chandler', 'Laredo', 'Norfolk', 'Durham',
+  'Madison', 'Lubbock', 'Irvine', 'Winston-Salem', 'Glendale', 'Garland', 'Hialeah',
+  'Reno', 'Baton Rouge', 'Irvine', 'Chesapeake', 'Irving', 'Scottsdale', 'North Las Vegas',
+  'Fremont', 'Gilbert', 'San Bernardino', 'Boise', 'Birmingham'
 ];
 
 const HomePage = () => {
@@ -150,84 +162,92 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Generate random purchase notifications
+  // Generate random purchase notifications with auto-remove
   useEffect(() => {
     const generateNotification = () => {
       const randomProduct = topProducts[Math.floor(Math.random() * topProducts.length)];
       const randomName = customerNames[Math.floor(Math.random() * customerNames.length)];
       const randomCity = cities[Math.floor(Math.random() * cities.length)];
-      const minutesAgo = Math.floor(Math.random() * 10) + 1;
+      
+      // Single digit minutes (1-9) and some double digit (10-45)
+      const minutesOptions = [31, 22, 34, 45, 60, 26, 37, 48, 19, 18, 44, 28, 40, 45, 30, 35, 40, 25];
+      const randomMinutes = minutesOptions[Math.floor(Math.random() * minutesOptions.length)];
       
       const newNotification = {
         id: Date.now(),
         customerName: randomName,
         productName: randomProduct.name,
-        timeAgo: `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`,
+        timeAgo: `${randomMinutes} minute${randomMinutes > 1 ? 's' : ''} ago`,
         city: randomCity
       };
 
-      setNotifications(prev => [newNotification, ...prev.slice(0, 4)]); // Keep only last 5 notifications
+      setNotifications(prev => [newNotification]);
+
+      // Automatically remove notification after 6 seconds
+      setTimeout(() => {
+        setNotifications(prev => prev.filter(n => n.id !== newNotification.id));
+      }, 6000);
     };
 
-    // Generate first notification immediately
-    generateNotification();
+    // Generate first notification after 3 seconds
+    const initialTimeout = setTimeout(generateNotification, 3000);
 
-    // Set interval for new notifications (every 8-15 seconds)
-    const interval = setInterval(generateNotification, Math.random() * 7000 + 8000);
+    // Set interval for new notifications (every 8-12 seconds)
+    const interval = setInterval(generateNotification, Math.random() * 4000 + 8000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(interval);
+    };
   }, []);
+
+  const removeNotification = (id: number) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
 
   return (
     <div className="min-h-screen bg-white">
       {/* Real-time Purchase Notifications */}
       <AnimatePresence>
-        {notifications.length > 0 && (
-          <motion.div 
-            className="fixed bottom-4 left-4 z-50 max-w-xs sm:max-w-sm space-y-3"
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
+        {notifications.map((notification) => (
+          <motion.div
+            key={notification.id}
+            className="fixed top-4 right-4 z-50 max-w-xs sm:max-w-sm"
+            initial={{ opacity: 0, x: 100, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 100, scale: 0.8 }}
+            transition={{ duration: 0.3 }}
           >
-            {notifications.map((notification, index) => (
-              <motion.div
-                key={notification.id}
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -100, scale: 0.9 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-lg border border-gray-200 p-3 sm:p-4 relative"
+            <div className="bg-white rounded-lg shadow-lg border border-green-200 p-3 sm:p-4 relative">
+              <button
+                onClick={() => removeNotification(notification.id)}
+                className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-gray-100 hover:bg-gray-200 rounded-full p-1 transition-colors"
               >
-                <button
-                  onClick={() => setNotifications(prev => prev.filter(n => n.id !== notification.id))}
-                  className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-gray-100 hover:bg-gray-200 rounded-full p-1 transition-colors"
-                >
-                  <X className="h-3 w-3 text-gray-600" />
-                </button>
-                
-                <div className="flex items-start space-x-2 sm:space-x-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
-                    </div>
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs sm:text-sm font-medium text-gray-900">
-                      {notification.customerName} from {notification.city}
-                    </p>
-                    <p className="text-xs sm:text-sm text-gray-600 truncate">
-                      purchased {notification.productName.split(' ').slice(0, 4).join(' ')}...
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {notification.timeAgo}
-                    </p>
+                <X className="h-3 w-3 text-gray-600" />
+              </button>
+              
+              <div className="flex items-start space-x-2 sm:space-x-3">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                   </div>
                 </div>
-              </motion.div>
-            ))}
+                
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-gray-900">
+                    {notification.customerName} from {notification.city}
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-600 truncate">
+                    purchased {notification.productName.split(' ').slice(0, 3).join(' ')}...
+                  </p>
+                  <p className="text-xs text-green-600 font-medium mt-1">
+                    {notification.timeAgo}
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
-        )}
+        ))}
       </AnimatePresence>
 
       {/* Hero Section */}
@@ -432,7 +452,7 @@ const HomePage = () => {
             className="border-teal-600 text-teal-600 bg-white hover:bg-teal-50 hover:text-teal-700 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg"
             asChild
           >
-            <Link href="/products">
+            <Link href="/cat-food">
               View All Products <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Link>
           </Button>
