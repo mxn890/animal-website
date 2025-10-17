@@ -1147,13 +1147,7 @@ const CheckoutPage = () => {
                     badge="Popular"
                   />
                   
-                  <PaymentMethodCard
-                    icon={<Bitcoin className="h-6 w-6" />}
-                    title="Bitcoin"
-                    description="Pay with cryptocurrency - fast and secure"
-                    isSelected={paymentMethod === 'bitcoin'}
-                    onClick={() => setPaymentMethod('bitcoin')}
-                  />
+                 
                 </div>
 
                 <div className="transition-all duration-500">
